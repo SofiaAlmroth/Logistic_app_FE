@@ -29,7 +29,7 @@ function BalancePage() {
               <td>{paint.batchName}</td>
               <td>{paint.bestBeforeDate.toLocaleDateString()}</td>
               <td>
-                <button className="btn btn-info">Adjust</button>
+                <button className="btn btn-ghost">Adjust</button>
               </td>
             </tr>
           ))}
