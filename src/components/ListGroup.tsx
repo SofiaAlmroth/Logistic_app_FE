@@ -1,23 +1,29 @@
-import { getCategories } from "../services/fakeCategoryService";
+import { Category } from "../services/fakeCategoryService";
 
-function ListGroup() {
-  const categories = getCategories();
+interface Props {
+  items: Category[];
+  selectedItems: Category[];
+  onItemSelect(category: Category, isChecked: boolean): void;
+}
 
+function ListGroup({ items, selectedItems, onItemSelect }: Props) {
   return (
     <div className="m-6 text-center">
-      <ul className="menu bg-base-200 w-40 rounded-box">
+      <ul className="menu bg-base-200 w-44 rounded-box">
         <li>
           <details open>
-            <summary>Filter</summary>
+            <summary className="text-lg">Filter</summary>
             <ul>
-              {categories.map((category) => (
-                <li key={category._id}>
+              {items.map((item) => (
+                <li key={item._id}>
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      className="checkbox checkbox-sm mr-2"
+                      className="checkbox checkbox-xs mr-2"
+                      onChange={(e) => onItemSelect(item, e.target.checked)}
+                      checked={selectedItems.includes(item)}
                     />
-                    <li>{category.name}</li>
+                    <span>{item.name}</span>
                   </label>
                 </li>
               ))}

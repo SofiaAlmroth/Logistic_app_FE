@@ -1,7 +1,56 @@
+import { useState } from "react";
 import ListGroup from "./components/ListGroup";
+import { Category, getCategories } from "./services/fakeCategoryService";
 import { paints } from "./services/fakePaintService";
 
+const DEFAULT_CATEGORY: Category = {
+  _id: "default",
+  name: "All Colors",
+};
+
 function BalancePage() {
+  const [selectedCategories, setSelectedCategories] = useState([
+    DEFAULT_CATEGORY,
+  ]);
+
+  function handleCategoryToggle(category: Category, isChecked: boolean) {
+    setSelectedCategories((prevCategories) => {
+      let categories = prevCategories;
+
+      if (!isChecked) {
+        if (prevCategories.length === 1) {
+          categories = [DEFAULT_CATEGORY];
+        } else {
+          categories = prevCategories.filter((c) => c._id !== category._id);
+        }
+      }
+
+      if (isChecked) {
+        if (category._id === DEFAULT_CATEGORY._id) {
+          categories = [DEFAULT_CATEGORY];
+        } else {
+          categories = prevCategories.filter(
+            (c) => c._id !== DEFAULT_CATEGORY._id
+          );
+          categories.push(category);
+        }
+      }
+
+      return categories;
+    });
+  }
+
+  if (paints.length === 0) return <p>There are no products in the database</p>;
+
+  const allColorsSelected = selectedCategories.find(
+    (c) => c._id === DEFAULT_CATEGORY._id
+  );
+  const filteredPaints = allColorsSelected
+    ? paints
+    : paints.filter((p) =>
+        selectedCategories.find((c) => c._id === p.category._id)
+      );
+
   return (
     <div className="flex">
       <div className="flex-auto">
@@ -20,7 +69,7 @@ function BalancePage() {
             </tr>
           </thead>
           <tbody>
-            {paints.map((paint) => (
+            {filteredPaints.map((paint) => (
               <tr key={paint._id}>
                 <td>{paint.name}</td>
                 <td>{paint.quantity}</td>
@@ -39,7 +88,11 @@ function BalancePage() {
         </table>
       </div>
       <div className="flex-none ml-4">
-        <ListGroup />
+        <ListGroup
+          items={[DEFAULT_CATEGORY, ...getCategories()]}
+          selectedItems={selectedCategories}
+          onItemSelect={handleCategoryToggle}
+        />
       </div>
     </div>
   );

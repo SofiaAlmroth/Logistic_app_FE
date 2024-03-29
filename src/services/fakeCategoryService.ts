@@ -1,6 +1,7 @@
 export interface Category {
   _id: string;
   name: string;
+  isChecked?: boolean;
 }
 
 const categories: Category[] = [
