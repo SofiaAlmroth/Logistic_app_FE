@@ -1,4 +1,4 @@
-import { paints } from "./services/fakePaintService";
+import { paints } from "../services/fakePaintService";
 
 function BalancePage() {
   return (

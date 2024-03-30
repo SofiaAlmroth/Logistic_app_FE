@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
+
 export default function Navbar() {
   return (
     <div className="navbar bg-base-100 shadow mb-2">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">Home</a>
+        <a href="/" className="btn btn-ghost text-xl">
+          Home
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -18,7 +22,10 @@ export default function Navbar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Settings</a>
+        <a className="btn">Login</a>
+        <Link to="/register" className="btn btn-primary ml-2">
+          Register
+        </Link>
       </div>
     </div>
   );
