@@ -1,7 +1,8 @@
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import user from "../services/userService";
 
 const schema = z.object({
   name: z
@@ -28,8 +29,9 @@ function RegisterPage() {
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema), mode: "onChange" });
 
-  function onSubmit(data: FieldValues) {
+  async function onSubmit(data: FormData) {
     console.log("Submitted", data);
+    await user.register(data);
     navigate("/balance");
   }
 
