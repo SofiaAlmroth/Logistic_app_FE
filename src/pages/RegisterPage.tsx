@@ -3,6 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import user from "../services/userService";
+import { toast } from "react-toastify";
 
 const schema = z.object({
   name: z
@@ -31,8 +32,14 @@ function RegisterPage() {
 
   async function onSubmit(data: FormData) {
     console.log("Submitted", data);
-    await user.register(data);
-    navigate("/balance");
+    try {
+      await user.register(data);
+      navigate("/balance");
+    } catch (error: any) {
+      if (error.response.status === 400) {
+        toast.error("User already exists");
+      }
+    }
   }
 
   return (
