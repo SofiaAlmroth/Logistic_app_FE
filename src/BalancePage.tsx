@@ -51,17 +51,6 @@ function BalancePage() {
     });
   }
 
-  // function handleSort(path: string) {
-  //   if (path === sortColumn.path) {
-  //     sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-  //   } else {
-  //     sortColumn.path = path;
-  //     sortColumn.order = "asc";
-  //   }
-  //   setSortColumn({ ...sortColumn });
-  //   console.log(sortColumn);
-  // }
-
   if (paints.length === 0) return <p>There are no products in the database</p>;
 
   const allColorsSelected = selectedCategories.find(
