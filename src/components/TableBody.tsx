@@ -18,7 +18,7 @@ export function TableBody({ paints }: Props) {
           <td>{paint.batchName}</td>
           <td>{paint.bestBeforeDate.toLocaleDateString()}</td>
           <td>
-            <button className="btn btn-ghost">Adjust</button>
+            <button className="btn btn-ghost">Update</button>
           </td>
         </tr>
       ))}

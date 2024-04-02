@@ -6,18 +6,23 @@ import { Pagination } from "./components/Pagination";
 import { TableHeader } from "./components/TableHeader";
 import { TableBody } from "./components/TableBody";
 import { paginate } from "./utils";
+import _ from "lodash";
+import { SortColumn } from "./types";
+import { PaintsTable } from "./components/PaintsTable";
 
 const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {
   _id: "default",
   name: "All Colors",
 };
+const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function BalancePage() {
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
     DEFAULT_CATEGORY,
   ]);
+  const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
 
   function handleCategoryToggle(category: Category, isChecked: boolean) {
     setSelectedCategories((prevCategories) => {
@@ -46,6 +51,17 @@ function BalancePage() {
     });
   }
 
+  // function handleSort(path: string) {
+  //   if (path === sortColumn.path) {
+  //     sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+  //   } else {
+  //     sortColumn.path = path;
+  //     sortColumn.order = "asc";
+  //   }
+  //   setSortColumn({ ...sortColumn });
+  //   console.log(sortColumn);
+  // }
+
   if (paints.length === 0) return <p>There are no products in the database</p>;
 
   const allColorsSelected = selectedCategories.find(
@@ -56,14 +72,20 @@ function BalancePage() {
     : paints.filter((p) =>
         selectedCategories.find((c) => c._id === p.category._id)
       );
-  const paginatedPaints = paginate(filteredPaints, PAGE_SIZE, selectedPage);
+  const sortedPaints = _.orderBy(
+    filteredPaints,
+    sortColumn.path,
+    sortColumn.order
+  );
+  const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
     <div className="flex">
       <div className="flex-auto">
-        <table className="table">
-          <TableHeader />
-          <TableBody paints={paginatedPaints} />
-        </table>
+        <PaintsTable
+          sortColumn={sortColumn}
+          onSort={setSortColumn}
+          paints={paginatedPaints}
+        />
         <Pagination
           totalCount={filteredPaints.length}
           pageSize={PAGE_SIZE}
