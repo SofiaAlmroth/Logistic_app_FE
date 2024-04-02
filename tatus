@@ -1,0 +1,19 @@
+[33m25c814b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msofia/searchbox[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #10 from Ammarelkhalil/sofia/listgroup
+[33m8e5a96a[m[33m ([m[1;31morigin/sofia/listgroup[m[33m)[m Merge branch 'main' into sofia/listgroup
+[33m8d906ac[m finished filter component functionality
+[33mbd1c928[m[33m ([m[1;31morigin/pagination[m[33m)[m implemented pagination component
+[33mbdc4204[m added listgroup UI
+[33m7f1c3ae[m Merge pull request #5 from Ammarelkhalil/ammar/navbar
+[33mc976814[m[33m ([m[1;31morigin/ammar/navbar[m[33m)[m added navbar ui
+[33m6ea1678[m Merge branch 'balancelist'
+[33m78914f2[m[33m ([m[1;31morigin/balancelist[m[33m)[m implemented balancePage
+[33m909ff27[m Merge pull request #3 from Ammarelkhalil/sofia/colorThemes
+[33mfdee3e2[m[33m ([m[1;31morigin/sofia/colorThemes[m[33m)[m added color theme and custom button
+[33m0e81867[m implemented BalancePage and added table to BalancePage
+[33mb464e17[m Merge pull request #2 from Ammarelkhalil/sofia/fakeServices
+[33mf3fc159[m Merge pull request #1 from Ammarelkhalil/sofia/fakeServices
+[33me9ef3dc[m[33m ([m[1;31morigin/sofia/fakeServices[m[33m)[m finished fake services
+[33m1e44c84[m Merge branch 'sofia/fakeServices' of https://github.com/Ammarelkhalil/logistic_app into sofia/fakeServices
+[33m03826c8[m finished fake services
+[33m530bcbc[m added fake services
+[33m3abeb5b[m init
