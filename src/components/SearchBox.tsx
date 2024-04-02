@@ -1,7 +1,18 @@
-function SearchBox() {
+interface Props {
+  value: string;
+  onChange(value: string): void;
+}
+
+function SearchBox({ value, onChange }: Props) {
   return (
-    <label className="input input-bordered flex items-center gap-2">
-      <input type="text" className="grow" placeholder="Search" />
+    <label className="input input-bordered input-secondary flex items-center gap-2">
+      <input
+        type="text"
+        className="grow"
+        placeholder="Search"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"

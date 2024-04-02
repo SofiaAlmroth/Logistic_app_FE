@@ -12,6 +12,7 @@ const DEFAULT_CATEGORY: Category = {
 };
 
 function BalancePage() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
     DEFAULT_CATEGORY,
@@ -40,6 +41,13 @@ function BalancePage() {
     }
 
     setSelectedCategories(categories);
+    setSearchQuery("");
+    setSelectedPage(1);
+  }
+
+  function handleSearch(value: string) {
+    setSearchQuery(value);
+    setSelectedCategories([DEFAULT_CATEGORY]);
   }
 
   if (paints.length === 0) return <p>There are no products in the database</p>;
@@ -47,17 +55,24 @@ function BalancePage() {
   const allColorsSelected = selectedCategories.find(
     (c) => c._id === DEFAULT_CATEGORY._id
   );
-  const filteredPaints = allColorsSelected
-    ? paints
-    : paints.filter((p) =>
-        selectedCategories.find((c) => c._id === p.category._id)
-      );
+
+  let filteredPaints = paints;
+
+  if (searchQuery) {
+    filteredPaints = paints.filter((paint) =>
+      paint.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  } else if (!allColorsSelected) {
+    filteredPaints = paints.filter((p) =>
+      selectedCategories.find((c) => c._id === p.category._id)
+    );
+  }
 
   return (
     <div className="container mx-auto">
       <div className="flex justify-center">
         <div className="w-1/2 m-6">
-          <SearchBox />
+          <SearchBox value={searchQuery} onChange={handleSearch} />
         </div>
       </div>
       <div className="flex justify-center">
@@ -68,6 +83,7 @@ function BalancePage() {
                 <tr>
                   <th>Name</th>
                   <th>Quantity</th>
+                  <th>Cateogry</th>
                   <th>Price</th>
                   <th>SupplierInfo</th>
                   <th>Orderdate</th>
@@ -82,6 +98,7 @@ function BalancePage() {
                   <tr key={paint._id}>
                     <td>{paint.name}</td>
                     <td>{paint.quantity}</td>
+                    <td>{paint.category.name}</td>
                     <td>{paint.price}</td>
                     <td>{paint.supplierInfo}</td>
                     <td>{paint.orderDate.toLocaleDateString()}</td>
