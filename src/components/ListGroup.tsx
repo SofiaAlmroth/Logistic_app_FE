@@ -8,7 +8,7 @@ interface Props {
 
 function ListGroup({ items, selectedItems, onItemSelect }: Props) {
   return (
-    <div className="m-6 text-center">
+    <div className="text-center">
       <ul className="menu bg-base-200 w-44 rounded-box">
         <li>
           <details open>

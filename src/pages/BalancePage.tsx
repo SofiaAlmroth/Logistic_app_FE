@@ -7,6 +7,7 @@ import ListGroup from "../components/ListGroup";
 import { Category, getCategories } from "../services/fakeCategoryService";
 import { paints } from "../services/fakePaintService";
 import { Pagination } from "../components/Pagination";
+import SearchBox from "../components/SearchBox";
 
 const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {
@@ -16,6 +17,7 @@ const DEFAULT_CATEGORY: Category = {
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function BalancePage() {
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
     DEFAULT_CATEGORY,
@@ -23,30 +25,35 @@ function BalancePage() {
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
 
   function handleCategoryToggle(category: Category, isChecked: boolean) {
-    setSelectedCategories((prevCategories) => {
-      let categories = prevCategories;
+    let categories = selectedCategories;
 
-      if (!isChecked) {
-        if (prevCategories.length === 1) {
-          categories = [DEFAULT_CATEGORY];
-        } else {
-          categories = prevCategories.filter((c) => c._id !== category._id);
-        }
+    if (!isChecked) {
+      if (selectedCategories.length === 1) {
+        categories = [DEFAULT_CATEGORY];
+      } else {
+        categories = selectedCategories.filter((c) => c._id !== category._id);
       }
+    }
 
-      if (isChecked) {
-        if (category._id === DEFAULT_CATEGORY._id) {
-          categories = [DEFAULT_CATEGORY];
-        } else {
-          categories = prevCategories.filter(
-            (c) => c._id !== DEFAULT_CATEGORY._id
-          );
-          categories.push(category);
-        }
+    if (isChecked) {
+      if (category._id === DEFAULT_CATEGORY._id) {
+        categories = [DEFAULT_CATEGORY];
+      } else {
+        categories = selectedCategories.filter(
+          (c) => c._id !== DEFAULT_CATEGORY._id
+        );
+        categories.push(category);
       }
+    }
 
-      return categories;
-    });
+    setSelectedCategories(categories);
+    setSearchQuery("");
+    setSelectedPage(1);
+  }
+
+  function handleSearch(value: string) {
+    setSearchQuery(value);
+    setSelectedCategories([DEFAULT_CATEGORY]);
   }
 
   if (paints.length === 0) return <p>There are no products in the database</p>;
@@ -54,11 +61,22 @@ function BalancePage() {
   const allColorsSelected = selectedCategories.find(
     (c) => c._id === DEFAULT_CATEGORY._id
   );
-  const filteredPaints = allColorsSelected
-    ? paints
-    : paints.filter((p) =>
-        selectedCategories.find((c) => c._id === p.category._id)
-      );
+  // const filteredPaints = allColorsSelected
+  //   ? paints
+  //   : paints.filter((p) =>
+  //       selectedCategories.find((c) => c._id === p.category._id)
+  //     );
+  let filteredPaints = paints;
+
+  if (searchQuery) {
+    filteredPaints = paints.filter((paint) =>
+      paint.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  } else if (!allColorsSelected) {
+    filteredPaints = paints.filter((p) =>
+      selectedCategories.find((c) => c._id === p.category._id)
+    );
+  }
   const sortedPaints = _.orderBy(
     filteredPaints,
     sortColumn.path,
@@ -66,27 +84,29 @@ function BalancePage() {
   );
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
-    <div className="flex">
-      <div className="flex-auto">
-        <PaintsTable
-          sortColumn={sortColumn}
-          onSort={setSortColumn}
-          paints={paginatedPaints}
-        />
-        <Pagination
-          totalCount={filteredPaints.length}
-          pageSize={PAGE_SIZE}
-          selectedPage={selectedPage}
-          onPageSelect={setSelectedPage}
-        />
+    <div className="flex flex-row m-12">
+      <div className="basis-1/4 m-6">
+        <SearchBox value={searchQuery} onChange={handleSearch} />
+
+        <div>
+          <PaintsTable
+            sortColumn={sortColumn}
+            onSort={setSortColumn}
+            paints={paginatedPaints}
+          />
+          <Pagination
+            totalCount={filteredPaints.length}
+            pageSize={PAGE_SIZE}
+            selectedPage={selectedPage}
+            onPageSelect={setSelectedPage}
+          />
+        </div>
       </div>
-      <div className="flex-none ml-4">
-        <ListGroup
-          items={[DEFAULT_CATEGORY, ...getCategories()]}
-          selectedItems={selectedCategories}
-          onItemSelect={handleCategoryToggle}
-        />
-      </div>
+      <ListGroup
+        items={[DEFAULT_CATEGORY, ...getCategories()]}
+        selectedItems={selectedCategories}
+        onItemSelect={handleCategoryToggle}
+      />
     </div>
   );
 }
