@@ -1,8 +1,8 @@
 import { useState } from "react";
-import ListGroup from "./components/ListGroup";
-import { Category, getCategories } from "./services/fakeCategoryService";
-import { paints } from "./services/fakePaintService";
-import { Pagination } from "./components/Pagination";
+import ListGroup from "../components/ListGroup";
+import { Category, getCategories } from "../services/fakeCategoryService";
+import { paints } from "../services/fakePaintService";
+import { Pagination } from "../components/Pagination";
 
 const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {
@@ -17,30 +17,28 @@ function BalancePage() {
   ]);
 
   function handleCategoryToggle(category: Category, isChecked: boolean) {
-    setSelectedCategories((prevCategories) => {
-      let categories = prevCategories;
+    let categories = selectedCategories;
 
-      if (!isChecked) {
-        if (prevCategories.length === 1) {
-          categories = [DEFAULT_CATEGORY];
-        } else {
-          categories = prevCategories.filter((c) => c._id !== category._id);
-        }
+    if (!isChecked) {
+      if (selectedCategories.length === 1) {
+        categories = [DEFAULT_CATEGORY];
+      } else {
+        categories = selectedCategories.filter((c) => c._id !== category._id);
       }
+    }
 
-      if (isChecked) {
-        if (category._id === DEFAULT_CATEGORY._id) {
-          categories = [DEFAULT_CATEGORY];
-        } else {
-          categories = prevCategories.filter(
-            (c) => c._id !== DEFAULT_CATEGORY._id
-          );
-          categories.push(category);
-        }
+    if (isChecked) {
+      if (category._id === DEFAULT_CATEGORY._id) {
+        categories = [DEFAULT_CATEGORY];
+      } else {
+        categories = selectedCategories.filter(
+          (c) => c._id !== DEFAULT_CATEGORY._id
+        );
+        categories.push(category);
       }
+    }
 
-      return categories;
-    });
+    setSelectedCategories(categories);
   }
 
   if (paints.length === 0) return <p>There are no products in the database</p>;
