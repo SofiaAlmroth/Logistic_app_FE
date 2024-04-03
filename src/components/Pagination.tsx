@@ -1,3 +1,5 @@
+import { range } from "../utils";
+
 interface Props {
   pageSize: number;
   totalCount: number;
@@ -12,11 +14,8 @@ export function Pagination({
   onPageSelect,
 }: Props) {
   const pageCount = Math.ceil(totalCount / pageSize);
-  let pages: number[] = [];
 
-  for (let count = 1; count <= pageCount; count++) {
-    pages.push(count);
-  }
+  const pages = range(1, pageCount);
 
   if (pageCount === 1) return null;
 
