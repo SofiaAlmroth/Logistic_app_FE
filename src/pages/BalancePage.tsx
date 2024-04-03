@@ -1,14 +1,12 @@
 import { useState } from "react";
-import ListGroup from "./components/ListGroup";
-import { Category, getCategories } from "./services/fakeCategoryService";
-import { paints } from "./services/fakePaintService";
-import { Pagination } from "./components/Pagination";
-import { TableHeader } from "./components/TableHeader";
-import { TableBody } from "./components/TableBody";
-import { paginate } from "./utils";
+import { paginate } from "../utils";
 import _ from "lodash";
-import { SortColumn } from "./types";
-import { PaintsTable } from "./components/PaintsTable";
+import { SortColumn } from "../types";
+import { PaintsTable } from "../components/PaintsTable";
+import ListGroup from "../components/ListGroup";
+import { Category, getCategories } from "../services/fakeCategoryService";
+import { paints } from "../services/fakePaintService";
+import { Pagination } from "../components/Pagination";
 
 const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {
