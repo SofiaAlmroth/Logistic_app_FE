@@ -2,13 +2,16 @@ import { useState } from "react";
 import ListGroup from "../components/ListGroup";
 import { Category, getCategories } from "../services/fakeCategoryService";
 import { paints } from "../services/fakePaintService";
+import { Pagination } from "../components/Pagination";
 
+const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {
   _id: "default",
   name: "All Colors",
 };
 
 function BalancePage() {
+  const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
     DEFAULT_CATEGORY,
   ]);
@@ -84,6 +87,12 @@ function BalancePage() {
             ))}
           </tbody>
         </table>
+        <Pagination
+          totalCount={paints.length}
+          pageSize={PAGE_SIZE}
+          selectedPage={selectedPage}
+          onPageSelect={setSelectedPage}
+        />
       </div>
       <div className="flex-none ml-4">
         <ListGroup
