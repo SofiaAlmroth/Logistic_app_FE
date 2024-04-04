@@ -19,7 +19,7 @@ function ListGroup({ items, selectedItems, onItemSelect }: Props) {
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      className="checkbox checkbox-xs mr-2"
+                      className="checkbox checkbox-xs checkbox-primary mr-2"
                       onChange={(e) => onItemSelect(item, e.target.checked)}
                       checked={selectedItems.includes(item)}
                     />

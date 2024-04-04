@@ -22,7 +22,10 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-function ProductModal() {
+interface Props {
+  orderId?: string;
+}
+function ProductModal({ orderId }: Props) {
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
     register,
@@ -175,7 +178,11 @@ function ProductModal() {
             </div>
           </div>
           <div className="form-control">
-            <button type="submit" className="btn btn-primary mt-12">
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="btn btn-primary mt-12"
+            >
               Save
             </button>
           </div>
