@@ -13,10 +13,14 @@ export function TableBody({ paints }: Props) {
           <td>{paint.quantity}</td>
           <td>{paint.price}</td>
           <td>{paint.supplierInfo}</td>
-          <td>{paint.orderDate.toLocaleDateString()}</td>
+          <td>{paint.orderDate ? paint.orderDate.toLocaleDateString() : ""}</td>
           <td>{paint.EAN_GTIN}</td>
           <td>{paint.batchName}</td>
-          <td>{paint.bestBeforeDate.toLocaleDateString()}</td>
+          <td>
+            {paint.bestBeforeDate
+              ? paint.bestBeforeDate.toLocaleDateString()
+              : ""}
+          </td>
           <td>
             <button className="btn btn-ghost">Update</button>
           </td>
