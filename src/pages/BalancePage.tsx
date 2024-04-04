@@ -5,11 +5,11 @@ import { SortColumn } from "../types";
 import { PaintsTable } from "../components/PaintsTable";
 import ListGroup from "../components/ListGroup";
 import { Category, getCategories } from "../services/fakeCategoryService";
-import { paints } from "../services/fakePaintService";
+import { deletePaint, getPaints } from "../services/fakePaintService";
 import { Pagination } from "../components/Pagination";
 import SearchBox from "../components/SearchBox";
 
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
   _id: "default",
   name: "All Colors",
@@ -17,12 +17,19 @@ const DEFAULT_CATEGORY: Category = {
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function BalancePage() {
+  const [paints, setPaints] = useState(getPaints());
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
     DEFAULT_CATEGORY,
   ]);
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
+
+  function handleDelete(id: string) {
+    const newPaints = paints.filter((paint) => paint._id !== id);
+    deletePaint(id);
+    setPaints(newPaints);
+  }
 
   function handleCategoryToggle(category: Category, isChecked: boolean) {
     let categories = selectedCategories;
@@ -56,7 +63,7 @@ function BalancePage() {
     setSelectedCategories([DEFAULT_CATEGORY]);
   }
 
-  if (paints.length === 0) return <p>There are no products in the database</p>;
+  if (paints.length === 0) return <p>There are no products available</p>;
 
   const allColorsSelected = selectedCategories.find(
     (c) => c._id === DEFAULT_CATEGORY._id
@@ -93,6 +100,7 @@ function BalancePage() {
             sortColumn={sortColumn}
             onSort={setSortColumn}
             paints={paginatedPaints}
+            onDelete={handleDelete}
           />
           <Pagination
             totalCount={filteredPaints.length}
