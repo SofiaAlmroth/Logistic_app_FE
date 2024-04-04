@@ -13,3 +13,11 @@
 .custom-button:hover {
   background-position: 100% 100%;
 }
+
+.select option[disabled] {
+  color: #999; /* Adjust color as needed */
+}
+
+.select::-ms-expand {
+  display: none; /* Hide the arrow in IE/Edge */
+}
