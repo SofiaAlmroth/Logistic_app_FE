@@ -91,7 +91,7 @@ function BalancePage() {
   );
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
-    <div className="flex flex-row m-12">
+    <div className="flex flex-row m-6">
       <div className="basis-1/4 m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
 

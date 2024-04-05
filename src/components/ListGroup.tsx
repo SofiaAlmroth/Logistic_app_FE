@@ -8,7 +8,7 @@ interface Props {
 
 function ListGroup({ items, selectedItems, onItemSelect }: Props) {
   return (
-    <div className="text-center">
+    <div className="text-center m-6">
       <ul className="menu bg-base-200 w-44 rounded-box">
         <li>
           <details open>
@@ -19,7 +19,7 @@ function ListGroup({ items, selectedItems, onItemSelect }: Props) {
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      className="checkbox checkbox-xs mr-2"
+                      className="checkbox checkbox-xs checkbox-primary mr-2"
                       onChange={(e) => onItemSelect(item, e.target.checked)}
                       checked={selectedItems.includes(item)}
                     />
