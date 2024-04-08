@@ -8,13 +8,14 @@ interface Props {
   onSort: (sortColumn: SortColumn) => void;
   paints: Paint[];
   sortColumn: SortColumn;
+  onDelete(id: string): void;
 }
 
-export function PaintsTable({ sortColumn, onSort, paints }: Props) {
+export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
   return (
     <table className="table">
       <TableHeader onSort={onSort} sortColumn={sortColumn} />
-      <TableBody paints={paints} />
+      <TableBody paints={paints} onDelete={onDelete} />
     </table>
   );
 }

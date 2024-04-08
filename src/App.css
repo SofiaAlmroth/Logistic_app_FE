@@ -13,3 +13,13 @@
 .custom-button:hover {
   background-position: 100% 100%;
 }
+
+.text-error {
+  position: absolute;
+  font-size: 0.75rem;
+}
+.slide-out {
+  transition: transform 0.75s ease-in-out; /* Adjust the transition duration as needed */
+  transform: translateX(-100%);
+  background-color: rgba(239, 68, 68, 0.5); /* Red color with opacity */
+}

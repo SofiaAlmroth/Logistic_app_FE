@@ -28,7 +28,7 @@ export default function Navbar() {
             <a>Stock</a>
           </li>
           <li>
-            <a>Orders</a>
+            <Link to="/orders">Orders</Link>
           </li>
           <li>
             <a>Sales</a>
