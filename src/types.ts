@@ -39,16 +39,16 @@ export interface Category {
 export interface User {
   id: string;
   name: string;
-  username: string;
+  email: string;
   isAdmin: string;
 }
 export interface UserRegister {
   name: string;
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface UserLogin {
-  username: string;
+  email: string;
   password: string;
 }
