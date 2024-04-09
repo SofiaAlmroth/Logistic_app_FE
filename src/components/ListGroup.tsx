@@ -8,26 +8,24 @@ interface Props {
 
 function ListGroup({ items, selectedItems, onItemSelect }: Props) {
   return (
-    <div className="text-center m-6">
-      <ul className="menu bg-base-200 w-44 rounded-box">
+    <div className="text-center mt-6">
+      <ul className="menu  bg-stone-200 w-36 rounded-box">
         <li>
           <details open>
             <summary className="text-lg">Filter</summary>
-            <ul>
-              {items.map((item) => (
-                <li key={item._id}>
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-xs checkbox-primary mr-2"
-                      onChange={(e) => onItemSelect(item, e.target.checked)}
-                      checked={selectedItems.includes(item)}
-                    />
-                    <span>{item.name}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
+            {items.map((item) => (
+              <li key={item._id}>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-xs checkbox-primary mr-2"
+                    onChange={(e) => onItemSelect(item, e.target.checked)}
+                    checked={selectedItems.includes(item)}
+                  />
+                  <span>{item.name}</span>
+                </label>
+              </li>
+            ))}
           </details>
         </li>
       </ul>

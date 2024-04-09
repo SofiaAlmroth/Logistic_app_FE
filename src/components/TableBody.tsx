@@ -37,14 +37,14 @@ export function TableBody({ paints, onDelete }: Props) {
               ? paint.bestBeforeDate.toLocaleDateString()
               : ""}
           </td>
-          <td>
+          <td className="p-2">
             <div className="tooltip" data-tip="Update">
               <button className="btn btn-circle">
                 <FontAwesomeIcon icon={faPen} />
               </button>
             </div>
           </td>
-          <td>
+          <td className="p-2">
             <div className="tooltip tooltip-error" data-tip="Delete">
               <button
                 className="btn btn-circle"

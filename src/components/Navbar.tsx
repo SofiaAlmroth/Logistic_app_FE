@@ -16,25 +16,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="navbar bg-base-100 shadow mb-2">
+    <div className="navbar bg-base-100 shadow ">
       <div className="navbar-start">
         <Link to="/balance" className="btn btn-ghost text-xl">
           Home
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <a>Stock</a>
-          </li>
-          <li>
-            <Link to="/orders">Orders</Link>
-          </li>
-          <li>
-            <a>Sales</a>
-          </li>
-        </ul>
-      </div>
+
       {user && (
         <div className="navbar-end">
           <Link to="/profile" className="btn btn-neutral ml-2">
