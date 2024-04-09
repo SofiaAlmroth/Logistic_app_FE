@@ -2,13 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import RegisterPage from "./pages/RegisterPage";
 import BalancePage from "./pages/BalancePage";
-<<<<<<< HEAD
-import { LoginPage } from "./pages/LoginPage";
-=======
 // import { LoginPage } from "./pages/LoginPage";
 import Logout from "./components/Logout";
 import OrderPage from "./pages/OrderPage";
->>>>>>> main
+import { LoginPage } from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -21,12 +18,8 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/register", element: <RegisterPage /> },
-<<<<<<< HEAD
-  { path: "/login", element: <LoginPage /> },
-=======
   { path: "/logout", element: <Logout /> },
-  // { path: "/login", element: <LoginPage /> },
->>>>>>> main
+  { path: "/login", element: <LoginPage /> },
 ]);
 
 export default router;
