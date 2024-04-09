@@ -156,13 +156,13 @@ export function savePaint(paint: PaintFormData) {
 
   paintInDb.name = paint.name;
   paintInDb.category = categoryInDb;
-  paintInDb.batchName = paint.batchName;
-  paintInDb.bestBeforeDate = paint.bestBeforeDate;
   paintInDb.orderDate = paint.orderDate;
   paintInDb.price = paint.price;
   paintInDb.quantity = paint.quantity;
-  paintInDb.supplierInfo = paint.supplierInfo;
   paintInDb.EAN_GTIN = paint.EAN_GTIN;
+  paintInDb.batchName = paint.batchName;
+  paintInDb.bestBeforeDate = paint.bestBeforeDate;
+  paintInDb.supplierInfo = paint.supplierInfo;
 
   if (!paintInDb._id) {
     paintInDb._id = Date.now().toString();

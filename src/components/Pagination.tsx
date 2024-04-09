@@ -23,6 +23,7 @@ export function Pagination({
     <div className="join">
       {pages.map((page) => (
         <button
+          key={page}
           onClick={() => onPageSelect(page)}
           className={`join-item btn ${
             page === selectedPage ? "btn-active" : ""
