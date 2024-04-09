@@ -8,7 +8,6 @@ import { Category, getCategories } from "../services/fakeCategoryService";
 import { deletePaint, getPaints } from "../services/fakePaintService";
 import { Pagination } from "../components/Pagination";
 import SearchBox from "../components/SearchBox";
-import Menu from "../components/Menu";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -93,7 +92,6 @@ function BalancePage() {
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
     <div className="flex flex-row">
-      <Menu />
       <div className="basis-1/4 m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <div>
