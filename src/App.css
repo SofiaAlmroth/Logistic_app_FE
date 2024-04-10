@@ -25,10 +25,10 @@
 }
 
 .bg-menu-select {
-  background: linear-gradient(to right, #4338ca, #9d76f7);
+  background: linear-gradient(to right, #4338ca, #b292fc);
   padding: 10px 20px;
   border: none;
-  color: #fff;
+  color: #fff !important;
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
