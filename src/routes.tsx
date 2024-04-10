@@ -6,6 +6,8 @@ import BalancePage from "./pages/BalancePage";
 import Logout from "./components/Logout";
 import OrderPage from "./pages/OrderPage";
 import { LoginPage } from "./pages/LoginPage";
+import Dashboard from "./components/Dashboard";
+import Sales from "./components/Sales";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +15,10 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/balance", element: <BalancePage /> },
+      { path: "/dashboard", element: <Dashboard /> },
       { path: "/orders", element: <OrderPage /> },
+      { path: "/sales", element: <Sales /> },
+
       { path: "/orders/:id", element: <OrderPage /> },
     ],
   },
