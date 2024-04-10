@@ -19,7 +19,7 @@ export default function Navbar() {
     <div className="navbar bg-base-100 shadow flex justify-between">
       <div>
         <NavLink to="/balance" className="btn btn-ghost text-xl">
-          Home
+          Logistic App
         </NavLink>
       </div>
       <div className="dropdown dropdown-end mr-6">

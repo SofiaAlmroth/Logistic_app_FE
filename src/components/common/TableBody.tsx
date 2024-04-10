@@ -1,7 +1,6 @@
 import { Paint } from "../../services/fakePaintService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
-import "../App.css";
 import { useState } from "react";
 
 interface Props {
