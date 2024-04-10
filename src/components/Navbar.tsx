@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../types";
 
@@ -18,9 +18,9 @@ export default function Navbar() {
   return (
     <div className="navbar bg-base-100 shadow flex justify-between">
       <div>
-        <Link to="/balance" className="btn btn-ghost text-xl">
+        <NavLink to="/balance" className="btn btn-ghost text-xl">
           Home
-        </Link>
+        </NavLink>
       </div>
       <div className="dropdown dropdown-end mr-6">
         <div
@@ -40,23 +40,23 @@ export default function Navbar() {
           className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
         >
           <li>
-            <Link to={"/profile"} className="block w-full py-1 ">
+            <NavLink to={"/profile"} className="block w-full py-1 ">
               Profile
-            </Link>
+            </NavLink>
           </li>
           <li>
             {!user && (
               <>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
+                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/register">Register</NavLink>
               </>
             )}
           </li>
           <li>
             {user && (
               <>
-                <Link to="/profile">{user.name}</Link>
-                <Link to="/logout">Logout</Link>
+                <NavLink to="/profile">{user.name}</NavLink>
+                <NavLink to="/logout">Logout</NavLink>
               </>
             )}
           </li>
