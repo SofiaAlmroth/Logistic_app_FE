@@ -7,7 +7,7 @@ import SearchBox from "./components/SearchBox";
 
 const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {
-  _id: "default",
+  id: "default",
   name: "All Colors",
 };
 
@@ -25,16 +25,16 @@ function BalancePage() {
       if (selectedCategories.length === 1) {
         categories = [DEFAULT_CATEGORY];
       } else {
-        categories = selectedCategories.filter((c) => c._id !== category._id);
+        categories = selectedCategories.filter((c) => c.id !== category.id);
       }
     }
 
     if (isChecked) {
-      if (category._id === DEFAULT_CATEGORY._id) {
+      if (category.id === DEFAULT_CATEGORY.id) {
         categories = [DEFAULT_CATEGORY];
       } else {
         categories = selectedCategories.filter(
-          (c) => c._id !== DEFAULT_CATEGORY._id
+          (c) => c.id !== DEFAULT_CATEGORY.id
         );
         categories.push(category);
       }
@@ -53,7 +53,7 @@ function BalancePage() {
   if (paints.length === 0) return <p>There are no products in the database</p>;
 
   const allColorsSelected = selectedCategories.find(
-    (c) => c._id === DEFAULT_CATEGORY._id
+    (c) => c.id === DEFAULT_CATEGORY.id
   );
 
   let filteredPaints = paints;
@@ -64,7 +64,7 @@ function BalancePage() {
     );
   } else if (!allColorsSelected) {
     filteredPaints = paints.filter((p) =>
-      selectedCategories.find((c) => c._id === p.category._id)
+      selectedCategories.find((c) => c.id === p.category.id)
     );
   }
 
@@ -95,7 +95,7 @@ function BalancePage() {
               </thead>
               <tbody>
                 {filteredPaints.map((paint) => (
-                  <tr key={paint._id}>
+                  <tr key={paint.id}>
                     <td>{paint.name}</td>
                     <td>{paint.quantity}</td>
                     <td>{paint.category.name}</td>

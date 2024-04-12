@@ -11,7 +11,7 @@ import SearchBox from "../components/SearchBox";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
-  _id: "default",
+  id: "default",
   name: "All Colors",
 };
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
@@ -26,7 +26,7 @@ function BalancePage() {
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
 
   function handleDelete(id: string) {
-    const newPaints = paints.filter((paint) => paint._id !== id);
+    const newPaints = paints.filter((paint) => paint.id !== id);
     deletePaint(id);
     setPaints(newPaints);
   }
@@ -38,16 +38,16 @@ function BalancePage() {
       if (selectedCategories.length === 1) {
         categories = [DEFAULT_CATEGORY];
       } else {
-        categories = selectedCategories.filter((c) => c._id !== category._id);
+        categories = selectedCategories.filter((c) => c.id !== category.id);
       }
     }
 
     if (isChecked) {
-      if (category._id === DEFAULT_CATEGORY._id) {
+      if (category.id === DEFAULT_CATEGORY.id) {
         categories = [DEFAULT_CATEGORY];
       } else {
         categories = selectedCategories.filter(
-          (c) => c._id !== DEFAULT_CATEGORY._id
+          (c) => c.id !== DEFAULT_CATEGORY.id
         );
         categories.push(category);
       }
@@ -66,12 +66,12 @@ function BalancePage() {
   if (paints.length === 0) return <p>There are no products available</p>;
 
   const allColorsSelected = selectedCategories.find(
-    (c) => c._id === DEFAULT_CATEGORY._id
+    (c) => c.id === DEFAULT_CATEGORY.id
   );
   // const filteredPaints = allColorsSelected
   //   ? paints
   //   : paints.filter((p) =>
-  //       selectedCategories.find((c) => c._id === p.category._id)
+  //       selectedCategories.find((c) => c.id === p.category.id)
   //     );
   let filteredPaints = paints;
 
@@ -81,7 +81,7 @@ function BalancePage() {
     );
   } else if (!allColorsSelected) {
     filteredPaints = paints.filter((p) =>
-      selectedCategories.find((c) => c._id === p.category._id)
+      selectedCategories.find((c) => c.id === p.category.id)
     );
   }
   const sortedPaints = _.orderBy(

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { savePaint } from "../services/fakePaintService";
 
 const schema = z.object({
-  _id: z.string().optional(),
+  id: z.string().optional(),
   name: z.string().min(1, { message: "Name is required" }),
   categoryId: z.string().min(1, { message: "Category is required" }),
   quantity: z.coerce.number().gt(0, { message: "Quantity is required" }),
@@ -77,7 +77,7 @@ function ProductModal({ orderId }: Props) {
               </option>
 
               {getCategories().map((category) => (
-                <option key={category._id} value={category._id}>
+                <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
