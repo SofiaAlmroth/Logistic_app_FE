@@ -1,9 +1,9 @@
 import { useState } from "react";
-import ListGroup from "./components/ListGroup";
+import ListGroup from "./components/common/ListGroup";
 import { Category, getCategories } from "./services/fakeCategoryService";
 import { paints } from "./services/fakePaintService";
-import { Pagination } from "./components/Pagination";
-import SearchBox from "./components/SearchBox";
+import { Pagination } from "./components/common/Pagination";
+import SearchBox from "./components/common/SearchBox";
 
 const PAGE_SIZE = 4;
 const DEFAULT_CATEGORY: Category = {

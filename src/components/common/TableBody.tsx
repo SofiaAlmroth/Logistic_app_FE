@@ -1,7 +1,6 @@
-import { Paint } from "../services/fakePaintService";
+import { Paint } from "../../services/fakePaintService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
-import "../App.css";
 import { useState } from "react";
 
 interface Props {
@@ -37,14 +36,14 @@ export function TableBody({ paints, onDelete }: Props) {
               ? paint.bestBeforeDate.toLocaleDateString()
               : ""}
           </td>
-          <td>
+          <td className="p-2">
             <div className="tooltip" data-tip="Update">
               <button className="btn btn-circle">
                 <FontAwesomeIcon icon={faPen} />
               </button>
             </div>
           </td>
-          <td>
+          <td className="p-2">
             <div className="tooltip tooltip-error" data-tip="Delete">
               <button
                 className="btn btn-circle"

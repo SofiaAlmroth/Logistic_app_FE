@@ -6,6 +6,10 @@ import BalancePage from "./pages/BalancePage";
 import Logout from "./components/Logout";
 import OrderPage from "./pages/OrderPage";
 import { LoginPage } from "./pages/LoginPage";
+import Dashboard from "./pages/DashboardPage";
+import Sales from "./pages/SalesPage";
+import Settings from "./components/Settings";
+import ProfilePage from "./pages/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -13,13 +17,17 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/balance", element: <BalancePage /> },
+      { path: "/dashboard", element: <Dashboard /> },
       { path: "/orders", element: <OrderPage /> },
+      { path: "/sales", element: <Sales /> },
+      { path: "/settings", element: <Settings /> },
       { path: "/orders/:id", element: <OrderPage /> },
     ],
   },
   { path: "/register", element: <RegisterPage /> },
   { path: "/logout", element: <Logout /> },
   { path: "/login", element: <LoginPage /> },
+  { path: "/profile", element: <ProfilePage /> },
 ]);
 
 export default router;

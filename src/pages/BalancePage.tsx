@@ -3,11 +3,11 @@ import { paginate } from "../utils";
 import _ from "lodash";
 import { SortColumn } from "../types";
 import { PaintsTable } from "../components/PaintsTable";
-import ListGroup from "../components/ListGroup";
+import ListGroup from "../components/common/ListGroup";
 import { Category, getCategories } from "../services/fakeCategoryService";
 import { deletePaint, getPaints } from "../services/fakePaintService";
-import { Pagination } from "../components/Pagination";
-import SearchBox from "../components/SearchBox";
+import { Pagination } from "../components/common/Pagination";
+import SearchBox from "../components/common/SearchBox";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -91,10 +91,9 @@ function BalancePage() {
   );
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
-    <div className="flex flex-row m-6">
+    <div className="flex flex-row">
       <div className="basis-1/4 m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
-
         <div>
           <PaintsTable
             sortColumn={sortColumn}

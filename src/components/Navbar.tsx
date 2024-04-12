@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../types";
 
@@ -16,26 +16,58 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="navbar bg-base-100 shadow mb-2">
-      <div className="navbar-start">
-        <Link to="/balance" className="btn btn-ghost text-xl">
-          Home
-        </Link>
+    <div className="navbar bg-base-100 shadow flex justify-between">
+      <div>
+        <NavLink to="/balance" className="btn btn-ghost text-xl">
+          Logistic App
+        </NavLink>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+      <div className="dropdown dropdown-end mr-6">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn btn-ghost btn-circle avatar"
+        >
+          <div className="w-10 rounded-full">
+            <img
+              alt="Tailwind CSS Navbar component"
+              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+            />
+          </div>
+        </div>
+        <ul
+          tabIndex={0}
+          className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+        >
           <li>
-            <a>Stock</a>
+            <NavLink to={"/profile"} className="block w-full py-1 ">
+              Profile
+            </NavLink>
           </li>
           <li>
-            <Link to="/orders">Orders</Link>
+            {!user && (
+              <>
+                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/register">Register</NavLink>
+              </>
+            )}
           </li>
           <li>
-            <a>Sales</a>
+            {user && (
+              <>
+                <NavLink to="/profile">{user.name}</NavLink>
+                <NavLink to="/logout">Logout</NavLink>
+              </>
+            )}
           </li>
         </ul>
       </div>
-      {user && (
+    </div>
+  );
+}
+
+{
+  /* {user && (
         <div className="navbar-end">
           <Link to="/profile" className="btn btn-neutral ml-2">
             {user.name}
@@ -54,7 +86,5 @@ export default function Navbar() {
             Register
           </Link>
         </div>
-      )}
-    </div>
-  );
+      )} */
 }

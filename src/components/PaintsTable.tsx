@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { Paint } from "../services/fakePaintService";
 import { SortColumn } from "../types";
-import { TableHeader } from "./TableHeader";
-import { TableBody } from "./TableBody";
+import { TableHeader } from "./common/TableHeader";
+import { TableBody } from "./common/TableBody";
 
 interface Props {
   onSort: (sortColumn: SortColumn) => void;
