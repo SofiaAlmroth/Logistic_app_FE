@@ -1,4 +1,4 @@
-import { range } from "../utils";
+import { range } from "../../utils";
 
 interface Props {
   pageSize: number;
@@ -20,7 +20,7 @@ export function Pagination({
   if (pageCount === 1) return null;
 
   return (
-    <div className="join">
+    <div className="join m-3">
       {pages.map((page) => (
         <button
           key={page}

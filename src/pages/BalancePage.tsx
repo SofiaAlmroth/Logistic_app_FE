@@ -1,14 +1,14 @@
 import _ from "lodash";
-import ListGroup from "../components/ListGroup";
-import SearchBox from "../components/SearchBox";
-import { useEffect, useState } from "react";
-import { paginate } from "../utils";
 import { Category, SortColumn } from "../types";
 import { PaintsTable } from "../components/PaintsTable";
-import { deletePaint, getPaints } from "../services/paintService";
-import { Pagination } from "../components/Pagination";
+import ListGroup from "../components/common/ListGroup";
+import { Pagination } from "../components/common/Pagination";
+import SearchBox from "../components/common/SearchBox";
+import { useState, useEffect } from "react";
 import { useCategories } from "../hooks/useCategories";
 import { usePaints } from "../hooks/usePaints";
+import { getPaints, deletePaint } from "../services/paintService";
+import { paginate } from "../utils";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -98,10 +98,9 @@ function BalancePage() {
   );
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
-    <div className="flex flex-row m-6">
+    <div className="flex flex-row">
       <div className="basis-1/4 m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
-
         <div>
           <PaintsTable
             sortColumn={sortColumn}
