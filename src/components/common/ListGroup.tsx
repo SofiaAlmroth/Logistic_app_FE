@@ -1,4 +1,4 @@
-import { Category } from "../../services/fakeCategoryService";
+import { Category } from "../../types";
 
 interface Props {
   items: Category[];
@@ -14,7 +14,7 @@ function ListGroup({ items, selectedItems, onItemSelect }: Props) {
           <details open>
             <summary className="text-lg">Filter</summary>
             {items.map((item) => (
-              <li key={item._id}>
+              <li key={item.id}>
                 <label className="flex items-center">
                   <input
                     type="checkbox"
