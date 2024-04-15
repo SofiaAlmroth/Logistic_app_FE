@@ -1,13 +1,14 @@
+import _ from "lodash";
+import ListGroup from "../components/ListGroup";
+import SearchBox from "../components/SearchBox";
 import { useEffect, useState } from "react";
 import { paginate } from "../utils";
-import _ from "lodash";
-import { Category, Paint, SortColumn } from "../types";
+import { Category, SortColumn } from "../types";
 import { PaintsTable } from "../components/PaintsTable";
-import ListGroup from "../components/ListGroup";
-import { getCategories } from "../services/categoryService";
 import { deletePaint, getPaints } from "../services/paintService";
 import { Pagination } from "../components/Pagination";
-import SearchBox from "../components/SearchBox";
+import { useCategories } from "../hooks/useCategories";
+import { usePaints } from "../hooks/usePaints";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -17,8 +18,8 @@ const DEFAULT_CATEGORY: Category = {
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function BalancePage() {
-  const [paints, setPaints] = useState<Paint[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const categories = useCategories();
+  const { paints, setPaints } = usePaints();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
@@ -28,9 +29,6 @@ function BalancePage() {
 
   useEffect(() => {
     async function fetch() {
-      const { data: categories } = await getCategories();
-      setCategories(categories);
-
       const { data: paints } = await getPaints();
       setPaints(paints);
     }

@@ -1,6 +1,5 @@
 import _ from "lodash";
-import { Paint } from "../services/fakePaintService";
-import { SortColumn } from "../types";
+import { Paint, SortColumn } from "../types";
 import { TableHeader } from "./TableHeader";
 import { TableBody } from "./TableBody";
 

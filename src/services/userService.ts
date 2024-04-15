@@ -6,10 +6,10 @@ interface User {
   password: string;
 }
 
-const API_ENPOINT = "http://localhost:5999/api/users/";
+const API_ENDPOINT = "http://localhost:5999/api/users/";
 
 function register(user: User) {
-  return axios.post(API_ENPOINT, user);
+  return axios.post(API_ENDPOINT, user);
 }
 
 export default {
