@@ -1,11 +1,11 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { getCategories } from "../services/fakeCategoryService";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { savePaint } from "../services/fakePaintService";
+import { getPaint, savePaint } from "../services/fakePaintService";
 
 const schema = z.object({
   _id: z.string().optional(),
@@ -37,6 +37,11 @@ function ProductModal({ orderId }: Props) {
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+
+  useEffect(() => {
+    if (!orderId) return;
+    const paint = getPaint(orderId);
+  }, []);
 
   function handleDateChange(date: Date) {
     console.log(date);
