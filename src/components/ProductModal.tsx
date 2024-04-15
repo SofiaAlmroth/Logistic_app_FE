@@ -1,11 +1,12 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useRef } from "react";
-import { getCategories } from "../services/fakeCategoryService";
+import { useEffect, useRef, useState } from "react";
+import { getCategories } from "../services/categoryService";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { savePaint } from "../services/fakePaintService";
+import { savePaint } from "../services/paintService";
+import { Category } from "../types";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -15,7 +16,7 @@ const schema = z.object({
   price: z.coerce.number().gt(0, { message: "Price is required" }),
   supplierInfo: z.string().min(1, { message: "Name is required" }),
   orderDate: z.coerce.date(),
-  EAN_GTIN: z.string().min(1, { message: "EAN_GTIN is required" }),
+  ean_gtin: z.string().min(1, { message: "ean_gtin is required" }),
   batchName: z.string().min(1, { message: "BatchName is required" }),
   bestBeforeDate: z.coerce.date(),
 });
@@ -26,6 +27,7 @@ interface Props {
   orderId?: string;
 }
 function ProductModal({ orderId }: Props) {
+  const [categories, setCategories] = useState<Category[]>([]);
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
     register,
@@ -38,12 +40,20 @@ function ProductModal({ orderId }: Props) {
     mode: "onChange",
   });
 
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data: categories } = await getCategories();
+      setCategories(categories);
+    }
+    fetchCategories();
+  }, []);
+
   function handleDateChange(date: Date) {
     console.log(date);
   }
-  function onSubmit(data: FormData) {
+  async function onSubmit(data: FormData) {
     console.log("data", data);
-    savePaint(data);
+    await savePaint(data);
     reset();
     modalRef.current?.close();
   }
@@ -76,7 +86,7 @@ function ProductModal({ orderId }: Props) {
                 Category
               </option>
 
-              {getCategories().map((category) => (
+              {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
@@ -136,13 +146,13 @@ function ProductModal({ orderId }: Props) {
               )}
             </div>
             <input
-              {...register("EAN_GTIN")}
+              {...register("ean_gtin")}
               type="text"
-              placeholder="EAN_GTIN"
+              placeholder="ean_gtin"
               className="input input-bordered w-full mt-6"
             />{" "}
-            {errors.EAN_GTIN && (
-              <p className="text-error">{errors.EAN_GTIN.message}</p>
+            {errors.ean_gtin && (
+              <p className="text-error">{errors.ean_gtin.message}</p>
             )}
             <input
               {...register("batchName")}

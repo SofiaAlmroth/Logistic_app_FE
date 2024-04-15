@@ -1,17 +1,5 @@
-import { Category, getCategories } from "./fakeCategoryService";
-
-export interface Paint {
-  id: string;
-  name: string;
-  category: Category;
-  quantity: number;
-  price: number;
-  supplierInfo: string;
-  orderDate: Date;
-  EAN_GTIN: string;
-  batchName: string;
-  bestBeforeDate: Date;
-}
+import axios from "axios";
+import { Paint } from "../types";
 
 export interface PaintFormData {
   id?: string;
@@ -21,7 +9,7 @@ export interface PaintFormData {
   price: number;
   supplierInfo: string;
   orderDate: Date;
-  EAN_GTIN: string;
+  ean_gtin: string;
   batchName: string;
   bestBeforeDate: Date;
 }
@@ -35,7 +23,7 @@ export const paints: Paint[] = [
     price: 50,
     supplierInfo: "Supplier ABC",
     orderDate: new Date(),
-    EAN_GTIN: "1234567890123",
+    ean_gtin: "1234567890123",
     batchName: "Batch001",
     bestBeforeDate: new Date(),
   },
@@ -47,7 +35,7 @@ export const paints: Paint[] = [
     price: 100,
     supplierInfo: "Supplier XYZ",
     orderDate: new Date(),
-    EAN_GTIN: "9876543210987",
+    ean_gtin: "9876543210987",
     batchName: "Batch002",
     bestBeforeDate: new Date(),
   },
@@ -59,7 +47,7 @@ export const paints: Paint[] = [
     price: 80,
     supplierInfo: "Supplier XYZ",
     orderDate: new Date(),
-    EAN_GTIN: "9876543210987",
+    ean_gtin: "9876543210987",
     batchName: "Batch003",
     bestBeforeDate: new Date(),
   },
@@ -71,7 +59,7 @@ export const paints: Paint[] = [
     price: 70,
     supplierInfo: "Supplier ABC",
     orderDate: new Date(),
-    EAN_GTIN: "1234567890123",
+    ean_gtin: "1234567890123",
     batchName: "Batch004",
     bestBeforeDate: new Date(),
   },
@@ -83,7 +71,7 @@ export const paints: Paint[] = [
     price: 90,
     supplierInfo: "Supplier ABC",
     orderDate: new Date(),
-    EAN_GTIN: "1234567890123",
+    ean_gtin: "1234567890123",
     batchName: "Batch005",
     bestBeforeDate: new Date(),
   },
@@ -95,7 +83,7 @@ export const paints: Paint[] = [
     price: 60,
     supplierInfo: "Supplier XYZ",
     orderDate: new Date(),
-    EAN_GTIN: "9876543210987",
+    ean_gtin: "9876543210987",
     batchName: "Batch006",
     bestBeforeDate: new Date(),
   },
@@ -107,7 +95,7 @@ export const paints: Paint[] = [
     price: 110,
     supplierInfo: "Supplier ABC",
     orderDate: new Date(),
-    EAN_GTIN: "1234567890123",
+    ean_gtin: "1234567890123",
     batchName: "Batch007",
     bestBeforeDate: new Date(),
   },
@@ -119,7 +107,7 @@ export const paints: Paint[] = [
     price: 65,
     supplierInfo: "Supplier XYZ",
     orderDate: new Date(),
-    EAN_GTIN: "9876543210987",
+    ean_gtin: "9876543210987",
     batchName: "Batch008",
     bestBeforeDate: new Date(),
   },
@@ -131,51 +119,29 @@ export const paints: Paint[] = [
     price: 75,
     supplierInfo: "Supplier ABC",
     orderDate: new Date(),
-    EAN_GTIN: "1234567890123",
+    ean_gtin: "1234567890123",
     batchName: "Batch009",
     bestBeforeDate: new Date(),
   },
 ];
 
 export function getPaints() {
-  return paints;
+  return axios.get<Paint[]>("http://localhost:5999/api/paints");
 }
 
 export function getPaint(id: string) {
-  return paints.find((paint) => paint.id === id);
+  return axios.get<Paint>(`http://localhost:5999/api/paints/${id}`);
 }
 
 export function savePaint(paint: PaintFormData) {
-  const categoryInDb = getCategories().find(
-    (category) => category.id === paint.categoryId
-  );
-
-  if (!categoryInDb) throw new Error(`Category was not found`);
-
-  const paintInDb = paints.find((p) => p.id === paint.id) || ({} as Paint);
-
-  paintInDb.name = paint.name;
-  paintInDb.category = categoryInDb;
-  paintInDb.orderDate = paint.orderDate;
-  paintInDb.price = paint.price;
-  paintInDb.quantity = paint.quantity;
-  paintInDb.EAN_GTIN = paint.EAN_GTIN;
-  paintInDb.batchName = paint.batchName;
-  paintInDb.bestBeforeDate = paint.bestBeforeDate;
-  paintInDb.supplierInfo = paint.supplierInfo;
-
-  if (!paintInDb.id) {
-    paintInDb.id = Date.now().toString();
-    paints.push(paintInDb);
-  }
-
-  return paintInDb;
+  if (paint.id)
+    return axios.put<Paint>(
+      `http://localhost:5999/api/paints/${paint.id}`,
+      paint
+    );
+  return axios.post<Paint>("http://localhost:5999/api/paints", paint);
 }
 
 export function deletePaint(id: string) {
-  const paintInDb = paints.find((paint) => paint.id === id);
-
-  if (paintInDb) paints.splice(paints.indexOf(paintInDb), 1);
-
-  return paintInDb;
+  return axios.delete<Paint>(`http://localhost:5999/api/paints/${id}`);
 }

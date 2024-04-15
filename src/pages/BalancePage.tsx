@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { paginate } from "../utils";
 import _ from "lodash";
-import { SortColumn } from "../types";
+import { Category, Paint, SortColumn } from "../types";
 import { PaintsTable } from "../components/PaintsTable";
 import ListGroup from "../components/ListGroup";
-import { Category, getCategories } from "../services/fakeCategoryService";
-import { deletePaint, getPaints } from "../services/fakePaintService";
+import { getCategories } from "../services/categoryService";
+import { deletePaint, getPaints } from "../services/paintService";
 import { Pagination } from "../components/Pagination";
 import SearchBox from "../components/SearchBox";
 
@@ -17,7 +17,8 @@ const DEFAULT_CATEGORY: Category = {
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function BalancePage() {
-  const [paints, setPaints] = useState(getPaints());
+  const [paints, setPaints] = useState<Paint[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
@@ -25,10 +26,22 @@ function BalancePage() {
   ]);
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
 
-  function handleDelete(id: string) {
+  useEffect(() => {
+    async function fetch() {
+      const { data: categories } = await getCategories();
+      setCategories(categories);
+
+      const { data: paints } = await getPaints();
+      setPaints(paints);
+    }
+
+    fetch();
+  }, []);
+
+  async function handleDelete(id: string) {
     const newPaints = paints.filter((paint) => paint.id !== id);
-    deletePaint(id);
     setPaints(newPaints);
+    await deletePaint(id);
   }
 
   function handleCategoryToggle(category: Category, isChecked: boolean) {
@@ -68,11 +81,7 @@ function BalancePage() {
   const allColorsSelected = selectedCategories.find(
     (c) => c.id === DEFAULT_CATEGORY.id
   );
-  // const filteredPaints = allColorsSelected
-  //   ? paints
-  //   : paints.filter((p) =>
-  //       selectedCategories.find((c) => c.id === p.category.id)
-  //     );
+
   let filteredPaints = paints;
 
   if (searchQuery) {
@@ -111,7 +120,7 @@ function BalancePage() {
         </div>
       </div>
       <ListGroup
-        items={[DEFAULT_CATEGORY, ...getCategories()]}
+        items={[DEFAULT_CATEGORY, ...categories]}
         selectedItems={selectedCategories}
         onItemSelect={handleCategoryToggle}
       />

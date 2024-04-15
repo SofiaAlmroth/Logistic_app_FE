@@ -34,8 +34,8 @@ export function TableHeader({ onSort, sortColumn }: Props) {
         <th onClick={() => handleSort("orderDate")}>
           Orderdate {sortIcon("orderDate")}
         </th>
-        <th onClick={() => handleSort("EAN_GTIN")}>
-          EAN {sortIcon("EAN_GTIN")}
+        <th onClick={() => handleSort("ean_gtin")}>
+          EAN {sortIcon("ean_gtin")}
         </th>
         <th onClick={() => handleSort("batchName")}>
           Batch {sortIcon("batchName")}
