@@ -29,11 +29,7 @@ export function TableBody({ paints, onDelete }: Props) {
           <td>{new Date(paint.orderDate).toLocaleDateString()}</td>
           <td>{paint.ean_gtin}</td>
           <td>{paint.batchName}</td>
-          <td>
-            {paint.bestBeforeDate
-              ? paint.bestBeforeDate.toLocaleDateString()
-              : ""}
-          </td>
+          <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
           <td className="p-2">
             <div className="tooltip" data-tip="Update">
               <button className="btn btn-circle">
