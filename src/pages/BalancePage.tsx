@@ -4,15 +4,15 @@ import { PaintsTable } from "../components/PaintsTable";
 import ListGroup from "../components/common/ListGroup";
 import { Pagination } from "../components/common/Pagination";
 import SearchBox from "../components/common/SearchBox";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCategories } from "../hooks/useCategories";
 import { usePaints } from "../hooks/usePaints";
-import { getPaints, deletePaint } from "../services/paintService";
+import { deletePaint } from "../services/paintService";
 import { paginate } from "../utils";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
-  id: "default",
+  id: "",
   name: "All Colors",
 };
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
@@ -26,15 +26,6 @@ function BalancePage() {
     DEFAULT_CATEGORY,
   ]);
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
-
-  useEffect(() => {
-    async function fetch() {
-      const { data: paints } = await getPaints();
-      setPaints(paints);
-    }
-
-    fetch();
-  }, []);
 
   async function handleDelete(id: string) {
     const newPaints = paints.filter((paint) => paint.id !== id);
@@ -63,7 +54,6 @@ function BalancePage() {
         categories.push(category);
       }
     }
-
     setSelectedCategories(categories);
     setSearchQuery("");
     setSelectedPage(1);
@@ -102,25 +92,29 @@ function BalancePage() {
       <div className="basis-1/4 m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <div>
-          <PaintsTable
-            sortColumn={sortColumn}
-            onSort={setSortColumn}
-            paints={paginatedPaints}
-            onDelete={handleDelete}
-          />
-          <Pagination
-            totalCount={filteredPaints.length}
-            pageSize={PAGE_SIZE}
-            selectedPage={selectedPage}
-            onPageSelect={setSelectedPage}
-          />
+          <div>
+            <PaintsTable
+              sortColumn={sortColumn}
+              onSort={setSortColumn}
+              paints={paginatedPaints}
+              onDelete={handleDelete}
+            />
+            <Pagination
+              totalCount={filteredPaints.length}
+              pageSize={PAGE_SIZE}
+              selectedPage={selectedPage}
+              onPageSelect={setSelectedPage}
+            />
+          </div>
         </div>
       </div>
-      <ListGroup
-        items={[DEFAULT_CATEGORY, ...categories]}
-        selectedItems={selectedCategories}
-        onItemSelect={handleCategoryToggle}
-      />
+      <div className="ml-1/4">
+        <ListGroup
+          items={[DEFAULT_CATEGORY, ...categories]}
+          selectedItems={selectedCategories}
+          onItemSelect={handleCategoryToggle}
+        />
+      </div>
     </div>
   );
 }
