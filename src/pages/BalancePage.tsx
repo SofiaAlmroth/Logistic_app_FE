@@ -54,9 +54,7 @@ function BalancePage() {
         categories.push(category);
       }
     }
-    console.log(categories);
     setSelectedCategories(categories);
-    console.log(categories);
     setSearchQuery("");
     setSelectedPage(1);
   }
@@ -94,25 +92,29 @@ function BalancePage() {
       <div className="basis-1/4 m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <div>
-          <PaintsTable
-            sortColumn={sortColumn}
-            onSort={setSortColumn}
-            paints={paginatedPaints}
-            onDelete={handleDelete}
-          />
-          <Pagination
-            totalCount={filteredPaints.length}
-            pageSize={PAGE_SIZE}
-            selectedPage={selectedPage}
-            onPageSelect={setSelectedPage}
-          />
+          <div>
+            <PaintsTable
+              sortColumn={sortColumn}
+              onSort={setSortColumn}
+              paints={paginatedPaints}
+              onDelete={handleDelete}
+            />
+            <Pagination
+              totalCount={filteredPaints.length}
+              pageSize={PAGE_SIZE}
+              selectedPage={selectedPage}
+              onPageSelect={setSelectedPage}
+            />
+          </div>
         </div>
       </div>
-      <ListGroup
-        items={[DEFAULT_CATEGORY, ...categories]}
-        selectedItems={selectedCategories}
-        onItemSelect={handleCategoryToggle}
-      />
+      <div className="ml-1/4">
+        <ListGroup
+          items={[DEFAULT_CATEGORY, ...categories]}
+          selectedItems={selectedCategories}
+          onItemSelect={handleCategoryToggle}
+        />
+      </div>
     </div>
   );
 }
