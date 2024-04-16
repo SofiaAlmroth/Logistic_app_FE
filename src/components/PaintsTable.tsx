@@ -9,7 +9,7 @@ interface Props {
   paints: Paint[];
   sortColumn: SortColumn;
   onDelete(id: string): void;
-  onModalOpen(): void;
+  onModalOpen(id: string): void;
 }
 
 export function PaintsTable({

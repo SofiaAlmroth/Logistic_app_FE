@@ -19,7 +19,7 @@ function OrderPage() {
       <button onClick={openModal} className="custom-button btn-wide">
         New Order
       </button>
-      <ProductModal orderId={id} isOpen={isModalOpen} onClose={closeModal} />
+      <ProductModal id={id} isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }

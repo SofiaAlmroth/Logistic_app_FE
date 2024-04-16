@@ -6,7 +6,7 @@ import { Paint } from "../../types";
 interface Props {
   paints: Paint[];
   onDelete(id: string): void;
-  onModalOpen(): void;
+  onModalOpen(id: string): void;
 }
 
 export function TableBody({ paints, onDelete, onModalOpen }: Props) {
@@ -33,7 +33,10 @@ export function TableBody({ paints, onDelete, onModalOpen }: Props) {
           <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
           <td className="p-2">
             <div className="tooltip" data-tip="Update">
-              <button className="btn btn-circle" onClick={onModalOpen}>
+              <button
+                className="btn btn-circle"
+                onClick={() => onModalOpen(paint.id)}
+              >
                 <FontAwesomeIcon icon={faPen} />
               </button>
             </div>

@@ -1,12 +1,11 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useEffect, useRef, useState } from "react";
-import { getCategories } from "../services/categoryService";
+import { useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getPaint, savePaint } from "../services/paintService";
-import { Category } from "../types";
+import { useCategories } from "../hooks/useCategories";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -24,12 +23,12 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 interface Props {
-  orderId?: string;
+  id?: string;
   isOpen: boolean;
   onClose(): void;
 }
-function ProductModal({ orderId, onClose, isOpen }: Props) {
-  const [categories, setCategories] = useState<Category[]>([]);
+function ProductModal({ id, onClose, isOpen }: Props) {
+  const categories = useCategories();
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
     register,
@@ -43,11 +42,14 @@ function ProductModal({ orderId, onClose, isOpen }: Props) {
   });
 
   useEffect(() => {
-    async function fetchCategories() {
-      const { data: categories } = await getCategories();
-      setCategories(categories);
+    async function fetch() {
+      if (!id) return;
+
+      const { data: paint } = await getPaint(id);
+      console.log(id);
+      reset(paint);
     }
-    fetchCategories();
+    fetch();
   }, []);
 
   useEffect(() => {
@@ -61,6 +63,7 @@ function ProductModal({ orderId, onClose, isOpen }: Props) {
   function handleDateChange(date: Date) {
     console.log(date);
   }
+
   async function onSubmit(data: FormData) {
     console.log("data", data);
     await savePaint(data);
