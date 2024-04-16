@@ -5,10 +5,16 @@ export interface Paint {
   quantity: number;
   price: number;
   supplierInfo: string;
-  orderDate: string;
-  EAN_GTIN: string;
+  orderDate: Date;
+  ean_gtin: string;
   batchName: string;
-  bestBeforeDate: string;
+  bestBeforeDate: Date;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  isChecked?: boolean;
 }
 
 export interface TextColumn {
