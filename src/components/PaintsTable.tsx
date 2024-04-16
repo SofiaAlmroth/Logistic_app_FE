@@ -9,13 +9,24 @@ interface Props {
   paints: Paint[];
   sortColumn: SortColumn;
   onDelete(id: string): void;
+  onModalOpen(): void;
 }
 
-export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
+export function PaintsTable({
+  sortColumn,
+  paints,
+  onSort,
+  onDelete,
+  onModalOpen,
+}: Props) {
   return (
     <table className="table">
       <TableHeader onSort={onSort} sortColumn={sortColumn} />
-      <TableBody paints={paints} onDelete={onDelete} />
+      <TableBody
+        paints={paints}
+        onDelete={onDelete}
+        onModalOpen={onModalOpen}
+      />
     </table>
   );
 }

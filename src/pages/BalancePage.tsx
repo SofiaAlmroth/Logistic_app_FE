@@ -18,6 +18,8 @@ const DEFAULT_CATEGORY: Category = {
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function BalancePage() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const categories = useCategories();
   const { paints, setPaints } = usePaints();
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +28,11 @@ function BalancePage() {
     DEFAULT_CATEGORY,
   ]);
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
+
+  function openModal() {
+    setModalOpen(true);
+    console.log(isModalOpen);
+  }
 
   async function handleDelete(id: string) {
     const newPaints = paints.filter((paint) => paint.id !== id);
@@ -98,6 +105,7 @@ function BalancePage() {
               onSort={setSortColumn}
               paints={paginatedPaints}
               onDelete={handleDelete}
+              onModalOpen={openModal}
             />
             <Pagination
               totalCount={filteredPaints.length}

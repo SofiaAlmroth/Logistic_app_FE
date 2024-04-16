@@ -25,8 +25,10 @@ type FormData = z.infer<typeof schema>;
 
 interface Props {
   orderId?: string;
+  isOpen: boolean;
+  onClose(): void;
 }
-function ProductModal({ orderId }: Props) {
+function ProductModal({ orderId, onClose, isOpen }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
   const modalRef = useRef<HTMLDialogElement>(null);
   const {
@@ -41,14 +43,20 @@ function ProductModal({ orderId }: Props) {
   });
 
   useEffect(() => {
-    if (!orderId) return;
-    const paint = getPaint(orderId);
     async function fetchCategories() {
       const { data: categories } = await getCategories();
       setCategories(categories);
     }
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      modalRef.current?.showModal();
+    } else {
+      modalRef.current?.close();
+    }
+  }, [isOpen]);
 
   function handleDateChange(date: Date) {
     console.log(date);
@@ -62,12 +70,6 @@ function ProductModal({ orderId }: Props) {
 
   return (
     <>
-      <button
-        onClick={() => modalRef.current?.showModal()}
-        className="custom-button btn-wide"
-      >
-        New Order
-      </button>
       <dialog id="modal" className="modal gap-4" ref={modalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="font-bold text-xl mb-6">New Order</h1>
@@ -200,7 +202,7 @@ function ProductModal({ orderId }: Props) {
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button>Close</button>
+          <button onClick={onClose}>Close</button>
         </form>
       </dialog>
     </>

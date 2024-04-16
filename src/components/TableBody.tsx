@@ -1,15 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
+import "../App.css";
 import { useState } from "react";
-import { Paint } from "../../types";
+import { Paint } from "../types";
 
 interface Props {
   paints: Paint[];
   onDelete(id: string): void;
-  onModalOpen(): void;
 }
 
-export function TableBody({ paints, onDelete, onModalOpen }: Props) {
+export function TableBody({ paints, onDelete }: Props) {
   const [slideOut, setSlideOut] = useState<string | null>(null);
 
   const handleDelete = (id: string) => {
@@ -31,14 +31,14 @@ export function TableBody({ paints, onDelete, onModalOpen }: Props) {
           <td>{paint.ean_gtin}</td>
           <td>{paint.batchName}</td>
           <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
-          <td className="p-2">
+          <td>
             <div className="tooltip" data-tip="Update">
-              <button className="btn btn-circle" onClick={onModalOpen}>
+              <button className="btn btn-circle">
                 <FontAwesomeIcon icon={faPen} />
               </button>
             </div>
           </td>
-          <td className="p-2">
+          <td>
             <div className="tooltip tooltip-error" data-tip="Delete">
               <button
                 className="btn btn-circle"
