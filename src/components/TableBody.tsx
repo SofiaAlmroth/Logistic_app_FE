@@ -3,6 +3,7 @@ import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
 import "../App.css";
 import { useState } from "react";
 import { Paint } from "../types";
+import { useModalContext } from "../context/ModalContext";
 
 interface Props {
   paints: Paint[];
@@ -11,6 +12,7 @@ interface Props {
 
 export function TableBody({ paints, onDelete }: Props) {
   const [slideOut, setSlideOut] = useState<string | null>(null);
+  const { productModalRef } = useModalContext();
 
   const handleDelete = (id: string) => {
     setSlideOut(id); // Set the ID to fade out
@@ -33,7 +35,10 @@ export function TableBody({ paints, onDelete }: Props) {
           <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
           <td>
             <div className="tooltip" data-tip="Update">
-              <button className="btn btn-circle">
+              <button
+                className="btn btn-circle"
+                onClick={() => productModalRef.current?.show()}
+              >
                 <FontAwesomeIcon icon={faPen} />
               </button>
             </div>

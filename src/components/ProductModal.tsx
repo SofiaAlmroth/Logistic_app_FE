@@ -1,11 +1,12 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getPaint, savePaint } from "../services/paintService";
 import { useCategories } from "../hooks/useCategories";
+import { useModalContext } from "../context/ModalContext";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -24,12 +25,12 @@ type FormData = z.infer<typeof schema>;
 
 interface Props {
   id?: string;
-  isOpen: boolean;
-  onClose(): void;
 }
-function ProductModal({ id, onClose, isOpen }: Props) {
+
+function ProductModal({ id }: Props) {
   const categories = useCategories();
-  const modalRef = useRef<HTMLDialogElement>(null);
+  const { productModalRef } = useModalContext();
+
   const {
     register,
     handleSubmit,
@@ -52,14 +53,6 @@ function ProductModal({ id, onClose, isOpen }: Props) {
     fetch();
   }, []);
 
-  useEffect(() => {
-    if (isOpen) {
-      modalRef.current?.showModal();
-    } else {
-      modalRef.current?.close();
-    }
-  }, [isOpen]);
-
   function handleDateChange(date: Date) {
     console.log(date);
   }
@@ -68,12 +61,12 @@ function ProductModal({ id, onClose, isOpen }: Props) {
     console.log("data", data);
     await savePaint(data);
     reset();
-    modalRef.current?.close();
+    productModalRef.current?.close();
   }
 
   return (
     <>
-      <dialog id="modal" className="modal gap-4" ref={modalRef}>
+      <dialog id="modal" className="modal gap-4" ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="font-bold text-xl mb-6">New Order</h1>
           <div className="input-container">
@@ -205,7 +198,9 @@ function ProductModal({ id, onClose, isOpen }: Props) {
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button onClick={onClose}>Close</button>
+          <button onClick={() => productModalRef.current?.close()}>
+            Close
+          </button>
         </form>
       </dialog>
     </>

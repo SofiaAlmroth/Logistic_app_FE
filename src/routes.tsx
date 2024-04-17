@@ -17,12 +17,10 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/balance", element: <BalancePage /> },
-      { path: "/balance/:id", element: <BalancePage /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/orders", element: <OrderPage /> },
       { path: "/sales", element: <Sales /> },
       { path: "/settings", element: <Settings /> },
-      { path: "/orders/:id", element: <OrderPage /> },
     ],
   },
   { path: "/register", element: <RegisterPage /> },

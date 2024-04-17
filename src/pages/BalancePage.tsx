@@ -10,7 +10,6 @@ import { usePaints } from "../hooks/usePaints";
 import { deletePaint } from "../services/paintService";
 import { paginate } from "../utils";
 import ProductModal from "../components/ProductModal";
-import { useParams } from "react-router-dom";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -28,16 +27,6 @@ function BalancePage() {
     DEFAULT_CATEGORY,
   ]);
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const { id } = useParams();
-
-  function openModal() {
-    setModalOpen(true);
-  }
-
-  function closeModal() {
-    setModalOpen(false);
-  }
 
   async function handleDelete(id: string) {
     const newPaints = paints.filter((paint) => paint.id !== id);
@@ -110,7 +99,6 @@ function BalancePage() {
               onSort={setSortColumn}
               paints={paginatedPaints}
               onDelete={handleDelete}
-              onModalOpen={openModal}
             />
             <Pagination
               totalCount={filteredPaints.length}
@@ -128,9 +116,7 @@ function BalancePage() {
           onItemSelect={handleCategoryToggle}
         />
       </div>
-      {isModalOpen && (
-        <ProductModal id={id} isOpen={isModalOpen} onClose={closeModal} />
-      )}
+      <ProductModal />
     </div>
   );
 }
