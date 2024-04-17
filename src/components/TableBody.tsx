@@ -12,7 +12,7 @@ interface Props {
 
 export function TableBody({ paints, onDelete }: Props) {
   const [slideOut, setSlideOut] = useState<string | null>(null);
-  const { productModalRef } = useModalContext();
+  const { productModalRef, setProductId } = useModalContext();
 
   const handleDelete = (id: string) => {
     setSlideOut(id); // Set the ID to fade out
@@ -20,6 +20,11 @@ export function TableBody({ paints, onDelete }: Props) {
       onDelete(id); // After a delay, trigger the delete action
     }, 1000); // Adjust the delay time as needed
   };
+
+  function handleOpenModal(id: string) {
+    setProductId(id);
+    productModalRef.current?.show();
+  }
 
   return (
     <tbody>
@@ -33,11 +38,11 @@ export function TableBody({ paints, onDelete }: Props) {
           <td>{paint.ean_gtin}</td>
           <td>{paint.batchName}</td>
           <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
-          <td>
-            <div className="tooltip" data-tip="Update">
+          <td className="p-0">
+            <div className="tooltip " data-tip="Update">
               <button
                 className="btn btn-circle"
-                onClick={() => productModalRef.current?.show()}
+                onClick={() => handleOpenModal(paint.id)}
               >
                 <FontAwesomeIcon icon={faPen} />
               </button>

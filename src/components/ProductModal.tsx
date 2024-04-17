@@ -23,13 +23,9 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-interface Props {
-  id?: string;
-}
-
-function ProductModal({ id }: Props) {
+function ProductModal() {
   const categories = useCategories();
-  const { productModalRef } = useModalContext();
+  const { productModalRef, productId, setProductId } = useModalContext();
 
   const {
     register,
@@ -44,23 +40,26 @@ function ProductModal({ id }: Props) {
 
   useEffect(() => {
     async function fetch() {
-      if (!id) return;
-
-      const { data: paint } = await getPaint(id);
-      console.log(id);
+      if (!productId) return;
+      const { data: paint } = await getPaint(productId);
       reset(paint);
     }
     fetch();
-  }, []);
+  }, [productId]);
 
   function handleDateChange(date: Date) {
     console.log(date);
   }
 
   async function onSubmit(data: FormData) {
-    console.log("data", data);
     await savePaint(data);
+    setProductId("");
     reset();
+    productModalRef.current?.close();
+  }
+
+  function handleModalClose() {
+    setProductId("");
     productModalRef.current?.close();
   }
 
@@ -198,9 +197,7 @@ function ProductModal({ id }: Props) {
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button onClick={() => productModalRef.current?.close()}>
-            Close
-          </button>
+          <button onClick={handleModalClose}>Close</button>
         </form>
       </dialog>
     </>

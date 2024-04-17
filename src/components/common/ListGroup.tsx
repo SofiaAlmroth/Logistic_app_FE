@@ -7,7 +7,6 @@ interface Props {
 }
 
 function ListGroup({ items, selectedItems, onItemSelect }: Props) {
-  console.log("Selected Items:", selectedItems);
   return (
     <div className="text-center mt-6">
       <ul className="menu  bg-stone-200 w-36 rounded-box">
