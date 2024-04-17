@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
+import "../App.css";
 import { useState } from "react";
-import { Paint } from "../../types";
+import { Paint } from "../types";
+import { useModalContext } from "../context/ModalContext";
 
 interface Props {
   paints: Paint[];
@@ -10,6 +12,7 @@ interface Props {
 
 export function TableBody({ paints, onDelete }: Props) {
   const [slideOut, setSlideOut] = useState<string | null>(null);
+  const { productModalRef, setProductId } = useModalContext();
 
   const handleDelete = (id: string) => {
     setSlideOut(id); // Set the ID to fade out
@@ -17,6 +20,11 @@ export function TableBody({ paints, onDelete }: Props) {
       onDelete(id); // After a delay, trigger the delete action
     }, 1000); // Adjust the delay time as needed
   };
+
+  function handleOpenModal(id: string) {
+    setProductId(id);
+    productModalRef.current?.show();
+  }
 
   return (
     <tbody>
@@ -30,14 +38,17 @@ export function TableBody({ paints, onDelete }: Props) {
           <td>{paint.ean_gtin}</td>
           <td>{paint.batchName}</td>
           <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
-          <td className="p-2">
-            <div className="tooltip" data-tip="Update">
-              <button className="btn btn-circle">
+          <td className="p-0">
+            <div className="tooltip " data-tip="Update">
+              <button
+                className="btn btn-circle"
+                onClick={() => handleOpenModal(paint.id)}
+              >
                 <FontAwesomeIcon icon={faPen} />
               </button>
             </div>
           </td>
-          <td className="p-2">
+          <td>
             <div className="tooltip tooltip-error" data-tip="Delete">
               <button
                 className="btn btn-circle"

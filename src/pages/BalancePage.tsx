@@ -9,6 +9,7 @@ import { useCategories } from "../hooks/useCategories";
 import { usePaints } from "../hooks/usePaints";
 import { deletePaint } from "../services/paintService";
 import { paginate } from "../utils";
+import ProductModal from "../components/ProductModal";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -115,6 +116,7 @@ function BalancePage() {
           onItemSelect={handleCategoryToggle}
         />
       </div>
+      <ProductModal />
     </div>
   );
 }

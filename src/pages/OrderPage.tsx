@@ -1,11 +1,18 @@
-import { useParams } from "react-router";
 import ProductModal from "../components/ProductModal";
+import { useModalContext } from "../context/ModalContext";
 
 function OrderPage() {
-  const { id } = useParams();
+  const { productModalRef } = useModalContext();
+
   return (
     <div className=" m-16">
-      <ProductModal orderId={id} />
+      <button
+        onClick={() => productModalRef.current?.show()}
+        className="custom-button btn-wide"
+      >
+        New Order
+      </button>
+      <ProductModal />
     </div>
   );
 }

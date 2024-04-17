@@ -1,6 +1,6 @@
 import _ from "lodash";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { SortColumn } from "../../types";
+import { SortColumn } from "../types";
 
 interface Props {
   sortColumn: SortColumn;

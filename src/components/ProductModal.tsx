@@ -1,12 +1,12 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useEffect, useRef, useState } from "react";
-import { getCategories } from "../services/categoryService";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { savePaint } from "../services/paintService";
-import { Category } from "../types";
+import { getPaint, savePaint } from "../services/paintService";
+import { useCategories } from "../hooks/useCategories";
+import { useModalContext } from "../context/ModalContext";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -23,12 +23,10 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-interface Props {
-  orderId?: string;
-}
-function ProductModal({ orderId }: Props) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const modalRef = useRef<HTMLDialogElement>(null);
+function ProductModal() {
+  const categories = useCategories();
+  const { productModalRef, productId, setProductId } = useModalContext();
+
   const {
     register,
     handleSubmit,
@@ -41,32 +39,33 @@ function ProductModal({ orderId }: Props) {
   });
 
   useEffect(() => {
-    async function fetchCategories() {
-      const { data: categories } = await getCategories();
-      setCategories(categories);
+    async function fetch() {
+      if (!productId) return;
+      const { data: paint } = await getPaint(productId);
+      reset(paint);
     }
-    fetchCategories();
-  }, []);
+    fetch();
+  }, [productId]);
 
   function handleDateChange(date: Date) {
     console.log(date);
   }
+
   async function onSubmit(data: FormData) {
-    console.log("data", data);
     await savePaint(data);
+    setProductId("");
     reset();
-    modalRef.current?.close();
+    productModalRef.current?.close();
+  }
+
+  function handleModalClose() {
+    setProductId("");
+    productModalRef.current?.close();
   }
 
   return (
     <>
-      <button
-        onClick={() => modalRef.current?.showModal()}
-        className="custom-button btn-wide"
-      >
-        New Order
-      </button>
-      <dialog id="modal" className="modal gap-4" ref={modalRef}>
+      <dialog id="modal" className="modal gap-4" ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="font-bold text-xl mb-6">New Order</h1>
           <div className="input-container">
@@ -198,7 +197,7 @@ function ProductModal({ orderId }: Props) {
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button>Close</button>
+          <button onClick={handleModalClose}>Close</button>
         </form>
       </dialog>
     </>
