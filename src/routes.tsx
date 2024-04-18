@@ -22,12 +22,12 @@ const router = createBrowserRouter([
       { path: "/sales", element: <Sales /> },
       { path: "/settings", element: <Settings /> },
       { path: "/orders/:id", element: <OrderPage /> },
+      { path: "/profile", element: <ProfilePage /> },
     ],
   },
   { path: "/register", element: <RegisterPage /> },
   { path: "/logout", element: <Logout /> },
   { path: "/login", element: <LoginPage /> },
-  { path: "/profile", element: <ProfilePage /> },
 ]);
 
 export default router;
