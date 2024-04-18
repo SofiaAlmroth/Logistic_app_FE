@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { getPaint, savePaint } from "../services/paintService";
 import { useCategories } from "../hooks/useCategories";
 import { useModalContext } from "../context/ModalContext";
+import Input from "./common/Input";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -37,7 +38,6 @@ function ProductModal() {
     resolver: zodResolver(schema),
     mode: "onChange",
   });
-
   useEffect(() => {
     async function fetch() {
       if (!productId) return;
@@ -67,61 +67,46 @@ function ProductModal() {
     <>
       <dialog id="modal" className="modal gap-4" ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="font-bold text-xl mb-6">New Order</h1>
+          {productId ? (
+            <h1 className="font-bold text-xl mb-3">Update Product</h1>
+          ) : (
+            <h1 className="font-bold text-xl mb-3">Add Product</h1>
+          )}
           <div className="input-container">
-            <input
-              {...register("name")}
-              type="text"
-              placeholder="Product Name"
-              className="input input-bordered w-full"
-            />
-            {errors.name && <p className="text-error">{errors.name.message}</p>}
-            <select
-              {...register("categoryId")}
-              defaultValue=""
-              className="select select-bordered w-full text-base mt-6"
-            >
-              <option value="" disabled>
-                Category
-              </option>
+            <Input {...register("name")} label="Name" error={errors.name} />
 
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            {errors.categoryId && (
-              <p className="text-error">{errors.categoryId.message}</p>
-            )}
-            <input
+            <div>
+              <label className="form-control mb-1 text-sm text-slate-500">
+                Category
+              </label>
+              <select
+                {...register("categoryId")}
+                className="select select-bordered w-full text-base mb-3"
+              >
+                <option />
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              {errors.categoryId && (
+                <p className="text-error">{errors.categoryId.message}</p>
+              )}
+            </div>
+
+            <Input
               {...register("quantity")}
-              type="text"
-              placeholder="Quantity"
-              className="input input-bordered w-full mt-6"
+              label="Quantity"
+              error={errors.name}
             />
-            {errors.quantity && (
-              <p className="text-error">{errors.quantity.message}</p>
-            )}
-            <input
-              {...register("price")}
-              type="text"
-              placeholder="Price"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.price && (
-              <p className="text-error">{errors.price.message}</p>
-            )}
-            <input
+            <Input {...register("price")} label="Price" error={errors.name} />
+            <Input
               {...register("supplierInfo")}
-              type="text"
-              placeholder="SupplierInfo"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.supplierInfo && (
-              <p className="text-error">{errors.supplierInfo.message}</p>
-            )}
-            <div className="mt-6 ">
+              label="Supplier"
+              error={errors.name}
+            />
+            {/* <div className="mt-6 ">
               <Controller
                 control={control}
                 name="orderDate"
@@ -139,7 +124,7 @@ function ProductModal() {
                     wrapperClassName="w-full"
                   />
                 )}
-              />{" "}
+              />
               {errors.orderDate && (
                 <p className="text-error">{errors.orderDate.message}</p>
               )}
@@ -184,13 +169,13 @@ function ProductModal() {
               {errors.bestBeforeDate && (
                 <p className="text-error">{errors.bestBeforeDate.message}</p>
               )}
-            </div>
+            </div> */}
           </div>
-          <div className="form-control">
+          <div className="form-control mt-6">
             <button
               type="submit"
               disabled={!isValid}
-              className="btn btn-primary mt-12"
+              className="custom-button "
             >
               Save
             </button>
