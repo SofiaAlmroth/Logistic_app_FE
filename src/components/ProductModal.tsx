@@ -8,6 +8,7 @@ import { getPaint, savePaint } from "../services/paintService";
 import { useCategories } from "../hooks/useCategories";
 import { useModalContext } from "../context/ModalContext";
 import Input from "./common/Input";
+import Select from "./common/Select";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -74,27 +75,12 @@ function ProductModal() {
           )}
           <div className="input-container">
             <Input {...register("name")} label="Name" error={errors.name} />
-
-            <div>
-              <label className="form-control mb-1 text-sm text-slate-500">
-                Category
-              </label>
-              <select
-                {...register("categoryId")}
-                className="select select-bordered w-full text-base mb-3"
-              >
-                <option />
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-              {errors.categoryId && (
-                <p className="text-error">{errors.categoryId.message}</p>
-              )}
-            </div>
-
+            <Select
+              {...register("categoryId")}
+              items={categories}
+              label="Category"
+              error={errors.categoryId}
+            />
             <Input
               {...register("quantity")}
               label="Quantity"
@@ -129,6 +115,8 @@ function ProductModal() {
                 <p className="text-error">{errors.orderDate.message}</p>
               )}
             </div>
+
+            
             <input
               {...register("ean_gtin")}
               type="text"

@@ -10,7 +10,7 @@ function OrderPage() {
         onClick={() => productModalRef.current?.show()}
         className="custom-button btn-wide"
       >
-        New Order
+        Add Product
       </button>
       <ProductModal />
     </div>
