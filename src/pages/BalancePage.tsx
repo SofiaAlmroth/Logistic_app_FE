@@ -90,7 +90,7 @@ function BalancePage() {
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
     <div className="flex flex-row">
-      <div className="basis-1/4 m-6">
+      <div className="m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <div>
           <div>
@@ -109,7 +109,7 @@ function BalancePage() {
           </div>
         </div>
       </div>
-      <div className="ml-1/4">
+      <div>
         <ListGroup
           items={[DEFAULT_CATEGORY, ...categories]}
           selectedItems={selectedCategories}

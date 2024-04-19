@@ -4,13 +4,16 @@ import "../App.css";
 import { useState } from "react";
 import { Paint } from "../types";
 import { useModalContext } from "../context/ModalContext";
+import _ from "lodash";
+import { Column } from "./TableHeader";
 
 interface Props {
   paints: Paint[];
+  columns: Column[];
   onDelete(id: string): void;
 }
 
-export function TableBody({ paints, onDelete }: Props) {
+export function TableBody({ columns, paints, onDelete }: Props) {
   const [slideOut, setSlideOut] = useState<string | null>(null);
   const { productModalRef, setProductId } = useModalContext();
 
@@ -30,16 +33,17 @@ export function TableBody({ paints, onDelete }: Props) {
     <tbody>
       {paints.map((paint) => (
         <tr key={paint.id} className={slideOut === paint.id ? "slide-out" : ""}>
-          <td>{paint.name}</td>
-          <td>{paint.quantity}</td>
-          <td>{paint.price}</td>
-          <td>{paint.supplierInfo}</td>
-          <td>{new Date(paint.orderDate).toLocaleDateString()}</td>
-          <td>{paint.ean_gtin}</td>
-          <td>{paint.batchName}</td>
-          <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
+          {columns.map((column) =>
+            "path" in column ? (
+              <td key={column.path}>{_.get(paint, column.path)}</td>
+            ) : (
+              <td key={column.key}>{}column.key</td>
+            )
+          )}
+
+          {/* <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td> */}
           <td className="p-0">
-            <div className="tooltip " data-tip="Update">
+            {/* <div className="tooltip " data-tip="Update">
               <button
                 className="btn btn-circle"
                 onClick={() => handleOpenModal(paint.id)}
@@ -56,7 +60,7 @@ export function TableBody({ paints, onDelete }: Props) {
               >
                 <FontAwesomeIcon icon={faTimes} size="lg" />
               </button>
-            </div>
+            </div> */}
           </td>
         </tr>
       ))}

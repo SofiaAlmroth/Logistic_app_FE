@@ -2,20 +2,32 @@ import _ from "lodash";
 
 import { Paint, SortColumn } from "../types";
 import { TableBody } from "./TableBody";
-import { TableHeader } from "./TableHeader";
+import { Column, TableHeader } from "./TableHeader";
 
 interface Props {
-  onSort: (sortColumn: SortColumn) => void;
   paints: Paint[];
   sortColumn: SortColumn;
+  onSort: (sortColumn: SortColumn) => void;
   onDelete(id: string): void;
 }
 
 export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
+  const columns: Column[] = [
+    { path: "name", label: "Name" },
+    { path: "cateogry", label: "Category" },
+    { path: "quantity", label: "Quantity" },
+    { path: "price", label: "Price" },
+    { path: "supplierInfo", label: "Suppier" },
+    { path: "order Date", label: "Order Date" },
+    { path: "ean_gtin", label: "Ean-Gtin" },
+    { path: "bestBeforeDate", label: "Best Before Date" },
+    { key: "update" },
+    { key: "delete" },
+  ];
   return (
     <table className="table">
-      <TableHeader onSort={onSort} sortColumn={sortColumn} />
-      <TableBody paints={paints} onDelete={onDelete} />
+      <TableHeader onSort={onSort} sortColumn={sortColumn} columns={columns} />
+      <TableBody paints={paints} onDelete={onDelete} columns={columns} />
     </table>
   );
 }
