@@ -1,6 +1,6 @@
 import _ from "lodash";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { SortColumn } from "../types";
+import { Paint, SortColumn } from "../types";
 
 interface Props {
   columns: Column[];
@@ -15,6 +15,7 @@ interface TextColumn {
 
 interface ContentColumn {
   key: string;
+  content(paint: Paint): JSX.Element;
 }
 export type Column = TextColumn | ContentColumn;
 
