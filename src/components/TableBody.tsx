@@ -1,24 +1,25 @@
 import "../App.css";
-import { Paint } from "../types";
 import _ from "lodash";
 import { Column } from "./TableHeader";
 
-interface Props {
-  paints: Paint[];
-  columns: Column[];
+type WithId<T> = T & { id: string };
+
+interface Props<T> {
+  items: WithId<T>[];
+  columns: Column<T>[];
   onDelete(id: string): void;
 }
 
-export function TableBody({ columns, paints }: Props) {
+export function TableBody<T>({ columns, items }: Props<T>) {
   return (
     <tbody>
-      {paints.map((paint) => (
-        <tr key={paint.id}>
+      {items.map((item) => (
+        <tr key={item.id}>
           {columns.map((column) =>
             "path" in column ? (
-              <td key={column.path}>{_.get(paint, column.path)}</td>
+              <td key={column.path}>{_.get(item, column.path)}</td>
             ) : (
-              <td key={column.key}>{column.content(paint)}</td>
+              <td key={column.key}>{column.content(item)}</td>
             )
           )}
 

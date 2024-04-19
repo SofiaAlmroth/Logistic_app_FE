@@ -1,9 +1,9 @@
 import _ from "lodash";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { Paint, SortColumn } from "../types";
+import { SortColumn } from "../types";
 
-interface Props {
-  columns: Column[];
+interface Props<T> {
+  columns: Column<T>[];
   sortColumn: SortColumn;
   onSort: (sortColumn: SortColumn) => void;
 }
@@ -13,13 +13,13 @@ interface TextColumn {
   label: string;
 }
 
-interface ContentColumn {
+interface ContentColumn<T> {
   key: string;
-  content(paint: Paint): JSX.Element;
+  content(item: T): JSX.Element;
 }
-export type Column = TextColumn | ContentColumn;
+export type Column<T> = TextColumn | ContentColumn<T>;
 
-export function TableHeader({ onSort, sortColumn, columns }: Props) {
+export function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
   function handleSort(path: string) {
     if (path === sortColumn.path) {
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";

@@ -31,7 +31,7 @@ export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     productModalRef.current?.show();
   }
 
-  const columns: Column[] = [
+  const columns: Column<Paint>[] = [
     { path: "name", label: "Name" },
     { path: "category.name", label: "Category" },
     { path: "quantity", label: "Quantity" },
@@ -80,7 +80,7 @@ export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
   return (
     <table className="table">
       <TableHeader onSort={onSort} sortColumn={sortColumn} columns={columns} />
-      <TableBody paints={paints} onDelete={onDelete} columns={columns} />
+      <TableBody items={paints} onDelete={onDelete} columns={columns} />
     </table>
   );
 }
