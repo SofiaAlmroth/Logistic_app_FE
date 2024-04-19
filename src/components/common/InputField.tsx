@@ -2,7 +2,7 @@ import { InputHTMLAttributes, PropsWithChildren, forwardRef } from "react";
 import { FieldError } from "react-hook-form";
 
 export default function InputField({ children }: PropsWithChildren) {
-  return <div className="p-2">{children}</div>;
+  return <div className="p-2 mb-2">{children}</div>;
 }
 
 InputField.Label = function Label({ children }: PropsWithChildren) {
@@ -18,7 +18,7 @@ function Input({ ...rest }: InputProps, ref: React.Ref<HTMLInputElement>) {
     <input
       ref={ref}
       type="text"
-      className="input input-bordered w-full"
+      className="input input-bordered w-full mt-1"
       {...rest}
     />
   );
@@ -31,5 +31,5 @@ interface ErrorProps {
 }
 
 InputField.Error = function Error({ error }: ErrorProps) {
-  return <>{error && <p className="text-error">{error.message}</p>}</>;
+  return <>{error && <p className="text-error ">{error.message}</p>}</>;
 };
