@@ -14,11 +14,11 @@ interface Props {
 export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
   const columns: Column[] = [
     { path: "name", label: "Name" },
-    { path: "cateogry", label: "Category" },
+    { path: "category.name", label: "Category" },
     { path: "quantity", label: "Quantity" },
     { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
-    { path: "order Date", label: "Order Date" },
+    { path: "orderDate", label: "Order Date" },
     { path: "ean_gtin", label: "Ean-Gtin" },
     { path: "bestBeforeDate", label: "Best Before Date" },
     { key: "update" },
