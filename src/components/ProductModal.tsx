@@ -7,8 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { getPaint, savePaint } from "../services/paintService";
 import { useCategories } from "../hooks/useCategories";
 import { useModalContext } from "../context/ModalContext";
-import Input from "./common/Input";
+import Input from "./common/_Input";
 import Select from "./common/Select";
+import InputField from "./common/InputField";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -17,10 +18,10 @@ const schema = z.object({
   quantity: z.coerce.number().gt(0, { message: "Quantity is required" }),
   price: z.coerce.number().gt(0, { message: "Price is required" }),
   supplierInfo: z.string().min(1, { message: "Name is required" }),
-  orderDate: z.coerce.date(),
-  ean_gtin: z.string().min(1, { message: "ean_gtin is required" }),
-  batchName: z.string().min(1, { message: "BatchName is required" }),
-  bestBeforeDate: z.coerce.date(),
+  // orderDate: z.coerce.date(),
+  // ean_gtin: z.string().min(1, { message: "ean_gtin is required" }),
+  // batchName: z.string().min(1, { message: "BatchName is required" }),
+  // bestBeforeDate: z.coerce.date(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -48,11 +49,14 @@ function ProductModal() {
     fetch();
   }, [productId]);
 
+  console.log(errors, isValid);
+
   function handleDateChange(date: Date) {
     console.log(date);
   }
 
   async function onSubmit(data: FormData) {
+    console.log("submitted", data);
     await savePaint(data);
     setProductId("");
     reset();
@@ -61,20 +65,28 @@ function ProductModal() {
 
   function handleModalClose() {
     setProductId("");
+    reset();
     productModalRef.current?.close();
   }
 
   return (
     <>
-      <dialog id="modal" className="modal gap-4" ref={productModalRef}>
+      <dialog id="modal" className="modal " ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
           {productId ? (
-            <h1 className="font-bold text-xl mb-3">Update Product</h1>
+            <h1 className="font-bold text-xl p-3">Update Product</h1>
           ) : (
-            <h1 className="font-bold text-xl mb-3">Add Product</h1>
+            <h1 className="font-bold text-xl p-3">Add Product</h1>
           )}
           <div className="input-container">
-            <Input {...register("name")} label="Name" error={errors.name} />
+            {/* <Input {...register("name")} label="Name" error={errors.name} /> */}
+
+            <InputField>
+              <InputField.Label>Name</InputField.Label>
+              <InputField.Input {...register("name")} />
+              <InputField.Error error={errors.name} />
+            </InputField>
+
             <Select
               {...register("categoryId")}
               items={categories}
@@ -84,13 +96,13 @@ function ProductModal() {
             <Input
               {...register("quantity")}
               label="Quantity"
-              error={errors.name}
+              error={errors.quantity}
             />
-            <Input {...register("price")} label="Price" error={errors.name} />
+            <Input {...register("price")} label="Price" error={errors.price} />
             <Input
               {...register("supplierInfo")}
               label="Supplier"
-              error={errors.name}
+              error={errors.supplierInfo}
             />
             {/* <div className="mt-6 ">
               <Controller
@@ -116,7 +128,7 @@ function ProductModal() {
               )}
             </div>
 
-            
+
             <input
               {...register("ean_gtin")}
               type="text"
@@ -159,7 +171,7 @@ function ProductModal() {
               )}
             </div> */}
           </div>
-          <div className="form-control mt-6">
+          <div className="form-control p-3 mt-3">
             <button
               type="submit"
               disabled={!isValid}

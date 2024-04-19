@@ -11,7 +11,7 @@ function Input(
   ref: React.Ref<HTMLInputElement>
 ) {
   return (
-    <div className="mb-3">
+    <div className=" p-3">
       <label className="form-control mb-1 text-sm text-slate-500">
         {label}
       </label>

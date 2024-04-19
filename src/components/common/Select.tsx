@@ -18,13 +18,11 @@ function Select<T extends Item>(
   ref: React.Ref<HTMLSelectElement>
 ) {
   return (
-    <div>
-      <label className="form-control mb-1 text-sm text-slate-500">
-        {label}
-      </label>
+    <div className="p-3">
+      <label className="form-control text-sm text-slate-500">{label}</label>
       <select
         ref={ref}
-        className="select select-bordered w-full text-base mb-3"
+        className="select select-bordered w-full text-base"
         {...rest}
       >
         <option />
