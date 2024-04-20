@@ -1,9 +1,6 @@
 import axios from "axios";
-
-interface UserLogin {
-  email: string;
-  password: string;
-}
+import { jwtDecode } from "jwt-decode";
+import { User, UserLogin } from "../types";
 
 const API_ENPOINT = "http://localhost:5999/api/auth/";
 
@@ -11,6 +8,17 @@ function login(user: UserLogin) {
   return axios.post(API_ENPOINT, user);
 }
 
+function getCurrentUser() {
+  const token = localStorage.getItem("token");
+
+  if (!token) return null;
+
+  const user = jwtDecode<User>(token);
+
+  return user;
+}
+
 export default {
   login,
+  getCurrentUser,
 };

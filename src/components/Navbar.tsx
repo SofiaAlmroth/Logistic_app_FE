@@ -1,17 +1,13 @@
+import authService from "../services/authService";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { User } from "../types";
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) return;
-
-    const user = jwtDecode<User>(token);
+    const user = authService.getCurrentUser();
     setUser(user);
   }, []);
 
