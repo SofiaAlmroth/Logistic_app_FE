@@ -40,7 +40,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  isAdmin: string;
+  isAdmin: Boolean;
 }
 export interface UserRegister {
   name: string;
