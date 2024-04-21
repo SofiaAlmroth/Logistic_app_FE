@@ -1,37 +1,17 @@
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import authService from "../services/authService";
-import { useEffect } from "react";
-import { User } from "../types";
+import { UserUpdate } from "../types";
+import { updateUser } from "../services/userService";
 
 function ProfilePage() {
-  const { reset, register, handleSubmit } = useForm();
-  const user = authService.getCurrentUser();
+  const { register, handleSubmit } = useForm<UserUpdate>({
+    defaultValues: authService.getCurrentUser() || {},
+  });
 
-  useEffect(() => {
-    async function fetch() {
-      const user = await authService.getCurrentUser();
-
-      if (!user) return;
-
-      reset(mapToFormData(user));
-    }
-
-    fetch();
-  }, []);
-
-  function mapToFormData(user: User) {
-    return {
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    };
-  }
-
-  function onSubmit(data: FieldValues) {
+  function onSubmit(data: UserUpdate) {
     console.log("submitted", data);
+    updateUser(data);
   }
-
-  console.log(user);
 
   return (
     <div className="grid grid-rows-2 w-full h-full justify-items-center items-center">

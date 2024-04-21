@@ -48,6 +48,10 @@ export interface UserRegister {
   password: string;
 }
 
+export interface UserUpdate extends Partial<UserRegister> {
+  id: string;
+}
+
 export interface UserLogin {
   email: string;
   password: string;
