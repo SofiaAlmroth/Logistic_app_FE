@@ -2,8 +2,10 @@ import { useForm } from "react-hook-form";
 import authService from "../services/authService";
 import { UserUpdate } from "../types";
 import { updateUser } from "../services/userService";
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<UserUpdate>({
     defaultValues: authService.getCurrentUser() || {},
   });
@@ -11,6 +13,7 @@ function ProfilePage() {
   function onSubmit(data: UserUpdate) {
     console.log("submitted", data);
     updateUser(data);
+    navigate("/login");
   }
 
   return (
