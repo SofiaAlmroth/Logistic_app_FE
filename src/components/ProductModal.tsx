@@ -153,15 +153,6 @@ function ProductModal() {
             {errors.ean_gtin && (
               <p className="text-error">{errors.ean_gtin.message}</p>
             )}
-            <input
-              {...register("batchName")}
-              type="text"
-              placeholder="BatchName"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.batchName && (
-              <p className="text-error">{errors.batchName.message}</p>
-            )}
             <div className="mt-6 ">
               <Controller
                 control={control}

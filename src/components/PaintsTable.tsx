@@ -14,6 +14,7 @@ interface Props {
 }
 
 function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
+  console.log;
   const { productModalRef, setProductId } = useModalContext();
   const [slideOut, setSlideOut] = useState<string | null>(null);
 
@@ -36,16 +37,16 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
     {
-      key: "orderDate",
-      content: (paint) => (
-        <td>{new Date(paint.orderDate).toLocaleDateString()}</td>
-      ),
+      path: "orderDate",
+      label: "Order Date",
+      content: (paint) => <>{new Date(paint.orderDate).toLocaleDateString()}</>,
     },
     { path: "ean_gtin", label: "Ean-Gtin" },
     {
-      key: "bestBeforeDate",
+      path: "bestBeforeDate",
+      label: "Best Before Date",
       content: (paint) => (
-        <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td>
+        <>{new Date(paint.bestBeforeDate).toLocaleDateString()}</>
       ),
     },
     {
@@ -64,6 +65,7 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     {
       key: "delete",
       content: (paint) => (
+        // className={slideOut === paint.id ? "slide-out" : ""}
         <div className="tooltip tooltip-error" data-tip="Delete">
           <button
             className="btn btn-circle"
@@ -75,6 +77,7 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
       ),
     },
   ];
+
   return (
     <Table
       columns={columns}

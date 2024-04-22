@@ -11,14 +11,14 @@ function TableBody<T extends Id>({ columns, items }: Props<T>) {
       {items.map((item) => (
         <tr key={item.id}>
           {columns.map((column) =>
-            "path" in column ? (
-              <td key={column.path}>{_.get(item, column.path)}</td>
+            "content" in column ? (
+              <td key={column.key} className="p-2">
+                {column.content(item)}
+              </td>
             ) : (
-              <td key={column.key}>{column.content(item)}</td>
+              <td key={column.path}>{_.get(item, column.path)}</td>
             )
           )}
-
-          {/* <td>{new Date(paint.bestBeforeDate).toLocaleDateString()}</td> */}
         </tr>
       ))}
     </tbody>
@@ -26,5 +26,3 @@ function TableBody<T extends Id>({ columns, items }: Props<T>) {
 }
 
 export default TableBody;
-
-// className={slideOut === paint.id ? "slide-out" : ""}

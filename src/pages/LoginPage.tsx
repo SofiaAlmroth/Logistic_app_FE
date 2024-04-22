@@ -3,7 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login } from "@services";
+import { auth } from "@services";
 
 const schema = z.object({
   email: z.string().min(1, { message: "Email is required" }),
@@ -24,7 +24,7 @@ function LoginPage() {
     console.log("Submitted", data);
 
     try {
-      const { data: jwt } = await login.login(data);
+      const { data: jwt } = await auth.login(data);
       localStorage.setItem("token", jwt);
       navigate("/balance");
     } catch (error: any) {
