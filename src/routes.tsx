@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import RegisterPage from "./pages/RegisterPage";
-import BalancePage from "./pages/BalancePage";
+import InventoryPage from "./pages/InventoryPage";
 // import { LoginPage } from "./pages/LoginPage";
 import Logout from "./components/Logout";
 import OrderPage from "./pages/OrderPage";
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
-      { path: "/balance", element: <BalancePage /> },
+      { path: "/balance", element: <InventoryPage /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/orders", element: <OrderPage /> },
       { path: "/sales", element: <Sales /> },

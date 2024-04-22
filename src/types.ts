@@ -26,8 +26,7 @@ export interface ContentColumn<T> {
   key: string;
   content(item: T): JSX.Element;
 }
-
-// export type Column<T> = TextColumn | ContentColumn<T>;
+export type Column<T> = TextColumn | ContentColumn<T>;
 
 export interface Id {
   id: string;

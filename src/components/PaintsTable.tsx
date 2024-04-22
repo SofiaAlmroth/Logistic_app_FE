@@ -1,12 +1,10 @@
 import _ from "lodash";
-
-import { Paint, SortColumn } from "../types";
-import { TableBody } from "./TableBody";
-import { Column, TableHeader } from "./TableHeader";
+import { Column, Paint, SortColumn } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useModalContext } from "../context/ModalContext";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import Table from "./Table";
 
 interface Props {
   paints: Paint[];
@@ -78,9 +76,11 @@ export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     },
   ];
   return (
-    <table className="table">
-      <TableHeader onSort={onSort} sortColumn={sortColumn} columns={columns} />
-      <TableBody items={paints} onDelete={onDelete} columns={columns} />
-    </table>
+    <Table
+      columns={columns}
+      items={paints}
+      onSort={onSort}
+      sortColumn={sortColumn}
+    />
   );
 }

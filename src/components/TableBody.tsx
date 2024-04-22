@@ -1,16 +1,13 @@
 import "../App.css";
 import _ from "lodash";
-import { Column } from "./TableHeader";
+import { Column, Id } from "../types";
 
-type WithId<T> = T & { id: string };
-
-interface Props<T> {
-  items: WithId<T>[];
+interface Props<T extends Id> {
+  items: T[];
   columns: Column<T>[];
-  onDelete(id: string): void;
 }
 
-export function TableBody<T>({ columns, items }: Props<T>) {
+export function TableBody<T extends Id>({ columns, items }: Props<T>) {
   return (
     <tbody>
       {items.map((item) => (

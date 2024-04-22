@@ -18,7 +18,7 @@ const DEFAULT_CATEGORY: Category = {
 };
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
-function BalancePage() {
+function InventoryPage() {
   const categories = useCategories();
   const { paints, setPaints } = usePaints();
   const [searchQuery, setSearchQuery] = useState("");
@@ -120,4 +120,4 @@ function BalancePage() {
     </div>
   );
 }
-export default BalancePage;
+export default InventoryPage;

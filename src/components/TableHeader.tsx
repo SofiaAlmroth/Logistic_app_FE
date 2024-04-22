@@ -1,23 +1,12 @@
 import _ from "lodash";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { SortColumn } from "../types";
+import { Column, SortColumn, TextColumn } from "../types";
 
 interface Props<T> {
   columns: Column<T>[];
   sortColumn: SortColumn;
   onSort: (sortColumn: SortColumn) => void;
 }
-
-interface TextColumn {
-  path: string;
-  label: string;
-}
-
-interface ContentColumn<T> {
-  key: string;
-  content(item: T): JSX.Element;
-}
-export type Column<T> = TextColumn | ContentColumn<T>;
 
 export function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
   function handleSort(path: string) {
