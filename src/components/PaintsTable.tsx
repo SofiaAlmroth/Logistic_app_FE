@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useModalContext } from "../context/ModalContext";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import Table from "./Table";
+import Table from "./common/Table";
 
 interface Props {
   paints: Paint[];
