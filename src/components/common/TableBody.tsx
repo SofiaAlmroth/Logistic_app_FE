@@ -6,8 +6,7 @@ interface Props<T extends Id> {
   items: T[];
   columns: Column<T>[];
 }
-
-export function TableBody<T extends Id>({ columns, items }: Props<T>) {
+function TableBody<T extends Id>({ columns, items }: Props<T>) {
   return (
     <tbody>
       {items.map((item) => (
@@ -26,5 +25,7 @@ export function TableBody<T extends Id>({ columns, items }: Props<T>) {
     </tbody>
   );
 }
+
+export default TableBody;
 
 // className={slideOut === paint.id ? "slide-out" : ""}

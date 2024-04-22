@@ -7,8 +7,7 @@ interface Props<T> {
   sortColumn: SortColumn;
   onSort: (sortColumn: SortColumn) => void;
 }
-
-export function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
+function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
   function handleSort(path: string) {
     if (path === sortColumn.path) {
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
@@ -44,6 +43,8 @@ export function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
     </thead>
   );
 }
+
+export default TableHeader;
 
 {
   /* <thead>

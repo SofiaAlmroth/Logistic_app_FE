@@ -1,10 +1,10 @@
 import _ from "lodash";
+import { Table } from "./common";
 import { Column, Paint, SortColumn } from "../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useModalContext } from "../context/ModalContext";
 import { faPen, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import Table from "./common/Table";
 
 interface Props {
   paints: Paint[];
@@ -13,7 +13,7 @@ interface Props {
   onDelete(id: string): void;
 }
 
-export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
+function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
   const { productModalRef, setProductId } = useModalContext();
   const [slideOut, setSlideOut] = useState<string | null>(null);
 
@@ -84,3 +84,5 @@ export function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     />
   );
 }
+
+export default PaintsTable;
