@@ -1,15 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import RegisterPage from "./pages/RegisterPage";
-import InventoryPage from "./pages/InventoryPage";
 // import { LoginPage } from "./pages/LoginPage";
-import Logout from "./components/Logout";
-import OrderPage from "./pages/OrderPage";
-import { LoginPage } from "./pages/LoginPage";
-import Dashboard from "./pages/DashboardPage";
-import Sales from "./pages/SalesPage";
-import Settings from "./components/Settings";
-import ProfilePage from "./pages/ProfilePage";
+import {
+  DashboardPage,
+  InventoryPage,
+  LoginPage,
+  OrderPage,
+  ProfilePage,
+  RegisterPage,
+  SalesPage,
+} from "@pages";
+import { Logout, Settings } from "@components";
 
 const router = createBrowserRouter([
   {
@@ -17,9 +18,9 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/balance", element: <InventoryPage /> },
-      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/dashboard", element: <DashboardPage /> },
       { path: "/orders", element: <OrderPage /> },
-      { path: "/sales", element: <Sales /> },
+      { path: "/sales", element: <SalesPage /> },
       { path: "/settings", element: <Settings /> },
     ],
   },

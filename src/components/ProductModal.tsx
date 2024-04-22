@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getPaint, savePaint } from "../services/paintService";
-import { useCategories } from "../hooks/useCategories";
 import { useModalContext } from "../context/ModalContext";
+import { getPaint, savePaint } from "@services";
+import { useCategories } from "@hooks";
 
 const schema = z.object({
   id: z.string().optional(),

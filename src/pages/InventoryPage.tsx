@@ -1,13 +1,11 @@
 import _ from "lodash";
-import { Category, SortColumn } from "../types";
 import { useState } from "react";
-import { useCategories } from "../hooks/useCategories";
-import { usePaints } from "../hooks/usePaints";
-import { deletePaint } from "../services/paintService";
-import { paginate } from "../utils";
-import { ListGroup, Pagination, SearchBox } from "../components/common";
-import ProductModal from "../components/ProductModal";
-import PaintsTable from "../components/PaintsTable";
+import { Category, SortColumn } from "@types";
+import { paginate } from "@utils";
+import { ListGroup, Pagination, SearchBox } from "@components/common";
+import { ProductModal, PaintsTable } from "@components";
+import { useCategories, usePaints } from "@hooks";
+import { deletePaint } from "@services";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {

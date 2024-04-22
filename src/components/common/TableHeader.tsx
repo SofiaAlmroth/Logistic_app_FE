@@ -1,6 +1,6 @@
 import _ from "lodash";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { Column, SortColumn, TextColumn } from "../../types";
+import { Column, SortColumn, TextColumn } from "@types";
 
 interface Props<T> {
   columns: Column<T>[];
