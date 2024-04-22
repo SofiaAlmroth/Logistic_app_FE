@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { savePaint } from "../services/fakePaintService";
+import Pending from "./Pending";
 
 const schema = z.object({
   _id: z.string().optional(),
@@ -54,7 +55,7 @@ function ProductModal({ orderId }: Props) {
         onClick={() => modalRef.current?.showModal()}
         className="custom-button btn-wide"
       >
-        New Order
+        Add Products
       </button>
       <dialog id="modal" className="modal gap-4" ref={modalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
@@ -191,6 +192,14 @@ function ProductModal({ orderId }: Props) {
           <button>Close</button>
         </form>
       </dialog>
+      <div className="m-2">
+        <h2 className="  font-serif">
+          <i className="fa-solid fa-hourglass-half"></i> Pending Orders...
+        </h2>
+      </div>
+      <form>
+        <Pending />
+      </form>
     </>
   );
 }
