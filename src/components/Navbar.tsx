@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { User } from "../types";
+import { User } from "@types";
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);

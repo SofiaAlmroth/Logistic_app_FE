@@ -1,207 +1,202 @@
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useRef } from "react";
-import { getCategories } from "../services/fakeCategoryService";
-import { Controller, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { savePaint } from "../services/fakePaintService";
 import Pending from "./Pending";
+import { useModalContext } from "../context/ModalContext";
+import { getPaint, savePaint } from "@services";
+import { useCategories } from "@hooks";
+import InputField from "./common/InputField";
+import SelectField from "./common/SelectField";
 
 const schema = z.object({
-  _id: z.string().optional(),
+  id: z.string().optional(),
   name: z.string().min(1, { message: "Name is required" }),
   categoryId: z.string().min(1, { message: "Category is required" }),
   quantity: z.coerce.number().gt(0, { message: "Quantity is required" }),
   price: z.coerce.number().gt(0, { message: "Price is required" }),
   supplierInfo: z.string().min(1, { message: "Name is required" }),
-  orderDate: z.coerce.date(),
-  EAN_GTIN: z.string().min(1, { message: "EAN_GTIN is required" }),
-  batchName: z.string().min(1, { message: "BatchName is required" }),
-  bestBeforeDate: z.coerce.date(),
 });
 
 type FormData = z.infer<typeof schema>;
 
-interface Props {
-  orderId?: string;
-}
-function ProductModal({ orderId }: Props) {
-  const modalRef = useRef<HTMLDialogElement>(null);
+function ProductModal() {
+  const categories = useCategories();
+  const { productModalRef, productId, setProductId } = useModalContext();
+
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
   });
+  useEffect(() => {
+    async function fetch() {
+      if (!productId) return;
+      const { data: paint } = await getPaint(productId);
+      reset(paint);
+    }
+    fetch();
+  }, [productId]);
 
-  function handleDateChange(date: Date) {
-    console.log(date);
-  }
-  function onSubmit(data: FormData) {
-    console.log("data", data);
-    savePaint(data);
+  async function onSubmit(data: FormData) {
+    console.log("submitted", data);
+    await savePaint(data);
+    setProductId("");
     reset();
-    modalRef.current?.close();
+    productModalRef.current?.close();
+  }
+
+  function handleModalClose() {
+    setProductId("");
+    reset();
+    productModalRef.current?.close();
   }
 
   return (
     <>
-      <button
-        onClick={() => modalRef.current?.showModal()}
-        className="custom-button btn-wide"
-      >
-        Add Products
-      </button>
-      <dialog id="modal" className="modal gap-4" ref={modalRef}>
+      <dialog id="modal" className="modal " ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="font-bold text-xl mb-6">New Order</h1>
+          {productId ? (
+            <h1 className="font-bold text-xl p-3">Update Product</h1>
+          ) : (
+            <h1 className="font-bold text-xl p-3">Add Product</h1>
+          )}
           <div className="input-container">
-            <input
-              {...register("name")}
-              type="text"
-              placeholder="Product Name"
-              className="input input-bordered w-full"
-            />
-            {errors.name && <p className="text-error">{errors.name.message}</p>}
-            <select
-              {...register("categoryId")}
-              defaultValue=""
-              className="select select-bordered w-full text-base mt-6"
-            >
-              <option value="" disabled>
-                Category
-              </option>
+            <InputField>
+              <InputField.Label>Name</InputField.Label>
+              <InputField.Input {...register("name")} />
+              <InputField.Error error={errors.name} />
+            </InputField>
 
-              {getCategories().map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            {errors.categoryId && (
-              <p className="text-error">{errors.categoryId.message}</p>
-            )}
-            <input
-              {...register("quantity")}
-              type="text"
-              placeholder="Quantity"
-              className="input input-bordered w-full mt-6"
-            />
-            {errors.quantity && (
-              <p className="text-error">{errors.quantity.message}</p>
-            )}
-            <input
-              {...register("price")}
-              type="text"
-              placeholder="Price"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.price && (
-              <p className="text-error">{errors.price.message}</p>
-            )}
-            <input
-              {...register("supplierInfo")}
-              type="text"
-              placeholder="SupplierInfo"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.supplierInfo && (
-              <p className="text-error">{errors.supplierInfo.message}</p>
-            )}
-            <div className="mt-6 ">
-              <Controller
-                control={control}
-                name="orderDate"
-                render={({ field }) => (
-                  <DatePicker
-                    selected={field.value}
-                    onChange={(date: Date) => {
-                      field.onChange(date);
-                      handleDateChange(date);
-                    }}
-                    className="input input-bordered w-full"
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="Order Date"
-                    popperPlacement="bottom-start"
-                    wrapperClassName="w-full"
-                  />
-                )}
-              />{" "}
-              {errors.orderDate && (
-                <p className="text-error">{errors.orderDate.message}</p>
-              )}
-            </div>
-            <input
-              {...register("EAN_GTIN")}
-              type="text"
-              placeholder="EAN_GTIN"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.EAN_GTIN && (
-              <p className="text-error">{errors.EAN_GTIN.message}</p>
-            )}
-            <input
-              {...register("batchName")}
-              type="text"
-              placeholder="BatchName"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.batchName && (
-              <p className="text-error">{errors.batchName.message}</p>
-            )}
-            <div className="mt-6 ">
-              <Controller
-                control={control}
-                name="bestBeforeDate"
-                render={({ field }) => (
-                  <DatePicker
-                    selected={field.value}
-                    onChange={(date: Date) => {
-                      field.onChange(date);
-                      handleDateChange(date);
-                    }}
-                    className="input input-bordered w-full"
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="Best Before Date"
-                    popperPlacement="bottom-start"
-                    wrapperClassName="w-full"
-                  />
-                )}
+            <SelectField>
+              <SelectField.Label>Categories</SelectField.Label>
+              <SelectField.Select
+                items={categories}
+                {...register("categoryId")}
               />
-              {errors.bestBeforeDate && (
-                <p className="text-error">{errors.bestBeforeDate.message}</p>
-              )}
-            </div>
+              <SelectField.Error error={errors.categoryId} />
+            </SelectField>
+
+            <InputField>
+              <InputField.Label>Quantity</InputField.Label>
+              <InputField.Input {...register("quantity")} />
+              <InputField.Error error={errors.quantity} />
+            </InputField>
+
+            <InputField>
+              <InputField.Label>Price</InputField.Label>
+              <InputField.Input {...register("price")} />
+              <InputField.Error error={errors.price} />
+            </InputField>
+
+            <InputField>
+              <InputField.Label>Supplier</InputField.Label>
+              <InputField.Input {...register("supplierInfo")} />
+              <InputField.Error error={errors.supplierInfo} />
+            </InputField>
           </div>
-          <div className="form-control">
+          <div className="form-control p-3 mt-3">
             <button
               type="submit"
               disabled={!isValid}
-              className="btn btn-primary mt-12"
+              className="custom-button "
             >
               Save
             </button>
           </div>
         </form>
         <form method="dialog" className="modal-backdrop">
-          <button>Close</button>
+          <button onClick={handleModalClose}>Close</button>
         </form>
       </dialog>
-      <div className="m-2">
-        <h2 className="  font-serif">
-          <i className="fa-solid fa-hourglass-half"></i> Pending Orders...
-        </h2>
-      </div>
-      <form>
-        <Pending />
-      </form>
     </>
   );
 }
 
 export default ProductModal;
+
+// <div className="mt-6 ">
+//             <Controller
+//               control={control}
+//               name="orderDate"
+//               render={({ field }) => (
+//                 <DatePicker
+//                   selected={field.value}
+//                   onChange={(date: Date) => {
+//                     field.onChange(date);
+//                     handleDateChange(date);
+//                   }}
+//                   className="input input-bordered w-full"
+//                   dateFormat="yyyy-MM-dd"
+//                   placeholderText="Order Date"
+//                   popperPlacement="bottom-start"
+//                   wrapperClassName="w-full"
+//                 />
+//               )}
+//             />
+//             {errors.orderDate && (
+//               <p className="text-error">{errors.orderDate.message}</p>
+//             )}
+//           </div>
+
+//           <input
+//             {...register("ean_gtin")}
+//             type="text"
+//             placeholder="ean_gtin"
+//             className="input input-bordered w-full mt-6"
+//           />{" "}
+//           {errors.ean_gtin && (
+//             <p className="text-error">{errors.ean_gtin.message}</p>
+//           )}
+//           <div className="mt-6 ">
+//             <Controller
+//               control={control}
+//               name="bestBeforeDate"
+//               render={({ field }) => (
+//                 <DatePicker
+//                   selected={field.value}
+//                   onChange={(date: Date) => {
+//                     field.onChange(date);
+//                     handleDateChange(date);
+//                   }}
+//                   className="input input-bordered w-full"
+//                   dateFormat="yyyy-MM-dd"
+//                   placeholderText="Best Before Date"
+//                   popperPlacement="bottom-start"
+//                   wrapperClassName="w-full"
+//                 />
+//               )}
+//             />
+//             {errors.bestBeforeDate && (
+//               <p className="text-error">{errors.bestBeforeDate.message}</p>
+//             )}
+//           </div>
+//         </div>
+//         <div className="form-control">
+//           <button
+//             type="submit"
+//             disabled={!isValid}
+//             className="btn btn-primary mt-12"
+//           >
+//             Save
+//           </button>
+//         </div>
+//       </form>
+//       <form method="dialog" className="modal-backdrop">
+//         <button>Close</button>
+//       </form>
+//     </dialog>
+//     <div className="m-2">
+//       <h2 className="  font-serif">
+//         <i className="fa-solid fa-hourglass-half"></i> Pending Orders...
+//       </h2>
+//     </div>
+//     <form>
+//       <Pending />
+//     </form>
+//   </>

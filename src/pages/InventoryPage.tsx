@@ -1,23 +1,22 @@
-import { useState } from "react";
-import { paginate } from "../utils";
 import _ from "lodash";
-import { SortColumn } from "../types";
-import { PaintsTable } from "../components/PaintsTable";
-import ListGroup from "../components/common/ListGroup";
-import { Category, getCategories } from "../services/fakeCategoryService";
-import { deletePaint, getPaints } from "../services/fakePaintService";
-import { Pagination } from "../components/common/Pagination";
-import SearchBox from "../components/common/SearchBox";
+import { useState } from "react";
+import { Category, SortColumn } from "@types";
+import { paginate } from "@utils";
+import { ListGroup, Pagination, SearchBox } from "@components/common";
+import { ProductModal, PaintsTable } from "@components";
+import { useCategories, usePaints } from "@hooks";
+import { deletePaint } from "@services";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
-  _id: "default",
+  id: "",
   name: "All Colors",
 };
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
-function BalancePage() {
-  const [paints, setPaints] = useState(getPaints());
+function InventoryPage() {
+  const categories = useCategories();
+  const { paints, setPaints } = usePaints();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([
@@ -25,10 +24,10 @@ function BalancePage() {
   ]);
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
 
-  function handleDelete(id: string) {
-    const newPaints = paints.filter((paint) => paint._id !== id);
-    deletePaint(id);
+  async function handleDelete(id: string) {
+    const newPaints = paints.filter((paint) => paint.id !== id);
     setPaints(newPaints);
+    await deletePaint(id);
   }
 
   function handleCategoryToggle(category: Category, isChecked: boolean) {
@@ -38,21 +37,20 @@ function BalancePage() {
       if (selectedCategories.length === 1) {
         categories = [DEFAULT_CATEGORY];
       } else {
-        categories = selectedCategories.filter((c) => c._id !== category._id);
+        categories = selectedCategories.filter((c) => c.id !== category.id);
       }
     }
 
     if (isChecked) {
-      if (category._id === DEFAULT_CATEGORY._id) {
+      if (category.id === DEFAULT_CATEGORY.id) {
         categories = [DEFAULT_CATEGORY];
       } else {
         categories = selectedCategories.filter(
-          (c) => c._id !== DEFAULT_CATEGORY._id
+          (c) => c.id !== DEFAULT_CATEGORY.id
         );
         categories.push(category);
       }
     }
-
     setSelectedCategories(categories);
     setSearchQuery("");
     setSelectedPage(1);
@@ -66,13 +64,9 @@ function BalancePage() {
   if (paints.length === 0) return <p>There are no products available</p>;
 
   const allColorsSelected = selectedCategories.find(
-    (c) => c._id === DEFAULT_CATEGORY._id
+    (c) => c.id === DEFAULT_CATEGORY.id
   );
-  // const filteredPaints = allColorsSelected
-  //   ? paints
-  //   : paints.filter((p) =>
-  //       selectedCategories.find((c) => c._id === p.category._id)
-  //     );
+
   let filteredPaints = paints;
 
   if (searchQuery) {
@@ -81,7 +75,7 @@ function BalancePage() {
     );
   } else if (!allColorsSelected) {
     filteredPaints = paints.filter((p) =>
-      selectedCategories.find((c) => c._id === p.category._id)
+      selectedCategories.find((c) => c.id === p.category.id)
     );
   }
   const sortedPaints = _.orderBy(
@@ -92,29 +86,34 @@ function BalancePage() {
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
     <div className="flex flex-row">
-      <div className="basis-1/4 m-6">
+      <div className="m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <div>
-          <PaintsTable
-            sortColumn={sortColumn}
-            onSort={setSortColumn}
-            paints={paginatedPaints}
-            onDelete={handleDelete}
-          />
-          <Pagination
-            totalCount={filteredPaints.length}
-            pageSize={PAGE_SIZE}
-            selectedPage={selectedPage}
-            onPageSelect={setSelectedPage}
-          />
+          <div>
+            <PaintsTable
+              sortColumn={sortColumn}
+              onSort={setSortColumn}
+              paints={paginatedPaints}
+              onDelete={handleDelete}
+            />
+            <Pagination
+              totalCount={filteredPaints.length}
+              pageSize={PAGE_SIZE}
+              selectedPage={selectedPage}
+              onPageSelect={setSelectedPage}
+            />
+          </div>
         </div>
       </div>
-      <ListGroup
-        items={[DEFAULT_CATEGORY, ...getCategories()]}
-        selectedItems={selectedCategories}
-        onItemSelect={handleCategoryToggle}
-      />
+      <div>
+        <ListGroup
+          items={[DEFAULT_CATEGORY, ...categories]}
+          selectedItems={selectedCategories}
+          onItemSelect={handleCategoryToggle}
+        />
+      </div>
+      <ProductModal />
     </div>
   );
 }
-export default BalancePage;
+export default InventoryPage;
