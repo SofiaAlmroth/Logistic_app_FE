@@ -5,12 +5,13 @@ import {
   DashboardPage,
   InventoryPage,
   LoginPage,
-  OrderPage,
+  OrderHistoryPage,
   ProfilePage,
   RegisterPage,
   SalesPage,
 } from "@pages";
 import { Logout, Settings } from "@components";
+import OrdersPage from "@pages/OrdersPage";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
     children: [
       { path: "/balance", element: <InventoryPage /> },
       { path: "/dashboard", element: <DashboardPage /> },
-      { path: "/orders", element: <OrderPage /> },
+      { path: "/orders", element: <OrderHistoryPage /> },
+      { path: "/neworder", element: <OrdersPage /> },
+
       { path: "/sales", element: <SalesPage /> },
       { path: "/settings", element: <Settings /> },
     ],
