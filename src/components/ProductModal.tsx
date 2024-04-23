@@ -1,12 +1,13 @@
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useModalContext } from "../context/ModalContext";
 import { getPaint, savePaint } from "@services";
 import { useCategories } from "@hooks";
+import InputField from "./common/InputField";
+import SelectField from "./common/SelectField";
 
 const schema = z.object({
   id: z.string().optional(),
@@ -15,10 +16,6 @@ const schema = z.object({
   quantity: z.coerce.number().gt(0, { message: "Quantity is required" }),
   price: z.coerce.number().gt(0, { message: "Price is required" }),
   supplierInfo: z.string().min(1, { message: "Name is required" }),
-  orderDate: z.coerce.date(),
-  ean_gtin: z.string().min(1, { message: "ean_gtin is required" }),
-  batchName: z.string().min(1, { message: "BatchName is required" }),
-  bestBeforeDate: z.coerce.date(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -30,14 +27,12 @@ function ProductModal() {
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
   });
-
   useEffect(() => {
     async function fetch() {
       if (!productId) return;
@@ -47,11 +42,8 @@ function ProductModal() {
     fetch();
   }, [productId]);
 
-  function handleDateChange(date: Date) {
-    console.log(date);
-  }
-
   async function onSubmit(data: FormData) {
+    console.log("submitted", data);
     await savePaint(data);
     setProductId("");
     reset();
@@ -60,68 +52,75 @@ function ProductModal() {
 
   function handleModalClose() {
     setProductId("");
+    reset();
     productModalRef.current?.close();
   }
 
   return (
     <>
-      <dialog id="modal" className="modal gap-4" ref={productModalRef}>
+      <dialog id="modal" className="modal " ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="font-bold text-xl mb-6">New Order</h1>
+          {productId ? (
+            <h1 className="font-bold text-xl p-3">Update Product</h1>
+          ) : (
+            <h1 className="font-bold text-xl p-3">Add Product</h1>
+          )}
           <div className="input-container">
-            <input
-              {...register("name")}
-              type="text"
-              placeholder="Product Name"
-              className="input input-bordered w-full"
-            />
-            {errors.name && <p className="text-error">{errors.name.message}</p>}
-            <select
-              {...register("categoryId")}
-              defaultValue=""
-              className="select select-bordered w-full text-base mt-6"
-            >
-              <option value="" disabled>
-                Category
-              </option>
+            <InputField>
+              <InputField.Label>Name</InputField.Label>
+              <InputField.Input {...register("name")} />
+              <InputField.Error error={errors.name} />
+            </InputField>
 
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            {errors.categoryId && (
-              <p className="text-error">{errors.categoryId.message}</p>
-            )}
-            <input
-              {...register("quantity")}
-              type="text"
-              placeholder="Quantity"
-              className="input input-bordered w-full mt-6"
-            />
-            {errors.quantity && (
-              <p className="text-error">{errors.quantity.message}</p>
-            )}
-            <input
-              {...register("price")}
-              type="text"
-              placeholder="Price"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.price && (
-              <p className="text-error">{errors.price.message}</p>
-            )}
-            <input
-              {...register("supplierInfo")}
-              type="text"
-              placeholder="SupplierInfo"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.supplierInfo && (
-              <p className="text-error">{errors.supplierInfo.message}</p>
-            )}
-            <div className="mt-6 ">
+            <SelectField>
+              <SelectField.Label>Categories</SelectField.Label>
+              <SelectField.Select
+                items={categories}
+                {...register("categoryId")}
+              />
+              <SelectField.Error error={errors.categoryId} />
+            </SelectField>
+
+            <InputField>
+              <InputField.Label>Quantity</InputField.Label>
+              <InputField.Input {...register("quantity")} />
+              <InputField.Error error={errors.quantity} />
+            </InputField>
+
+            <InputField>
+              <InputField.Label>Price</InputField.Label>
+              <InputField.Input {...register("price")} />
+              <InputField.Error error={errors.price} />
+            </InputField>
+
+            <InputField>
+              <InputField.Label>Supplier</InputField.Label>
+              <InputField.Input {...register("supplierInfo")} />
+              <InputField.Error error={errors.supplierInfo} />
+            </InputField>
+          </div>
+          <div className="form-control p-3 mt-3">
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="custom-button "
+            >
+              Save
+            </button>
+          </div>
+        </form>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={handleModalClose}>Close</button>
+        </form>
+      </dialog>
+    </>
+  );
+}
+
+export default ProductModal;
+
+{
+  /* <div className="mt-6 ">
               <Controller
                 control={control}
                 name="orderDate"
@@ -139,11 +138,13 @@ function ProductModal() {
                     wrapperClassName="w-full"
                   />
                 )}
-              />{" "}
+              />
               {errors.orderDate && (
                 <p className="text-error">{errors.orderDate.message}</p>
               )}
             </div>
+
+
             <input
               {...register("ean_gtin")}
               type="text"
@@ -175,24 +176,5 @@ function ProductModal() {
               {errors.bestBeforeDate && (
                 <p className="text-error">{errors.bestBeforeDate.message}</p>
               )}
-            </div>
-          </div>
-          <div className="form-control">
-            <button
-              type="submit"
-              disabled={!isValid}
-              className="btn btn-primary mt-12"
-            >
-              Save
-            </button>
-          </div>
-        </form>
-        <form method="dialog" className="modal-backdrop">
-          <button onClick={handleModalClose}>Close</button>
-        </form>
-      </dialog>
-    </>
-  );
+            </div> */
 }
-
-export default ProductModal;
