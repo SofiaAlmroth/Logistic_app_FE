@@ -38,7 +38,7 @@ function Menu() {
             selectedMenu === "purchase order" ? "bg-menu-select" : ""
           }`}
         >
-          <i className="fa-solid fa-cart-shopping"></i>Purchases
+          <i className="fa-solid fa-clipboard-list"></i>Orders
         </NavLink>
       </li>
 
@@ -50,7 +50,7 @@ function Menu() {
             selectedMenu === "sales order" ? "bg-menu-select" : ""
           }`}
         >
-          <i className="fa-solid fa-clipboard-list"></i>
+          <i className="fa-solid fa-cart-shopping "></i>
           Sales
         </NavLink>
       </li>

@@ -1,7 +1,7 @@
 import ProductModal from "../components/ProductModal";
 import { useModalContext } from "../context/ModalContext";
 
-function OrderPage() {
+function OrdersPage() {
   const { productModalRef } = useModalContext();
 
   return (
@@ -17,4 +17,4 @@ function OrderPage() {
   );
 }
 
-export default OrderPage;
+export default OrdersPage;
