@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Pending from "./Pending";
 import { useModalContext } from "../context/ModalContext";
 import { getPaint, savePaint } from "@services";
 import { useCategories } from "@hooks";
@@ -119,62 +120,83 @@ function ProductModal() {
 
 export default ProductModal;
 
-{
-  /* <div className="mt-6 ">
-              <Controller
-                control={control}
-                name="orderDate"
-                render={({ field }) => (
-                  <DatePicker
-                    selected={field.value}
-                    onChange={(date: Date) => {
-                      field.onChange(date);
-                      handleDateChange(date);
-                    }}
-                    className="input input-bordered w-full"
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="Order Date"
-                    popperPlacement="bottom-start"
-                    wrapperClassName="w-full"
-                  />
-                )}
-              />
-              {errors.orderDate && (
-                <p className="text-error">{errors.orderDate.message}</p>
-              )}
-            </div>
+// <div className="mt-6 ">
+//             <Controller
+//               control={control}
+//               name="orderDate"
+//               render={({ field }) => (
+//                 <DatePicker
+//                   selected={field.value}
+//                   onChange={(date: Date) => {
+//                     field.onChange(date);
+//                     handleDateChange(date);
+//                   }}
+//                   className="input input-bordered w-full"
+//                   dateFormat="yyyy-MM-dd"
+//                   placeholderText="Order Date"
+//                   popperPlacement="bottom-start"
+//                   wrapperClassName="w-full"
+//                 />
+//               )}
+//             />
+//             {errors.orderDate && (
+//               <p className="text-error">{errors.orderDate.message}</p>
+//             )}
+//           </div>
 
-
-            <input
-              {...register("ean_gtin")}
-              type="text"
-              placeholder="ean_gtin"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.ean_gtin && (
-              <p className="text-error">{errors.ean_gtin.message}</p>
-            )}
-            <div className="mt-6 ">
-              <Controller
-                control={control}
-                name="bestBeforeDate"
-                render={({ field }) => (
-                  <DatePicker
-                    selected={field.value}
-                    onChange={(date: Date) => {
-                      field.onChange(date);
-                      handleDateChange(date);
-                    }}
-                    className="input input-bordered w-full"
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText="Best Before Date"
-                    popperPlacement="bottom-start"
-                    wrapperClassName="w-full"
-                  />
-                )}
-              />
-              {errors.bestBeforeDate && (
-                <p className="text-error">{errors.bestBeforeDate.message}</p>
-              )}
-            </div> */
-}
+//           <input
+//             {...register("ean_gtin")}
+//             type="text"
+//             placeholder="ean_gtin"
+//             className="input input-bordered w-full mt-6"
+//           />{" "}
+//           {errors.ean_gtin && (
+//             <p className="text-error">{errors.ean_gtin.message}</p>
+//           )}
+//           <div className="mt-6 ">
+//             <Controller
+//               control={control}
+//               name="bestBeforeDate"
+//               render={({ field }) => (
+//                 <DatePicker
+//                   selected={field.value}
+//                   onChange={(date: Date) => {
+//                     field.onChange(date);
+//                     handleDateChange(date);
+//                   }}
+//                   className="input input-bordered w-full"
+//                   dateFormat="yyyy-MM-dd"
+//                   placeholderText="Best Before Date"
+//                   popperPlacement="bottom-start"
+//                   wrapperClassName="w-full"
+//                 />
+//               )}
+//             />
+//             {errors.bestBeforeDate && (
+//               <p className="text-error">{errors.bestBeforeDate.message}</p>
+//             )}
+//           </div>
+//         </div>
+//         <div className="form-control">
+//           <button
+//             type="submit"
+//             disabled={!isValid}
+//             className="btn btn-primary mt-12"
+//           >
+//             Save
+//           </button>
+//         </div>
+//       </form>
+//       <form method="dialog" className="modal-backdrop">
+//         <button>Close</button>
+//       </form>
+//     </dialog>
+//     <div className="m-2">
+//       <h2 className="  font-serif">
+//         <i className="fa-solid fa-hourglass-half"></i> Pending Orders...
+//       </h2>
+//     </div>
+//     <form>
+//       <Pending />
+//     </form>
+//   </>
