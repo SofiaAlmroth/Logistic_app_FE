@@ -1,4 +1,4 @@
-import { range } from "../../utils";
+import { range } from "@utils";
 
 interface Props {
   pageSize: number;
@@ -7,7 +7,7 @@ interface Props {
   onPageSelect(page: number): void;
 }
 
-export function Pagination({
+function Pagination({
   pageSize,
   totalCount,
   selectedPage,
@@ -35,3 +35,5 @@ export function Pagination({
     </div>
   );
 }
+
+export default Pagination;

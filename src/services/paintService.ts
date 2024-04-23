@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Paint } from "../types";
+import { Paint } from "@types";
 
 export interface PaintFormData {
   id?: string;

@@ -1,15 +1,11 @@
 import _ from "lodash";
-import { Category, SortColumn } from "../types";
-import { PaintsTable } from "../components/PaintsTable";
-import ListGroup from "../components/common/ListGroup";
-import { Pagination } from "../components/common/Pagination";
-import SearchBox from "../components/common/SearchBox";
 import { useState } from "react";
-import { useCategories } from "../hooks/useCategories";
-import { usePaints } from "../hooks/usePaints";
-import { deletePaint } from "../services/paintService";
-import { paginate } from "../utils";
-import ProductModal from "../components/ProductModal";
+import { Category, SortColumn } from "@types";
+import { paginate } from "@utils";
+import { ListGroup, Pagination, SearchBox } from "@components/common";
+import { ProductModal, PaintsTable } from "@components";
+import { useCategories, usePaints } from "@hooks";
+import { deletePaint } from "@services";
 
 const PAGE_SIZE = 6;
 const DEFAULT_CATEGORY: Category = {
@@ -18,7 +14,7 @@ const DEFAULT_CATEGORY: Category = {
 };
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
-function BalancePage() {
+function InventoryPage() {
   const categories = useCategories();
   const { paints, setPaints } = usePaints();
   const [searchQuery, setSearchQuery] = useState("");
@@ -90,7 +86,7 @@ function BalancePage() {
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
   return (
     <div className="flex flex-row">
-      <div className="basis-1/4 m-6">
+      <div className="m-6">
         <SearchBox value={searchQuery} onChange={handleSearch} />
         <div>
           <div>
@@ -109,7 +105,7 @@ function BalancePage() {
           </div>
         </div>
       </div>
-      <div className="ml-1/4">
+      <div>
         <ListGroup
           items={[DEFAULT_CATEGORY, ...categories]}
           selectedItems={selectedCategories}
@@ -120,4 +116,4 @@ function BalancePage() {
     </div>
   );
 }
-export default BalancePage;
+export default InventoryPage;

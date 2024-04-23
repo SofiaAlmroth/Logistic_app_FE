@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getPaint, savePaint } from "../services/paintService";
-import { useCategories } from "../hooks/useCategories";
 import { useModalContext } from "../context/ModalContext";
+import { getPaint, savePaint } from "@services";
+import { useCategories } from "@hooks";
 import InputField from "./common/InputField";
 import SelectField from "./common/SelectField";
 
@@ -153,15 +153,6 @@ export default ProductModal;
             />{" "}
             {errors.ean_gtin && (
               <p className="text-error">{errors.ean_gtin.message}</p>
-            )}
-            <input
-              {...register("batchName")}
-              type="text"
-              placeholder="BatchName"
-              className="input input-bordered w-full mt-6"
-            />{" "}
-            {errors.batchName && (
-              <p className="text-error">{errors.batchName.message}</p>
             )}
             <div className="mt-6 ">
               <Controller
