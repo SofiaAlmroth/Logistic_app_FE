@@ -17,6 +17,14 @@ export interface Category {
   isChecked?: boolean;
 }
 
+export interface Order {
+  id: string;
+  name: number;
+  status: string;
+  quantity: number;
+  orderDate: Date;
+}
+
 export interface TextColumn {
   path: string;
   label: string;

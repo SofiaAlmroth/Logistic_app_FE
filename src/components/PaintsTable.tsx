@@ -14,7 +14,6 @@ interface Props {
 }
 
 function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
-  console.log;
   const { productModalRef, setProductId } = useModalContext();
   const [slideOut, setSlideOut] = useState<string | null>(null);
 

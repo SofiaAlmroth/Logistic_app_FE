@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Pending from "./Pending";
 import { useModalContext } from "../context/ModalContext";
 import { getPaint, savePaint } from "@services";
 import { useCategories } from "@hooks";
