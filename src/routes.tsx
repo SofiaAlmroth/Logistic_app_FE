@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-// import { LoginPage } from "./pages/LoginPage";
 import {
   DashboardPage,
   InventoryPage,
@@ -9,8 +8,9 @@ import {
   ProfilePage,
   RegisterPage,
   SalesPage,
+  SettingsPage,
 } from "@pages";
-import { Logout, Settings } from "@components";
+import { Logout } from "@components";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <DashboardPage /> },
       { path: "/orders", element: <OrderPage /> },
       { path: "/sales", element: <SalesPage /> },
-      { path: "/settings", element: <Settings /> },
+      { path: "/settings", element: <SettingsPage /> },
       { path: "/orders/:id", element: <OrderPage /> },
       { path: "/profile", element: <ProfilePage /> },
     ],
