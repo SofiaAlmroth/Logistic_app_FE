@@ -1,7 +1,7 @@
 import authService from "../services/authService";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { User } from "../types";
+import { User } from "@types";
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);

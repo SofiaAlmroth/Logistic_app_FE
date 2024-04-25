@@ -2,10 +2,10 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { User, UserLogin } from "../types";
 
-const API_ENPOINT = "http://localhost:5999/api/auth/";
+const API_ENDPOINT = "http://localhost:5999/api/auth/";
 
 function login(user: UserLogin) {
-  return axios.post(API_ENPOINT, user);
+  return axios.post(API_ENDPOINT, user);
 }
 
 function getCurrentUser() {

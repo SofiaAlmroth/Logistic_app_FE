@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 function Menu() {
   const [selectedMenu, setSelectedMenu] = useState<string | null>("dashboard");
 
-  console.log(selectedMenu);
-
   return (
     <ul className="menu bg-stone-200 min-w-52 min-h-screen p-4 font-bold">
       <li>
