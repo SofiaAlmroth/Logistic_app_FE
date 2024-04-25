@@ -1,17 +1,17 @@
 import axios from "axios";
-
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
+import { User, UserRegister, UserUpdate } from "../types";
 
 const API_ENDPOINT = "http://localhost:5999/api/users/";
 
-function register(user: User) {
+function register(user: UserRegister) {
   return axios.post(API_ENDPOINT, user);
+}
+
+export function updateUser(user: UserUpdate) {
+  if (user.id) return axios.put<User>(API_ENDPOINT + user.id, user);
 }
 
 export default {
   register,
+  updateUser,
 };
