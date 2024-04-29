@@ -1,8 +1,32 @@
 import axios from "axios";
 import { Order } from "../types";
+import { PaintFormData } from "./paintService";
+
+export interface OrderFormData {
+  id?: string;
+  rows: PaintFormData[];
+}
 
 const API_ENDPOINT = "http://localhost:5999/api/orders";
+
+function orderUrl(id?: string) {
+  if (id) return `http://localhost:5999/api/orders/${id}`;
+
+  return API_ENDPOINT;
+}
 
 export function getOrders() {
   return axios.get<Order[]>(API_ENDPOINT);
 }
+
+export function saveOrder(order: OrderFormData) {
+  return axios.post<Order>(orderUrl(), order);
+}
+
+// export interface PaintRow {
+//   name: string;
+//   categoryId: string;
+//   quantity: number;
+//   price: number;
+//   supplierInfo: string;
+// }

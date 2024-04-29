@@ -11,10 +11,15 @@ function OrderHistoryPage() {
 
   const navigate = useNavigate();
   const orders = useOrders();
+  console.log(orders);
+
+  function handleOpen(id: string) {
+    console.log(id);
+  }
 
   const columns: Column<Order>[] = [
-    { path: "number", label: "Name" },
-    { path: "quantity", label: "Quantity" },
+    { path: "number", label: "Order Number" },
+    { path: "totalQuantity", label: "Quantity" },
     {
       path: "status",
       label: "Status",
@@ -26,6 +31,20 @@ function OrderHistoryPage() {
       path: "orderDate",
       label: "Order Date",
       content: (order) => <>{new Date(order.orderDate).toLocaleDateString()}</>,
+    },
+
+    {
+      key: "view",
+      content: (order) => (
+        <div className="tooltip tooltip-error" data-tip="View">
+          <button
+            className="btn btn-circle"
+            onClick={() => handleOpen(order.id)}
+          >
+            <i className="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      ),
     },
   ];
 
