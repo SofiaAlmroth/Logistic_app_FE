@@ -45,7 +45,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  isAdmin: Boolean;
+  isAdmin: boolean;
 }
 export interface UserRegister {
   name: string;
