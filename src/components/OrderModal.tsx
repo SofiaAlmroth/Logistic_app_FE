@@ -3,6 +3,7 @@ import { forwardRef, useEffect, useState } from "react";
 import { Table } from "./common";
 import { getOrder } from "@services/orderService";
 import { useNavigate } from "react-router-dom";
+import _ from "lodash";
 
 interface Props {
   onClose(): void;
@@ -53,6 +54,8 @@ function OrderModal(
     },
   ];
 
+  const sortedPaints = _.orderBy(items, sortColumn.path, sortColumn.order);
+
   return (
     <>
       <dialog id="order_modal" className="modal" ref={ref}>
@@ -61,7 +64,7 @@ function OrderModal(
 
           <Table
             columns={columns}
-            items={items}
+            items={sortedPaints}
             onSort={setSortColumn}
             sortColumn={sortColumn}
           />

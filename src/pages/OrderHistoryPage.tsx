@@ -2,6 +2,7 @@ import OrderModal from "@components/OrderModal";
 import { Table } from "@components/common";
 import { useOrders } from "@hooks/useOrders";
 import { Column, Order, SortColumn } from "@types";
+import _ from "lodash";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -56,6 +57,8 @@ function OrderHistoryPage() {
     },
   ];
 
+  const sortedOrders = _.orderBy(orders, sortColumn.path, sortColumn.order);
+
   return (
     <div className="w-full">
       <div className="m-10">
@@ -75,7 +78,7 @@ function OrderHistoryPage() {
       <div className="m-6">
         <Table
           columns={columns}
-          items={orders}
+          items={sortedOrders}
           onSort={setSortColumn}
           sortColumn={sortColumn}
         />
