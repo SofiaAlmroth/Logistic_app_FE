@@ -27,10 +27,6 @@ export function saveOrder(order: OrderFormData) {
   return axios.post<Order>(orderUrl(), order);
 }
 
-// export interface PaintRow {
-//   name: string;
-//   categoryId: string;
-//   quantity: number;
-//   price: number;
-//   supplierInfo: string;
-// }
+export function updateOrder(id: string, status: string) {
+  return axios.put<Order>(orderUrl(id), status);
+}

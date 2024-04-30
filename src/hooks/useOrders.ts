@@ -14,5 +14,5 @@ export function useOrders() {
     fetch();
   }, []);
 
-  return orders;
+  return { orders, setOrders };
 }

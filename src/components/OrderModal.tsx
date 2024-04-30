@@ -31,7 +31,6 @@ function OrderModal(
   }, [orderId]);
 
   const items: Paint[] = order?.rows || [];
-  console.log("orders", order);
 
   const columns: Column<Paint>[] = [
     { path: "name", label: "Name" },

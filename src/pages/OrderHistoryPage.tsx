@@ -1,6 +1,7 @@
 import OrderModal from "@components/OrderModal";
 import { Table } from "@components/common";
 import { useOrders } from "@hooks/useOrders";
+import { saveOrder, updateOrder } from "@services/orderService";
 import { Column, Order, SortColumn } from "@types";
 import _ from "lodash";
 import { useRef, useState } from "react";
@@ -8,14 +9,38 @@ import { useNavigate } from "react-router-dom";
 
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
+enum Status {
+  PENDING,
+  IN_TRANSIT,
+  RECEIVED,
+}
+
 function OrderHistoryPage() {
-  const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
-  const [currentOrderId, setCurrentOrderId] = useState("");
   const modalRef = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
-  const orders = useOrders();
+  const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
+  const [currentOrderId, setCurrentOrderId] = useState("");
+  const { orders, setOrders } = useOrders();
 
-  console.log(orders);
+  const statusOptions = [
+    { label: "PENDING", color: "badge-warning" },
+    { label: "IN_TRANSIT", color: "badge-accent" },
+    { label: "RECEIVED", color: "badge-success" },
+  ];
+
+  function handleStatusUpdate(id: string, newStatus: string) {
+    const newOrders = orders.map((order) => {
+      if (order.id === id) {
+        order.status = newStatus;
+      }
+      return order;
+    });
+    setOrders(newOrders);
+    // updateOrder(id, newStatus);
+
+    console.log(newOrders);
+    console.log(newStatus);
+  }
 
   function handleOpenModal(id: string) {
     modalRef.current?.showModal();
@@ -29,19 +54,31 @@ function OrderHistoryPage() {
   const columns: Column<Order>[] = [
     { path: "number", label: "Order Number" },
     { path: "totalQuantity", label: "Quantity" },
-    {
-      path: "status",
-      label: "Status",
-      content: (order) => (
-        <div className="badge badge-success">{order.status}</div>
-      ),
-    },
+
     {
       path: "orderDate",
       label: "Order Date",
       content: (order) => <>{new Date(order.orderDate).toLocaleDateString()}</>,
     },
-
+    {
+      path: "status",
+      label: "Status",
+      content: (order) => (
+        <select
+          className={` badge ${
+            statusOptions.find((o) => o.label === order.status)?.color
+          }`}
+          value={order.status}
+          onChange={(e) => handleStatusUpdate(order.id, e.target.value)}
+        >
+          {statusOptions.map((option) => (
+            <option key={option.label} value={option.label}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      ),
+    },
     {
       key: "view",
       content: (order) => (
