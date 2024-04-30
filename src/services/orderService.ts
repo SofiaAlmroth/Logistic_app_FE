@@ -19,6 +19,10 @@ export function getOrders() {
   return axios.get<Order[]>(API_ENDPOINT);
 }
 
+export function getOrder(id: string) {
+  return axios.get<Order>(orderUrl(id));
+}
+
 export function saveOrder(order: OrderFormData) {
   return axios.post<Order>(orderUrl(), order);
 }

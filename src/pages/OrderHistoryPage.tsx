@@ -1,20 +1,28 @@
+import OrderModal from "@components/OrderModal";
 import { Table } from "@components/common";
 import { useOrders } from "@hooks/useOrders";
 import { Column, Order, SortColumn } from "@types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function OrderHistoryPage() {
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
-
+  const [currentOrderId, setCurrentOrderId] = useState("");
+  const modalRef = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
   const orders = useOrders();
+
   console.log(orders);
 
-  function handleOpen(id: string) {
-    console.log(id);
+  function handleOpenModal(id: string) {
+    modalRef.current?.showModal();
+    setCurrentOrderId(id);
+  }
+
+  function handleCloseModal() {
+    modalRef.current?.close();
   }
 
   const columns: Column<Order>[] = [
@@ -36,10 +44,10 @@ function OrderHistoryPage() {
     {
       key: "view",
       content: (order) => (
-        <div className="tooltip tooltip-error" data-tip="View">
+        <div className="tooltip tooltip-primary" data-tip="View">
           <button
             className="btn btn-circle"
-            onClick={() => handleOpen(order.id)}
+            onClick={() => handleOpenModal(order.id)}
           >
             <i className="fa-solid fa-eye"></i>
           </button>
@@ -58,6 +66,11 @@ function OrderHistoryPage() {
           New order
         </button>
       </div>
+      <OrderModal
+        orderId={currentOrderId}
+        ref={modalRef}
+        onClose={handleCloseModal}
+      />
 
       <div className="m-6">
         <Table

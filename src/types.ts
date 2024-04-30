@@ -1,13 +1,13 @@
 export interface Paint {
-  id?: string;
+  id: string;
   name: string;
   category: Category;
   quantity: number;
   price: number;
   supplierInfo: string;
-  orderDate?: Date;
-  ean_gtin?: string;
-  bestBeforeDate?: Date;
+  orderDate: Date;
+  ean_gtin: string;
+  bestBeforeDate: Date;
 }
 
 export interface Category {
@@ -22,6 +22,7 @@ export interface Order {
   status: string;
   quantity: number;
   orderDate: Date;
+  rows: Paint[];
 }
 
 export interface TextColumn {

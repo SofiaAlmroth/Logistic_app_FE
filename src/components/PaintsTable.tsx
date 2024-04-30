@@ -33,7 +33,7 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     { path: "name", label: "Name" },
     { path: "category.name", label: "Category" },
     { path: "quantity", label: "Quantity (l)" },
-    { path: "price", label: "Price (SEK)" },
+    { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
     {
       path: "orderDate",
