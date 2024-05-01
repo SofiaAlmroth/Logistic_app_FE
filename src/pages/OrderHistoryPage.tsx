@@ -27,16 +27,10 @@ function OrderHistoryPage() {
       if (order.id === id) {
         order.status = newStatus;
       }
-      console.log("order", order);
-      console.log("orderID", order.id);
-
       return order;
     });
     setOrders(newOrders);
     updateOrder(id, newStatus);
-
-    console.log("New order", newOrders);
-    console.log("New status", newStatus);
   }
 
   function handleOpenModal(id: string) {
