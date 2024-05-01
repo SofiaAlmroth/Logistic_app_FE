@@ -39,12 +39,15 @@ function OrderModal(
     { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
     {
+      key: "orderDate",
       path: "orderDate",
       label: "Order Date",
       content: (paint) => <>{new Date(paint.orderDate).toLocaleDateString()}</>,
     },
     { path: "ean_gtin", label: "Ean-Gtin" },
     {
+      key: "bestBeforeDate",
+
       path: "bestBeforeDate",
       label: "Best Before Date",
       content: (paint) => (

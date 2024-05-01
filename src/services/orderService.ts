@@ -28,5 +28,5 @@ export function saveOrder(order: OrderFormData) {
 }
 
 export function updateOrder(id: string, status: string) {
-  return axios.put<Order>(orderUrl(id), status);
+  return axios.put<Order>(orderUrl(id), { status });
 }

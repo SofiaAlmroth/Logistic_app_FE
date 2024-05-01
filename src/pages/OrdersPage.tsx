@@ -65,13 +65,13 @@ function OrdersPage() {
   }
 
   return (
-    <div className="w-full m-10">
+    <div className="w-full max-w-7xl m-10">
       <button onClick={handleAddProduct} className="custom-button btn-wide">
         Add Product
       </button>
       <form onSubmit={handleSubmit(onSubmit)}>
         {showHeader && (
-          <table className="table mt-6 ">
+          <table className="table mt-6">
             <thead>
               <tr>
                 <th>Name</th>
@@ -88,13 +88,13 @@ function OrdersPage() {
                 <tr key={field.id}>
                   <td className="p-2">
                     <input
-                      className=" rounded  px-4 py-2 min-w-40"
+                      className=" rounded  px-4 py-2 "
                       {...register(`rows.${index}.name`)}
                     />
                   </td>
                   <td className="p-2">
                     <select
-                      className=" rounded  px-4 py-2 min-w-40"
+                      className=" rounded  px-4 py-2 w-48"
                       {...register(`rows.${index}.categoryId`)}
                     >
                       <option />
@@ -107,7 +107,7 @@ function OrdersPage() {
                   </td>
                   <td className="p-2">
                     <input
-                      className="rounded px-4 py-2 max-w-20"
+                      className="rounded px-4 py-2 "
                       {...register(`rows.${index}.quantity`, {
                         valueAsNumber: true,
                       })}
@@ -115,7 +115,7 @@ function OrdersPage() {
                   </td>
                   <td className="p-2">
                     <input
-                      className="rounded  px-4 py-2  max-w-20"
+                      className="rounded  px-4 py-2  "
                       {...register(`rows.${index}.price`, {
                         valueAsNumber: true,
                       })}
@@ -123,7 +123,7 @@ function OrdersPage() {
                   </td>
                   <td className="p-2">
                     <input
-                      className="rounded  px-4 py-2 w-full min-w-40"
+                      className="rounded  px-4 py-2 w-full "
                       {...register(`rows.${index}.supplierInfo`)}
                     />
                   </td>
@@ -146,12 +146,11 @@ function OrdersPage() {
           </table>
         )}
         {showHeader && (
-          <button
-            type="submit"
-            className="custom-button btn-wide mt-12 absolute right-12"
-          >
-            Submit Order
-          </button>
+          <div className="flex justify-end w-full">
+            <button type="submit" className="custom-button btn-wide mt-12 ">
+              Submit Order
+            </button>
+          </div>
         )}
       </form>
     </div>

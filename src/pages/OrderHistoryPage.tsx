@@ -1,19 +1,13 @@
 import OrderModal from "@components/OrderModal";
 import { Table } from "@components/common";
 import { useOrders } from "@hooks/useOrders";
-import { saveOrder, updateOrder } from "@services/orderService";
+import { updateOrder } from "@services/orderService";
 import { Column, Order, SortColumn } from "@types";
 import _ from "lodash";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
-
-enum Status {
-  PENDING,
-  IN_TRANSIT,
-  RECEIVED,
-}
+const DEFAULT_SORT_COLUMN: SortColumn = { path: "number", order: "asc" };
 
 function OrderHistoryPage() {
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -23,9 +17,9 @@ function OrderHistoryPage() {
   const { orders, setOrders } = useOrders();
 
   const statusOptions = [
-    { label: "PENDING", color: "badge-warning" },
-    { label: "IN_TRANSIT", color: "badge-accent" },
-    { label: "RECEIVED", color: "badge-success" },
+    { label: "PENDING", color: "bg-orange-200 text-orange-800" },
+    { label: "IN_TRANSIT", color: "bg-blue-200 text-blue-800" },
+    { label: "RECEIVED", color: "bg-emerald-200 text-emerald-800" },
   ];
 
   function handleStatusUpdate(id: string, newStatus: string) {
@@ -33,13 +27,16 @@ function OrderHistoryPage() {
       if (order.id === id) {
         order.status = newStatus;
       }
+      console.log("order", order);
+      console.log("orderID", order.id);
+
       return order;
     });
     setOrders(newOrders);
-    // updateOrder(id, newStatus);
+    updateOrder(id, newStatus);
 
-    console.log(newOrders);
-    console.log(newStatus);
+    console.log("New order", newOrders);
+    console.log("New status", newStatus);
   }
 
   function handleOpenModal(id: string) {
@@ -61,18 +58,23 @@ function OrderHistoryPage() {
       content: (order) => <>{new Date(order.orderDate).toLocaleDateString()}</>,
     },
     {
+      key: "status",
       path: "status",
       label: "Status",
       content: (order) => (
         <select
-          className={` badge ${
+          className={`border-none font-semibold py-1 h-8 badge ${
             statusOptions.find((o) => o.label === order.status)?.color
           }`}
           value={order.status}
           onChange={(e) => handleStatusUpdate(order.id, e.target.value)}
         >
           {statusOptions.map((option) => (
-            <option key={option.label} value={option.label}>
+            <option
+              className="bg-gray-200 text-black"
+              key={option.label}
+              value={option.label}
+            >
               {option.label}
             </option>
           ))}
