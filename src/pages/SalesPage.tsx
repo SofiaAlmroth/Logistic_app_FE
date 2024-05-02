@@ -66,9 +66,34 @@ function Sales() {
     const paintToAdd = paints.find((paint) => paint.id === id);
 
     if (paintToAdd) {
-      setCartItems((prevCartItems) => [...prevCartItems, paintToAdd]);
+      const existingItemIndex = cartItems.findIndex((item) => item.id === id);
+
+      if (existingItemIndex !== -1) {
+        const updatedCartItems = [...cartItems];
+        updatedCartItems[existingItemIndex].quantity++;
+
+        setCartItems(updatedCartItems);
+      } else {
+        setCartItems((prevCartItems) => [
+          ...prevCartItems,
+          { ...paintToAdd, quantity: 1 },
+        ]);
+      }
     }
   }
+
+  function calculateCartItems(cartItems: Paint[]) {
+    let totalQuantity = 0;
+
+    for (let i = 0; i < cartItems.length; i++) {
+      let itemQuantity = cartItems[i].quantity;
+
+      totalQuantity = totalQuantity + itemQuantity;
+    }
+    return totalQuantity;
+  }
+
+  const cartItemsQuantity = calculateCartItems(cartItems);
 
   function handleSearch(value: string) {
     setSearchQuery(value);
@@ -104,7 +129,7 @@ function Sales() {
         <div className="flex justify-end my-3">
           <button onClick={handleOpenModal} className="btn btn-sm">
             Cart
-            <div className="badge badge-secondary">{cartItems.length}</div>
+            <div className="badge badge-secondary">{cartItemsQuantity}</div>
           </button>
           <SalesModal
             cartItems={cartItems}

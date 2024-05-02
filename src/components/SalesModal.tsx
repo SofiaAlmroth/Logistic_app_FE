@@ -36,7 +36,7 @@ function SalesModal(
   const columns: Column<Paint>[] = [
     { path: "name", label: "Name" },
     { path: "category.name", label: "Category" },
-    { path: "quantity", label: "Quantity (l)" },
+    { path: "quantity", label: "Quantity" },
     { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
     {
