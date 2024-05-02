@@ -53,12 +53,16 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  isAdmin: string;
+  isAdmin: boolean;
 }
 export interface UserRegister {
   name: string;
   email: string;
   password: string;
+}
+
+export interface UserUpdate extends Partial<UserRegister> {
+  id: string;
 }
 
 export interface UserLogin {
