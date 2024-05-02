@@ -1,10 +1,9 @@
 import axios from "axios";
-import { Order, Sale } from "../types";
-import { PaintFormData } from "./paintService";
+import { Order, Paint, Sale } from "../types";
 
 export interface SaleFormData {
   id?: string;
-  rows: PaintFormData[];
+  rows: Paint[];
 }
 
 const API_ENDPOINT = "http://localhost:5999/api/sales";
@@ -23,7 +22,7 @@ export function getSale(id: string) {
   return axios.get<Sale>(orderUrl(id));
 }
 
-export function saveOrder(order: SaleFormData) {
+export function saveSale(order: SaleFormData) {
   return axios.post<Order>(orderUrl(), order);
 }
 

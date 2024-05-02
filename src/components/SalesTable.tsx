@@ -15,6 +15,7 @@ function SalesTable({ sortColumn, paints, onSort, onAdd }: Props) {
   const columns: Column<Paint>[] = [
     { path: "name", label: "Name" },
     { path: "category.name", label: "Category" },
+    { path: "quantity", label: "Quantity" },
     { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
     {

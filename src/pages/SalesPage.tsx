@@ -6,7 +6,6 @@ import { ListGroup, Pagination, SearchBox } from "@components/common";
 import { ProductModal } from "@components";
 import { useCategories, usePaints } from "@hooks";
 import SalesTable from "@components/SalesTable";
-import { useParams } from "react-router-dom";
 import SalesModal from "@components/SalesModal";
 
 const PAGE_SIZE = 6;
@@ -134,7 +133,6 @@ function Sales() {
           <SalesModal
             cartItems={cartItems}
             onClose={handleCloseModal}
-            saleId="1"
             ref={modalRef}
           />
         </div>
