@@ -5,3 +5,4 @@ export { default as OrderHistoryPage } from "./OrderHistoryPage";
 export { default as ProfilePage } from "./ProfilePage";
 export { default as RegisterPage } from "./RegisterPage";
 export { default as SalesPage } from "./SalesPage";
+export { default as SettingsPage } from "./SettingsPage";
