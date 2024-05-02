@@ -14,7 +14,6 @@ interface Props {
 }
 
 function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
-  console.log;
   const { productModalRef, setProductId } = useModalContext();
   const [slideOut, setSlideOut] = useState<string | null>(null);
 
@@ -33,16 +32,18 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
   const columns: Column<Paint>[] = [
     { path: "name", label: "Name" },
     { path: "category.name", label: "Category" },
-    { path: "quantity", label: "Quantity" },
+    { path: "quantity", label: "Quantity (l)" },
     { path: "price", label: "Price" },
     { path: "supplierInfo", label: "Suppier" },
     {
+      key: "orderDate",
       path: "orderDate",
       label: "Order Date",
       content: (paint) => <>{new Date(paint.orderDate).toLocaleDateString()}</>,
     },
     { path: "ean_gtin", label: "Ean-Gtin" },
     {
+      key: "bestBeforeDate",
       path: "bestBeforeDate",
       label: "Best Before Date",
       content: (paint) => (
@@ -52,7 +53,7 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     {
       key: "update",
       content: (paint: Paint) => (
-        <div className="tooltip " data-tip="Update">
+        <div className="tooltip tooltip-primary" data-tip="Update">
           <button
             className="btn btn-circle"
             onClick={() => handleOpenModal(paint.id)}

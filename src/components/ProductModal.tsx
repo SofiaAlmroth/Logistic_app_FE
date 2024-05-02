@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Pending from "./Pending";
 import { useModalContext } from "../context/ModalContext";
 import { getPaint, savePaint } from "@services";
 import { useCategories } from "@hooks";
@@ -59,7 +58,7 @@ function ProductModal() {
 
   return (
     <>
-      <dialog id="modal" className="modal " ref={productModalRef}>
+      <dialog id="modal" className="modal" ref={productModalRef}>
         <form className="modal-box" onSubmit={handleSubmit(onSubmit)}>
           {productId ? (
             <h1 className="font-bold text-xl p-3">Update Product</h1>

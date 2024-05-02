@@ -7,7 +7,6 @@ export interface Paint {
   supplierInfo: string;
   orderDate: Date;
   ean_gtin: string;
-  batchName: string;
   bestBeforeDate: Date;
 }
 
@@ -15,6 +14,15 @@ export interface Category {
   id: string;
   name: string;
   isChecked?: boolean;
+}
+
+export interface Order {
+  id: string;
+  number: number;
+  status: string;
+  quantity: number;
+  orderDate: Date;
+  rows: Paint[];
 }
 
 export interface TextColumn {
