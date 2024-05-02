@@ -2,7 +2,7 @@ import { Column, Paint, SortColumn } from "@types";
 import { forwardRef, useState } from "react";
 import { Table } from "./common";
 import _ from "lodash";
-import { getSale, saveSale } from "@services/salesService";
+import { saveSale } from "@services/salesService";
 import { useNavigate } from "react-router-dom";
 
 interface Props {

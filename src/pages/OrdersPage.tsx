@@ -57,7 +57,6 @@ function OrdersPage() {
 
   async function onSubmit(data: FormData) {
     console.log("submitted", data);
-
     await saveOrder(data);
     navigate("/orders");
   }

@@ -1,9 +1,7 @@
-import OrderModal from "@components/OrderModal";
 import { Table } from "@components/common";
-import { useOrders } from "@hooks/useOrders";
-import { SalesPage } from "@pages";
-import { updateOrder } from "@services/orderService";
-import { Column, Order, SortColumn } from "@types";
+import { useSales } from "@hooks";
+import { updateSale } from "@services/salesService";
+import { Column, Order, Sale, SortColumn } from "@types";
 import _ from "lodash";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,55 +12,59 @@ function SaleHistorypage() {
   const modalRef = useRef<HTMLDialogElement>(null);
   const navigate = useNavigate();
   const [sortColumn, setSortColumn] = useState(DEFAULT_SORT_COLUMN);
-  const [currentOrderId, setCurrentOrderId] = useState("");
-  const { orders, setOrders } = useOrders();
+  const [currentSalesId, setCurrentSalesId] = useState("");
+  const { sales, setSales } = useSales();
 
   const statusOptions = [
     { label: "PENDING", color: "bg-orange-200 text-orange-800" },
     { label: "IN_TRANSIT", color: "bg-blue-200 text-blue-800" },
-    { label: "RECEIVED", color: "bg-emerald-200 text-emerald-800" },
+    { label: "SENT", color: "bg-emerald-200 text-emerald-800" },
   ];
 
-  function handleStatusUpdate(id: string, newStatus: string) {
-    const newOrders = orders.map((order) => {
-      if (order.id === id) {
-        order.status = newStatus;
-      }
-      return order;
-    });
-    setOrders(newOrders);
-    updateOrder(id, newStatus);
-  }
+  console.log(sales);
 
   function handleOpenModal(id: string) {
     modalRef.current?.showModal();
-    setCurrentOrderId(id);
+    setCurrentSalesId(id);
   }
 
-  function handleCloseModal() {
-    modalRef.current?.close();
+  // function handleCloseModal() {
+  //   modalRef.current?.close();
+  // }
+
+  async function handleStatusUpdate(id: string, newStatus: string) {
+    const newSales = sales.map((sale) => {
+      if (sale.id === id) {
+        sale.status = newStatus;
+        console.log(sale.id);
+      }
+      return sale;
+    });
+    setSales(newSales);
+    await updateSale(id, newStatus);
   }
 
-  const columns: Column<Order>[] = [
-    { path: "number", label: "Order Number" },
+  const columns: Column<Sale>[] = [
+    { path: "number", label: "Sales Number" },
     { path: "totalQuantity", label: "Quantity" },
 
     {
+      key: "orderDate",
       path: "orderDate",
       label: "Order Date",
-      content: (order) => <>{new Date(order.orderDate).toLocaleDateString()}</>,
+      content: (sales) => <>{new Date(sales.orderDate).toLocaleDateString()}</>,
     },
     {
       key: "status",
       path: "status",
       label: "Status",
-      content: (order) => (
+      content: (sales) => (
         <select
           className={`border-none font-semibold py-1 h-8 badge ${
-            statusOptions.find((o) => o.label === order.status)?.color
+            statusOptions.find((s) => s.label === sales.status)?.color
           }`}
-          value={order.status}
-          onChange={(e) => handleStatusUpdate(order.id, e.target.value)}
+          value={sales.status}
+          onChange={(e) => handleStatusUpdate(sales.id, e.target.value)}
         >
           {statusOptions.map((option) => (
             <option
@@ -78,11 +80,11 @@ function SaleHistorypage() {
     },
     {
       key: "view",
-      content: (order) => (
+      content: (sales) => (
         <div className="tooltip tooltip-primary" data-tip="View">
           <button
             className="btn btn-circle"
-            onClick={() => handleOpenModal(order.id)}
+            onClick={() => handleOpenModal(sales.id)}
           >
             <i className="fa-solid fa-eye"></i>
           </button>
@@ -91,7 +93,7 @@ function SaleHistorypage() {
     },
   ];
 
-  const sortedOrders = _.orderBy(orders, sortColumn.path, sortColumn.order);
+  const sortedSales = _.orderBy(sales, sortColumn.path, sortColumn.order);
 
   return (
     <div className="w-full">
@@ -103,11 +105,15 @@ function SaleHistorypage() {
           New sale order
         </button>
       </div>
-
+      {/* <SalesModal
+        cartItems={cartItems}
+        onClose={handleCloseModal}
+        ref={modalRef}
+      /> */}
       <div className="m-6">
         <Table
           columns={columns}
-          items={sortedOrders}
+          items={sortedSales}
           onSort={setSortColumn}
           sortColumn={sortColumn}
         />

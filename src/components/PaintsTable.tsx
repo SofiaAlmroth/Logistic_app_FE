@@ -42,6 +42,7 @@ function PaintsTable({ sortColumn, paints, onSort, onDelete }: Props) {
     },
     { path: "ean_gtin", label: "Ean-Gtin" },
     {
+      key: "bestBeforeDate",
       path: "bestBeforeDate",
       label: "Best Before Date",
       content: (paint) => (

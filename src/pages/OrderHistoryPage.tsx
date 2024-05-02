@@ -1,6 +1,6 @@
 import OrderModal from "@components/OrderModal";
 import { Table } from "@components/common";
-import { useOrders } from "@hooks/useOrders";
+import { useOrders } from "@hooks";
 import { updateOrder } from "@services/orderService";
 import { Column, Order, SortColumn } from "@types";
 import _ from "lodash";
@@ -22,7 +22,7 @@ function OrderHistoryPage() {
     { label: "RECEIVED", color: "bg-emerald-200 text-emerald-800" },
   ];
 
-  function handleStatusUpdate(id: string, newStatus: string) {
+  async function handleStatusUpdate(id: string, newStatus: string) {
     const newOrders = orders.map((order) => {
       if (order.id === id) {
         order.status = newStatus;
@@ -30,7 +30,7 @@ function OrderHistoryPage() {
       return order;
     });
     setOrders(newOrders);
-    updateOrder(id, newStatus);
+    await updateOrder(id, newStatus);
   }
 
   function handleOpenModal(id: string) {
