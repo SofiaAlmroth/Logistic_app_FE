@@ -1,4 +1,8 @@
+import { useOrders } from "@hooks/useOrders";
+
 export function Stat() {
+  const { orders } = useOrders();
+
   return (
     <div className="stats shadow">
       <div className="stat">
@@ -18,8 +22,7 @@ export function Stat() {
           </svg>
         </div>
         <div className="stat-title">Total Purchase</div>
-        <div className="stat-value text-primary">1256</div>
-        <div className="stat-desc">24% more than last month</div>
+        <div className="stat-value text-primary">{orders.length}</div>
       </div>
 
       <div className="stat">
@@ -40,7 +43,6 @@ export function Stat() {
         </div>
         <div className="stat-title">Total Sales</div>
         <div className="stat-value text-secondary">958</div>
-        <div className="stat-desc">21% more than last month</div>
       </div>
 
       <div className="stat">

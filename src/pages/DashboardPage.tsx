@@ -6,7 +6,9 @@ function Dashboard() {
     <>
       <div
         style={{
-          justifyContent: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           marginTop: "20px",
           width: "100%",
         }}
@@ -14,7 +16,7 @@ function Dashboard() {
         <div style={{ marginLeft: "10px", marginBottom: "15px" }}>
           <Stat />
         </div>
-        <div style={{}}>
+        <div style={{ width: "75%" }}>
           <BarStacked />
         </div>
       </div>

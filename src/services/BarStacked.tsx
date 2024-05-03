@@ -1,86 +1,82 @@
-import React from "react";
-import { AxisOptions, Chart, UserSerie } from "react-charts";
-// @ts-ignore
-import ResizableBox from "./ResizableBox";
+import React, { useEffect, useRef } from "react";
 import { usePaints } from "../hooks/usePaints";
-import { Paint } from "../types";
+import { useCategories } from "../hooks/useCategories";
+import { Chart } from "chart.js/auto";
 
-// Definiera en utökad version av Paint-typen med primär och sekundär egenskap
-interface ExtendedPaint extends Paint {
-  primary: string;
-  secondary: number;
-}
+const PaintsChart = () => {
+  const { paints } = usePaints();
+  const categories = useCategories();
+  const chartRef = useRef<HTMLCanvasElement>(null);
 
-export default function BarStacked() {
-  const { paints, setPaints } = usePaints();
+  useEffect(() => {
+    if (!chartRef.current) return;
 
-  const primaryAxis = React.useMemo<AxisOptions<ExtendedPaint>>(
-    () => ({
-      getValue: (paint) => paint.primary,
-    }),
-    []
-  );
+    const ctx = chartRef.current.getContext("2d");
+    if (!ctx) return;
 
-  const secondaryAxes = React.useMemo<AxisOptions<ExtendedPaint>[]>(
-    () => [
-      {
-        getValue: (paint) => paint.secondary,
-        min: 0,
-      },
-    ],
-    []
-  );
-
-  // Skapa en ny serie för varje unik färgkategori
-  const formattedData: UserSerie<ExtendedPaint>[] = [];
-
-  paints.forEach((paint) => {
-    // Kolla om det redan finns en serie med samma kategori
-    const existingSeries = formattedData.find(
-      (series) => series.label === paint.category.name
-    );
-
-    if (existingSeries) {
-      // Beräkna den kumulativa kvantiteten för att justera datapunkterna
-      const cumulativeQuantity = existingSeries.data.reduce(
-        (sum, dataPoint) => sum + dataPoint.secondary,
-        0
+    // Skapa en sorterad lista av målningar baserat på kategorinamn
+    const sortedPaints = [...paints].sort((a, b) => {
+      const categoryA = categories.find(
+        (category) => category.id === a.category.id
       );
+      const categoryB = categories.find(
+        (category) => category.id === b.category.id
+      );
+      if (categoryA && categoryB) {
+        return categoryA.name.localeCompare(categoryB.name);
+      } else {
+        return 0; // Returnera 0 om antingen categoryA eller categoryB är undefined
+      }
+    });
 
-      // Justera varje datapunkt för att börja från 0
-      const adjustedQuantity = paint.quantity - cumulativeQuantity;
+    // Extrahera namnen på färgerna baserat på den sorterade listan av målningar
+    const colors = sortedPaints.map((paint) => {
+      const category = categories.find(
+        (category) => category.id === paint.category.id
+      );
+      return category ? category.name : "rgba(255, 99, 132, 1)";
+    });
 
-      // Lägg till den justerade datapunkten till den befintliga serien
-      existingSeries.data.push({
-        primary: paint.name,
-        secondary: adjustedQuantity,
-      } as ExtendedPaint);
-    } else {
-      // Om det inte finns någon befintlig serie, skapa en ny
-      formattedData.push({
-        label: paint.category.name,
-        data: [
+    const chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: sortedPaints.map((paint) => paint.name),
+        datasets: [
           {
-            primary: paint.name,
-            secondary: paint.quantity,
-          } as ExtendedPaint,
+            label: "In stock",
+            data: sortedPaints.map((paint) => paint.quantity),
+            backgroundColor: colors, // Använd färgerna från kategorin
+            borderColor: "rgba(255, 99, 132, 1)",
+          },
         ],
-      });
-    }
-  });
+      },
+      options: {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Paints",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Quantity",
+            },
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+
+    return () => chart.destroy(); // Cleanup on unmount
+  }, [paints, categories]);
 
   return (
-    <>
-      <ResizableBox>
-        <Chart
-          options={{
-            data: formattedData,
-            primaryAxis,
-            secondaryAxes,
-            tooltip: false,
-          }}
-        />
-      </ResizableBox>
-    </>
+    <div>
+      <canvas ref={chartRef}></canvas>
+    </div>
   );
-}
+};
+
+export default PaintsChart;
