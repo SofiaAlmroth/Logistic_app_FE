@@ -5,27 +5,27 @@ import {
   InventoryPage,
   LoginPage,
   OrderHistoryPage,
+  OrdersPage,
   ProfilePage,
   RegisterPage,
   SalesPage,
   SettingsPage,
 } from "@pages";
 import { Logout } from "@components";
-import OrdersPage from "@pages/OrdersPage";
+import SaleHistorypage from "@pages/SaleHistoryPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "/balance", element: <InventoryPage /> },
+      { path: "/inventory", element: <InventoryPage /> },
       { path: "/dashboard", element: <DashboardPage /> },
       { path: "/orders", element: <OrderHistoryPage /> },
       { path: "/neworder", element: <OrdersPage /> },
-
-      { path: "/sales", element: <SalesPage /> },
       { path: "/settings", element: <SettingsPage /> },
-      { path: "/orders/:id", element: <OrderHistoryPage /> },
+      { path: "/sales", element: <SaleHistorypage /> },
+      { path: "/newsaleorder", element: <SalesPage /> },
       { path: "/profile", element: <ProfilePage /> },
     ],
   },

@@ -25,6 +25,15 @@ export interface Order {
   rows: Paint[];
 }
 
+export interface Sale {
+  id: string;
+  number: number;
+  status: string;
+  quantity: number;
+  orderDate: Date;
+  rows: Paint[];
+}
+
 export interface TextColumn {
   path: string;
   label: string;

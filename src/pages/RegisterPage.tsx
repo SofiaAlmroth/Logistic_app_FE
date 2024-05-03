@@ -37,7 +37,7 @@ function RegisterPage() {
 
       const token = headers["x-auth-token"];
       localStorage.setItem("token", token);
-      navigate("/balance");
+      navigate("/inventory");
     } catch (error: any) {
       if (error.response.status === 400) {
         toast.error("User already exists");

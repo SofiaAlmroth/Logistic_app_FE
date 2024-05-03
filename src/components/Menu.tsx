@@ -16,7 +16,7 @@ function Menu() {
 
       <li>
         <NavLink
-          to={"/balance"}
+          to={"/inventory"}
           className={({ isActive }) =>
             `gap-2 mb-3 mt-2 ${isActive ? "bg-menu-select" : ""}`
           }

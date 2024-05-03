@@ -5,8 +5,6 @@ import { useState } from "react";
 import { useCategories } from "@hooks";
 import { useNavigate } from "react-router-dom";
 import { saveOrder } from "@services/orderService";
-// import { PaintFormData, savePaint } from "@services/paintService";
-// import { Paint } from "@types";
 
 const orderRowSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -59,7 +57,6 @@ function OrdersPage() {
 
   async function onSubmit(data: FormData) {
     console.log("submitted", data);
-
     await saveOrder(data);
     navigate("/orders");
   }
