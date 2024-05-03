@@ -1,7 +1,22 @@
 import { useOrders } from "@hooks/useOrders";
+import { useSales } from "@hooks/useSales";
 
 export function Stat() {
   const { orders } = useOrders();
+
+  const { sales } = useSales();
+
+  function mapToStatus() {
+    let totalPending: any = sales.map((sale) => {
+      if (sale.status === "PENDING") {
+        return totalPending + 1;
+      }
+    });
+
+    return 0;
+  }
+
+  console.log(mapToStatus());
 
   return (
     <div className="stats shadow">
@@ -42,7 +57,7 @@ export function Stat() {
           </svg>
         </div>
         <div className="stat-title">Total Sales</div>
-        <div className="stat-value text-secondary">958</div>
+        <div className="stat-value text-secondary">{sales.length}</div>
       </div>
 
       <div className="stat">
@@ -50,8 +65,8 @@ export function Stat() {
           <i className="fa-solid fa-clock"></i>
           <div className="w-16 rounded-full"></div>
         </div>
-        <div className="stat-title">Pending Orders</div>
-        <div className="stat-value">5</div>
+        <div className="stat-title">Pending</div>
+        <div className="stat-value">{mapToStatus()}</div>
       </div>
     </div>
   );
