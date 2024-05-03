@@ -36,3 +36,16 @@
   background-size: 150% auto;
   background-position: 0% 0%;
 }
+
+.inputt {
+  width: 360;
+  border: #4338ca;
+}
+
+.selectt {
+  width: 360 !important;
+  border: #4338ca;
+}
+.input-500 {
+  width: 500px;
+}

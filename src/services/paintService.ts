@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Paint } from "../types";
+import { Paint } from "@types";
 
 export interface PaintFormData {
   id?: string;
@@ -8,10 +8,9 @@ export interface PaintFormData {
   quantity: number;
   price: number;
   supplierInfo: string;
-  orderDate: Date;
-  ean_gtin: string;
-  batchName: string;
-  bestBeforeDate: Date;
+  orderDate?: Date;
+  ean_gtin?: string;
+  bestBeforeDate?: Date;
 }
 
 const API_ENDPOINT = "http://localhost:5999/api/paints";

@@ -7,7 +7,6 @@ export interface Paint {
   supplierInfo: string;
   orderDate: Date;
   ean_gtin: string;
-  batchName: string;
   bestBeforeDate: Date;
 }
 
@@ -15,6 +14,15 @@ export interface Category {
   id: string;
   name: string;
   isChecked?: boolean;
+}
+
+export interface Order {
+  id: string;
+  number: number;
+  status: string;
+  quantity: number;
+  orderDate: Date;
+  rows: Paint[];
 }
 
 export interface TextColumn {
@@ -26,7 +34,6 @@ export interface ContentColumn<T> {
   key: string;
   content(item: T): JSX.Element;
 }
-
 export type Column<T> = TextColumn | ContentColumn<T>;
 
 export interface Id {
@@ -46,12 +53,16 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  isAdmin: string;
+  isAdmin: boolean;
 }
 export interface UserRegister {
   name: string;
   email: string;
   password: string;
+}
+
+export interface UserUpdate extends Partial<UserRegister> {
+  id: string;
 }
 
 export interface UserLogin {
