@@ -74,7 +74,7 @@ const PaintsChart = () => {
 
   return (
     <div>
-      <canvas ref={chartRef}></canvas>
+      <canvas className="chartCanvas" ref={chartRef}></canvas>
     </div>
   );
 };

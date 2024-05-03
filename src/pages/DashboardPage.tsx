@@ -16,7 +16,7 @@ function Dashboard() {
         <div style={{ marginLeft: "10px", marginBottom: "15px" }}>
           <Stat />
         </div>
-        <div style={{ width: "75%" }}>
+        <div style={{ marginLeft: "10px", marginBottom: "15px" }}>
           <BarStacked />
         </div>
       </div>

@@ -32,7 +32,7 @@ function Menu() {
             `gap-2 mb-3 mt-2 ${isActive ? "bg-menu-select" : ""}`
           }
         >
-          <i className="fa-solid fa-clipboard-list"></i>Orders
+          <i className="fa-solid fa-clipboard-list"></i>Purchase Orders
         </NavLink>
       </li>
 
@@ -44,7 +44,7 @@ function Menu() {
           }
         >
           <i className="fa-solid fa-cart-shopping "></i>
-          Sales
+          Sales Orders
         </NavLink>
       </li>
       <div className="divider"></div>

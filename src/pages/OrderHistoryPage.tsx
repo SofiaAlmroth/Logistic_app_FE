@@ -99,7 +99,7 @@ function OrderHistoryPage() {
           onClick={() => navigate("/neworder")}
           className="custom-button btn-wide"
         >
-          New order
+          New Purchase Order
         </button>
       </div>
       <OrderModal

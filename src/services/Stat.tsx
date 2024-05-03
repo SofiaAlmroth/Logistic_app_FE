@@ -6,17 +6,15 @@ export function Stat() {
 
   const { sales } = useSales();
 
-  function mapToStatus() {
-    let totalPending: any = sales.map((sale) => {
-      if (sale.status === "PENDING") {
-        return totalPending + 1;
-      }
-    });
-
-    return 0;
+  function mapToSalesStatus() {
+    const pendingSales = sales.filter((sale) => sale.status === "PENDING");
+    return pendingSales.length;
   }
 
-  console.log(mapToStatus());
+  function mapToPurchaseStatus() {
+    const pendingOrders = orders.filter((order) => order.status === "PENDING");
+    return pendingOrders.length;
+  }
 
   return (
     <div className="stats shadow">
@@ -36,7 +34,7 @@ export function Stat() {
             ></path>
           </svg>
         </div>
-        <div className="stat-title">Total Purchase</div>
+        <div className="stat-title">Total Purchase Order</div>
         <div className="stat-value text-primary">{orders.length}</div>
       </div>
 
@@ -56,7 +54,7 @@ export function Stat() {
             ></path>
           </svg>
         </div>
-        <div className="stat-title">Total Sales</div>
+        <div className="stat-title">Total Sales Orders</div>
         <div className="stat-value text-secondary">{sales.length}</div>
       </div>
 
@@ -65,8 +63,16 @@ export function Stat() {
           <i className="fa-solid fa-clock"></i>
           <div className="w-16 rounded-full"></div>
         </div>
-        <div className="stat-title">Pending</div>
-        <div className="stat-value">{mapToStatus()}</div>
+        <div className="stat-title">Pending Purchase</div>
+        <div className="stat-value">{mapToPurchaseStatus()}</div>
+      </div>
+      <div className="stat">
+        <div className="stat-figure text-secondary">
+          <i className="fa-solid fa-clock"></i>
+          <div className="w-16 rounded-full"></div>
+        </div>
+        <div className="stat-title">Pending Sales</div>
+        <div className="stat-value">{mapToSalesStatus()}</div>
       </div>
     </div>
   );

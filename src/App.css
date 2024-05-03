@@ -46,6 +46,12 @@
   width: 360 !important;
   border: #4338ca;
 }
+
 .input-500 {
   width: 500px;
+}
+
+.chartCanvas {
+  min-width: 1300px;
+  min-height: 600px;
 }
