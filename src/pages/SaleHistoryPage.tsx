@@ -1,7 +1,8 @@
+import SalesModal from "@components/SalesModal";
 import { Table } from "@components/common";
 import { useSales } from "@hooks";
 import { updateSale } from "@services/salesService";
-import { Column, Order, Sale, SortColumn } from "@types";
+import { Column, Sale, SortColumn } from "@types";
 import _ from "lodash";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +18,8 @@ function SaleHistorypage() {
 
   const statusOptions = [
     { label: "PENDING", color: "bg-orange-200 text-orange-800" },
-    { label: "IN_TRANSIT", color: "bg-blue-200 text-blue-800" },
-    { label: "SENT", color: "bg-emerald-200 text-emerald-800" },
+    { label: "SENT", color: "bg-blue-200 text-blue-800" },
+    { label: "RECEIVED", color: "bg-emerald-200 text-emerald-800" },
   ];
 
   console.log(sales);
@@ -28,9 +29,9 @@ function SaleHistorypage() {
     setCurrentSalesId(id);
   }
 
-  // function handleCloseModal() {
-  //   modalRef.current?.close();
-  // }
+  function handleCloseModal() {
+    modalRef.current?.close();
+  }
 
   async function handleStatusUpdate(id: string, newStatus: string) {
     const newSales = sales.map((sale) => {
@@ -105,11 +106,11 @@ function SaleHistorypage() {
           New sale order
         </button>
       </div>
-      {/* <SalesModal
-        cartItems={cartItems}
+      <SalesModal
+        salesId={currentSalesId}
         onClose={handleCloseModal}
         ref={modalRef}
-      /> */}
+      />
       <div className="m-6">
         <Table
           columns={columns}

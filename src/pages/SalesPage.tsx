@@ -17,7 +17,7 @@ const DEFAULT_SORT_COLUMN: SortColumn = { path: "name", order: "asc" };
 
 function Sales() {
   const categories = useCategories();
-  const { paints, setPaints } = usePaints();
+  const { paints } = usePaints();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedPage, setSelectedPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([

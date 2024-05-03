@@ -30,8 +30,6 @@ function OrderModal(
     fetch();
   }, [orderId]);
 
-  const items: Paint[] = order?.rows || [];
-
   const columns: Column<Paint>[] = [
     { path: "name", label: "Name" },
     { path: "category.name", label: "Category" },
@@ -54,6 +52,8 @@ function OrderModal(
       ),
     },
   ];
+
+  const items: Paint[] = order?.rows || [];
 
   const sortedPaints = _.orderBy(items, sortColumn.path, sortColumn.order);
 
