@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <div className="navbar bg-base-100 shadow flex justify-between">
       <div>
-        <NavLink to="/balance" className="btn btn-ghost text-xl">
+        <NavLink to="/inventory" className="btn btn-ghost text-xl">
           Logistic App
         </NavLink>
       </div>

@@ -26,7 +26,7 @@ function LoginPage() {
     try {
       const { data: jwt } = await auth.login(data);
       localStorage.setItem("token", jwt);
-      navigate("/balance");
+      navigate("/inventory");
     } catch (error: any) {
       if (error.response.status === 400) {
         toast.error("Invalid email or password");
