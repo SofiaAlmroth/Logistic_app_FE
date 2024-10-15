@@ -3,7 +3,7 @@ import LogiAppLogo from "@assets/LogiApp_logo.svg";
 
 function Menu() {
   return (
-    <ul className="menu bg-stone-200 min-w-64 min-h-screen p-4 font-bold text-base gap-6">
+    <ul className="menu  bg-stone-200 min-w-64 min-h-screen p-4 font-bold text-base gap-6">
       <div className="flex justify-center mb-8">
         <NavLink to="/inventory">
           <img src={LogiAppLogo} alt="LogiApp Logo" className="h-24 w-auto " />

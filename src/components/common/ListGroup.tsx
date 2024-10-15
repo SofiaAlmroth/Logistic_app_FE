@@ -15,7 +15,7 @@ function ListGroup<T extends Item>({
   onItemSelect,
 }: Props<T>) {
   return (
-    <div className="relative z-20">
+    <div className="relative z-30">
       <ul className="menu rounded-box bg-slate-200 h-full ">
         <li className="h-full">
           <details className="h-full">

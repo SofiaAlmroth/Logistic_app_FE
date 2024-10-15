@@ -12,21 +12,21 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="bg-base-100 flex justify-end items-center px-6 py-4 ">
-      <div className="dropdown dropdown-end ">
-        <div
+    <div className="bg-base-100 flex justify-end items-center px-6 py-4 relative z-50">
+      <details className="dropdown dropdown-end">
+        <summary
           tabIndex={0}
           role="button"
-          className="btn btn-ghost btn-circle bg-[#a9a2fc] hover:bg-[#4338ca] text-2xl text-black hover:text-white transition-colors duration-300"
+          className="btn btn-ghost btn-circle bg-[#a9a2fc] hover:bg-[#4338ca] text-2xl text-black hover:text-white transition-colors duration-300 "
         >
           <div className="w-12 h-12 flex items-center justify-center">
             <i className="fa-solid fa-user"></i>
           </div>
-        </div>
+        </summary>
 
         <ul
           tabIndex={0}
-          className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-32"
+          className="mt-3  p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-32"
         >
           <li>
             <NavLink to={"/profile"} className="block w-full py-1 ">
@@ -50,7 +50,7 @@ export default function Navbar() {
             )}
           </li>
         </ul>
-      </div>
+      </details>
     </div>
   );
 }
