@@ -13,12 +13,14 @@ import {
 } from "@pages";
 import { Logout } from "@components";
 import SaleHistorypage from "@pages/SaleHistoryPage";
+import HomePage from "@components/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      { index: true, element: <HomePage /> },
       { path: "/inventory", element: <InventoryPage /> },
       { path: "/dashboard", element: <DashboardPage /> },
       { path: "/orders", element: <OrderHistoryPage /> },
