@@ -12,28 +12,21 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="navbar bg-base-100 shadow flex justify-between">
-      <div>
-        <NavLink to="/inventory" className="btn btn-ghost text-xl">
-          Logistic App
-        </NavLink>
-      </div>
-      <div className="dropdown dropdown-end mr-6">
+    <div className="bg-base-100 flex justify-end items-center px-6 py-4 ">
+      <div className="dropdown dropdown-end ">
         <div
           tabIndex={0}
           role="button"
-          className="btn btn-ghost btn-circle avatar"
+          className="btn btn-ghost btn-circle bg-[#a9a2fc] hover:bg-[#4338ca] text-2xl text-black hover:text-white transition-colors duration-300"
         >
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS Navbar component"
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-            />
+          <div className="w-12 h-12 flex items-center justify-center">
+            <i className="fa-solid fa-user"></i>
           </div>
         </div>
+
         <ul
           tabIndex={0}
-          className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+          className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-32"
         >
           <li>
             <NavLink to={"/profile"} className="block w-full py-1 ">
@@ -63,24 +56,4 @@ export default function Navbar() {
 }
 
 {
-  /* {user && (
-        <div className="navbar-end">
-          <Link to="/profile" className="btn btn-neutral ml-2">
-            {user.name}
-          </Link>
-          <Link to="/logout" className="btn btn-primary ml-2">
-            Logout
-          </Link>
-        </div>
-      )}
-      {!user && (
-        <div className="navbar-end">
-          <Link to="/login" className="btn btn-neutral ml-2">
-            Login
-          </Link>
-          <Link to="/register" className="btn btn-primary ml-2">
-            Register
-          </Link>
-        </div>
-      )} */
 }

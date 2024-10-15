@@ -46,7 +46,7 @@ function Settings() {
   const sortedUsers = _.orderBy(users, sortColumn.path, sortColumn.order);
 
   return (
-    <div className="grid grid-flow-row w-full h-full justify-items-center items-center">
+    <div className="mt-6 w-full h-full justify-items-center">
       <Table
         columns={columns}
         items={sortedUsers}

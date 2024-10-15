@@ -22,14 +22,14 @@ function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
     if (column.path !== sortColumn.path) return null;
 
     if (sortColumn.order === "asc")
-      return <i className="fa-solid fa-sort-down"></i>;
+      return <i className="fa-solid fa-sort-down text-xl"></i>;
 
-    return <i className="fa-solid fa-sort-up"></i>;
+    return <i className="fa-solid fa-sort-up text-xl"></i>;
   }
 
   return (
     <thead>
-      <tr>
+      <tr className="text-sm">
         {columns.map((column) =>
           "path" in column ? (
             <th key={column.path} onClick={() => handleSort(column.path)}>
@@ -47,34 +47,4 @@ function TableHeader<T>({ onSort, sortColumn, columns }: Props<T>) {
 export default TableHeader;
 
 {
-  /* <thead>
-      <tr>
-        <th onClick={() => handleSort("name")}>Name {sortIcon("name")}</th>
-        <th onClick={() => handleSort("name")}>
-          Category {sortIcon("category")}
-        </th>
-
-        <th onClick={() => handleSort("quantity")}>
-          Quantity {sortIcon("quantity")}
-        </th>
-
-        <th onClick={() => handleSort("price")}>Price {sortIcon("price")}</th>
-
-        <th onClick={() => handleSort("supplierInfo")}>
-          SupplierInfo {sortIcon("supplierInfo")}
-        </th>
-
-        <th onClick={() => handleSort("orderDate")}>
-          Orderdate {sortIcon("orderDate")}
-        </th>
-
-        <th onClick={() => handleSort("ean_gtin")}>
-          EAN-Gtin {sortIcon("ean_gtin")}
-        </th>
-
-        <th onClick={() => handleSort("bestBeforeDate")}>
-          Best Before Date {sortIcon("bestBeforeDate")}
-        </th>
-      </tr>
-    </thead> */
 }

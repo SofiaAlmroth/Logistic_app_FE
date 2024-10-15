@@ -15,14 +15,16 @@ function ListGroup<T extends Item>({
   onItemSelect,
 }: Props<T>) {
   return (
-    <div className="text-center m-6">
-      <ul className="menu bg-base-200 w-44 rounded-box">
-        <li>
-          <details open>
-            <summary className="text-lg">Filter</summary>
-            <ul>
+    <div className="relative z-20">
+      <ul className="menu rounded-box bg-slate-200 h-full ">
+        <li className="h-full">
+          <details className="h-full">
+            <summary className="text-lg flex items-center h-full cursor-pointer">
+              <i className="fa-solid fa-filter"></i>
+            </summary>
+            <ul className="ml-4 mt-2">
               {items.map((item) => (
-                <li key={item.id}>
+                <li key={item.id} className="mb-2">
                   <label className="flex items-center">
                     <input
                       type="checkbox"

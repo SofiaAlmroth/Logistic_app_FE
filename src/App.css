@@ -1,3 +1,28 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
 .custom-button {
   background: linear-gradient(to right, #4338ca, #9d76f7);
   padding: 10px 20px;
@@ -10,6 +35,7 @@
   background-size: 150% auto;
   background-position: 0% 0%;
 }
+
 .custom-button:hover {
   background-position: 100% 100%;
 }
@@ -18,6 +44,7 @@
   position: absolute;
   font-size: 0.75rem;
 }
+
 .slide-out {
   transition: transform 0.75s ease-in-out; /* Adjust the transition duration as needed */
   transform: translateX(-100%);

@@ -61,8 +61,6 @@ function InventoryPage() {
     setSelectedCategories([DEFAULT_CATEGORY]);
   }
 
-  if (paints.length === 0) return <p>There are no products available</p>;
-
   const allColorsSelected = selectedCategories.find(
     (c) => c.id === DEFAULT_CATEGORY.id
   );
@@ -84,34 +82,49 @@ function InventoryPage() {
     sortColumn.order
   );
   const paginatedPaints = paginate(sortedPaints, PAGE_SIZE, selectedPage);
+
+  if (paints.length === 0)
+    return (
+      <div className="flex flex-row justify-center items-center">
+        <p className="m-6 text-xl">Loading...</p>
+        <span
+          className="loading loading-spinner loading-xl  text-primary"
+          aria-label="Loading"
+        ></span>
+      </div>
+    );
+
   return (
-    <div className="flex flex-row">
-      <div className="m-6">
-        <SearchBox value={searchQuery} onChange={handleSearch} />
-        <div>
-          <div>
-            <PaintsTable
-              sortColumn={sortColumn}
-              onSort={setSortColumn}
-              paints={paginatedPaints}
-              onDelete={handleDelete}
-            />
-            <Pagination
-              totalCount={filteredPaints.length}
-              pageSize={PAGE_SIZE}
-              selectedPage={selectedPage}
-              onPageSelect={setSelectedPage}
-            />
-          </div>
+    <div className="flex flex-col mt-16">
+      <div className="flex justify-between ">
+        <div className="flex-1 ">
+          <SearchBox value={searchQuery} onChange={handleSearch} />
+        </div>
+        <div className="ml-4 h-12">
+          <ListGroup
+            items={[DEFAULT_CATEGORY, ...categories]}
+            selectedItems={selectedCategories}
+            onItemSelect={handleCategoryToggle}
+          />
         </div>
       </div>
       <div>
-        <ListGroup
-          items={[DEFAULT_CATEGORY, ...categories]}
-          selectedItems={selectedCategories}
-          onItemSelect={handleCategoryToggle}
-        />
+        <div className="mt-3">
+          <PaintsTable
+            sortColumn={sortColumn}
+            onSort={setSortColumn}
+            paints={paginatedPaints}
+            onDelete={handleDelete}
+          />
+          <Pagination
+            totalCount={filteredPaints.length}
+            pageSize={PAGE_SIZE}
+            selectedPage={selectedPage}
+            onPageSelect={setSelectedPage}
+          />
+        </div>
       </div>
+
       <ProductModal />
     </div>
   );

@@ -68,7 +68,7 @@ function LoginPage() {
             )}
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary" disabled={!isValid}>
+            <button className="custom-button" disabled={!isValid}>
               Login
             </button>
           </div>

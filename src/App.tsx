@@ -6,10 +6,20 @@ import ModalProvider from "./context/ModalContext";
 export default function App() {
   return (
     <ModalProvider>
-      <Navbar />
-      <div style={{ display: "flex" }}>
+      <div className="flex h-screen">
+        {/* Sidebar (Menu) */}
         <Menu />
-        <Outlet />
+
+        {/* Main Content Area with Navbar at the top */}
+        <div className="flex-1 flex flex-col">
+          {/* Navbar at the top */}
+          <Navbar />
+
+          {/* Main content displayed below the navbar */}
+          <div className="flex-1 p-6">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </ModalProvider>
   );

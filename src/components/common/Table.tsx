@@ -10,7 +10,7 @@ interface Props<T extends Id> {
 
 function Table<T extends Id>({ items, columns, sortColumn, onSort }: Props<T>) {
   return (
-    <table className="table">
+    <table className="table text-sm relative z-10">
       <TableHeader onSort={onSort} sortColumn={sortColumn} columns={columns} />
       <TableBody items={items} columns={columns} />
     </table>
