@@ -44,14 +44,6 @@ const PaintsChart = () => {
       }
     });
 
-    // Extrahera namnen på färgerna baserat på den sorterade listan av målningar
-    // const colors = sortedPaints.map((paint) => {
-    //   const category = categories.find(
-    //     (category) => category.id === paint.category.id
-    //   );
-    //   return category ? category.name : "rgba(255, 99, 132, 1)";
-    // });
-
     const colors = sortedPaints.map((paint) => {
       const category = categories.find(
         (category) => category.id === paint.category.id
