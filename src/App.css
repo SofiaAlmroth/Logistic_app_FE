@@ -40,10 +40,9 @@ h1 {
   background-position: 100% 100%;
 }
 
+/* Base styling shared between both buttons */
 .custom-button2 {
-  border: 3px solid currentColor;
   border-radius: 3rem;
-  color: #ff9913;
   font-size: 1.5rem;
   padding: 1rem 2rem;
   position: relative;
@@ -51,12 +50,19 @@ h1 {
   transition: 0.2s transform ease-in-out;
   will-change: transform;
   z-index: 0;
-  background-color: transparent;
   overflow: hidden;
+  cursor: pointer;
 }
 
-.custom-button2::after {
-  background-color: #ff9913;
+/* Login Button - starts as border, turns filled on hover */
+.login-button {
+  border: 3px solid #ff7113;
+  color: #ff7113;
+  background-color: transparent;
+}
+
+.login-button::after {
+  background-color: #ff7113;
   border-radius: 3rem;
   content: "";
   display: block;
@@ -67,18 +73,53 @@ h1 {
   top: 0;
   transform: translate(-100%, 0) rotate(10deg);
   transform-origin: top left;
-  transition: 0.2s transform ease-out;
-  will-change: transform;
+  transition: 0.4s transform ease-out;
   z-index: -1;
 }
 
-.custom-button2:hover::after {
+.login-button:hover::after {
   transform: translate(0, 0);
 }
 
-.custom-button2:hover {
+.login-button:hover {
   border: 2px solid transparent;
-  color: indigo;
+  color: white;
+  transform: scale(1.05);
+  will-change: transform;
+}
+
+/* Register Button - starts filled, turns to border on hover */
+.register-button {
+  background-color: #ff7113;
+  color: white;
+  border: 3px solid #ff7113;
+  position: relative; /* Ensure relative positioning */
+  z-index: 1; /* Keep this above the ::after element */
+}
+
+.register-button::after {
+  background-color: #f5f5f4;
+  border-radius: 3rem;
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0%;
+  top: 0;
+  transform: translate(-100%, 0) rotate(10deg);
+  transform-origin: top left;
+  transition: 0.4s transform ease-out;
+  z-index: -1;
+}
+
+.register-button:hover::after {
+  transform: translate(0, 0);
+}
+
+.register-button:hover {
+  color: #ff7113;
+  border: 3px solid transparent;
   transform: scale(1.05);
   will-change: transform;
 }
@@ -124,4 +165,8 @@ h1 {
 .chartCanvas {
   min-width: 1300px;
   min-height: 600px;
+}
+
+.hyperlink {
+  color: #200df1;
 }

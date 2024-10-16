@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { user } from "@services";
 
@@ -91,6 +91,13 @@ function RegisterPage() {
               <p className="text-error p-1">{errors.password.message}</p>
             )}
           </div>
+          <p>
+            Already have an account?{" "}
+            <NavLink to="/login" className="hyperlink">
+              <strong>Login</strong>
+            </NavLink>
+          </p>
+
           <div className="form-control mt-6">
             <button className="custom-button" disabled={!isValid}>
               Register

@@ -29,11 +29,6 @@ export default function Navbar() {
           className="mt-3  p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-32"
         >
           <li>
-            <NavLink to={"/profile"} className="block w-full py-1 ">
-              Profile
-            </NavLink>
-          </li>
-          <li>
             {!user && (
               <>
                 <NavLink to="/login">Login</NavLink>

@@ -13,12 +13,15 @@ function HomePage() {
         Simplifying Your Inventory Management
       </p> */}
       <div className="absolute bottom-1/4 flex space-x-6 ">
-        <NavLink to={"/login"} className="custom-button2 min-w-44 text-center">
+        <NavLink
+          to={"/login"}
+          className="custom-button2 login-button min-w-44 text-center"
+        >
           Login
         </NavLink>
         <NavLink
           to={"/register"}
-          className="custom-button2 min-w-44 text-center"
+          className="custom-button2 register-button min-w-44 text-center"
         >
           Register
         </NavLink>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "@services";
 
@@ -26,7 +26,7 @@ function LoginPage() {
     try {
       const { data: jwt } = await auth.login(data);
       localStorage.setItem("token", jwt);
-      navigate("/inventory");
+      navigate("/dashboard");
     } catch (error: any) {
       if (error.response.status === 400) {
         toast.error("Invalid email or password");
@@ -67,6 +67,12 @@ function LoginPage() {
               <p className="text-error p-1">{errors.password.message}</p>
             )}
           </div>
+          <p>
+            Don't have an account?{" "}
+            <NavLink to="/register" className="hyperlink">
+              <strong>Register</strong>
+            </NavLink>
+          </p>
           <div className="form-control mt-6">
             <button className="custom-button" disabled={!isValid}>
               Login
