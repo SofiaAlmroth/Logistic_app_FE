@@ -8,3 +8,4 @@ export { default as SalesPage } from "./SalesPage";
 export { default as SettingsPage } from "./SettingsPage";
 export { default as OrdersPage } from "./OrdersPage";
 export { default as SaleHistoryPage } from "./SaleHistoryPage";
+export { default as HomePage } from "./HomePage";

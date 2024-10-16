@@ -13,7 +13,7 @@ import {
 } from "@pages";
 import { Logout } from "@components";
 import SaleHistorypage from "@pages/SaleHistoryPage";
-import HomePage from "@components/HomePage";
+import HomePage from "@pages/HomePage";
 
 const router = createBrowserRouter([
   {

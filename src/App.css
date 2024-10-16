@@ -40,6 +40,49 @@ h1 {
   background-position: 100% 100%;
 }
 
+.custom-button2 {
+  border: 3px solid currentColor;
+  border-radius: 3rem;
+  color: #ff9913;
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  position: relative;
+  text-decoration: none;
+  transition: 0.2s transform ease-in-out;
+  will-change: transform;
+  z-index: 0;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.custom-button2::after {
+  background-color: #ff9913;
+  border-radius: 3rem;
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-100%, 0) rotate(10deg);
+  transform-origin: top left;
+  transition: 0.2s transform ease-out;
+  will-change: transform;
+  z-index: -1;
+}
+
+.custom-button2:hover::after {
+  transform: translate(0, 0);
+}
+
+.custom-button2:hover {
+  border: 2px solid transparent;
+  color: indigo;
+  transform: scale(1.05);
+  will-change: transform;
+}
+
 .text-error {
   position: absolute;
   font-size: 0.75rem;
