@@ -24,13 +24,7 @@ function OrdersPage() {
   const navigate = useNavigate();
   const categories = useCategories();
   const [showHeader, setShowHeader] = useState(false);
-  const {
-    register,
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { register, control, handleSubmit, watch } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
   });
